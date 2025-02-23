@@ -178,7 +178,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   return (
     <>
       <hr
-        className="border-1.5"
+        className="border-2"
         style={{
           borderColor: colorHex,
         }}
@@ -207,9 +207,11 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
                   {exp.endDate ? formatDate(exp.endDate, "MM/yyyy") : "Present"}
                 </span>
               )}
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-semibold">{exp.company}</p>
               <p className="text-xs font-light">{exp.locationType}</p>
             </div>
-            <p className="text-xs font-semibold">{exp.company}</p>
             <div className="whitespace-pre-line text-xs">{exp.description}</div>
           </div>
         ))}

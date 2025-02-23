@@ -47,7 +47,7 @@ export default async function Page() {
       </div>
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {resumes.map((resume) => (
-          <ResumeItem key={resume.id} resume={resume} />
+          <ResumeItem key={resume.id} resume={resume} contentRef={null} />
         ))}
       </div>
     </main>
