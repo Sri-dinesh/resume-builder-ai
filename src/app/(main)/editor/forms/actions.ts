@@ -114,7 +114,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
   Core Skills: ${skills}
   
   Output Requirements:
-  1. Length: 3-4 impactful sentences (50-75 words)
+  1. Length: 3-4 impactful sentences(Passage) (50-75 words)
   2. Structure: [Professional Title] + [Years of Experience] + [Key Achievements] + [Core Skills] + [Career Goal]
   
   ATS Optimization Rules:
@@ -235,7 +235,7 @@ export async function generateWorkExperience(
   3. Quantify achievements with specific metrics (%, $, time saved, efficiency gained)
   4. Highlight tools, technologies, and methodologies used
   5. Demonstrate progression and leadership when applicable
-  6. Keep each bullet point to 1-2 lines maximum for readability
+  6. Keep each bullet point to 1 line only maximum for readability
   7. Focus on STAR method (Situation, Task, Action, Result)
   8. Include relevant technical skills and certifications mentioned in the description
   
@@ -254,6 +254,7 @@ export async function generateWorkExperience(
   - Format must remain clean and parseable by ATS systems
   - Use standard bullet points (•) only
   - Keep technical terms consistent throughout
+  - Should be only of bullet points (•), dont include any other formatting points like (*), (-) etc.
 `;
 
   try {
@@ -302,7 +303,6 @@ As an expert ATS-optimization specialist, generate a highly effective project ex
 Format Requirements:
 Project Name: <industry-standard project name>
 Role: <clear project role/title>
-Duration: <MM/YYYY - MM/YYYY or "Present">
 Technologies: <comma-separated list of tools, languages, frameworks>
 Impact: <key business/technical impact in one line>
 
@@ -311,7 +311,7 @@ Description:
 • [Strong Action Verb] [Technical Implementation] to [Measurable Outcome]
 
 Technical Writing Guidelines:
-1. Begin each bullet with powerful technical action verbs (e.g., Architected, Engineered, Optimized)
+1. Begin each bullet with powerful technical action verbs (e.g., Architected, Engineered, Optimized, etc..)
 2. Include specific technologies, frameworks, and methodologies
 3. Quantify results (%, performance metrics, time/cost savings)
 4. Highlight technical complexity and problem-solving
@@ -325,6 +325,7 @@ ATS Optimization Rules:
 5. Maintain consistent technical naming conventions
 6. Use standard bullet points only (•)
 7. Avoid special characters or symbols except commonly accepted technical ones
+8. Should be only of bullet points (•), dont include any other formatting points like (*), (-) etc.
 
 Required Elements Per Bullet:
 - Technical implementation details
@@ -346,6 +347,8 @@ Format Rules:
 3. Maintain consistent date formatting
 4. Follow standard project naming conventions
 5. Structure content for maximum ATS readability
+6. Should be only of bullet points(•), dont include any other formatting points like (*), (-) etc.
+7. Keep each bullet point to 1 line only maximum for readability
 `;
 
   try {

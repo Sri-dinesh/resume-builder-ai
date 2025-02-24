@@ -37,6 +37,8 @@ import { useEffect } from "react";
 import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
 import GenerateWorkExperienceButton from "./GenerateWorkExperienceButton";
 
+import { RichTextEditor } from "@/components/RichTextEditor";
+
 export default function WorkExperienceForm({
   resumeData,
   setResumeData,
@@ -180,10 +182,21 @@ function WorkExperienceItem({
         />
       </div>
       <div className="flex justify-center">
-        <GenerateWorkExperienceButton
+        {/* <GenerateWorkExperienceButton
           onWorkExperienceGenerated={(exp) =>
             form.setValue(`workExperiences.${index}`, exp)
           }
+        /> */}
+        <GenerateWorkExperienceButton
+          onWorkExperienceGenerated={(generatedExp) => {
+            // Retrieve the current work experience values
+            const currentExp = form.getValues(`workExperiences.${index}`);
+            // Merge the generated description with the current values
+            form.setValue(`workExperiences.${index}`, {
+              ...currentExp,
+              description: generatedExp.description,
+            });
+          }}
         />
       </div>
       <FormField
@@ -275,7 +288,7 @@ function WorkExperienceItem({
         Leave <span className="font-semibold">end date</span> empty if you are
         currently working here.
       </FormDescription>
-      <FormField
+      {/* <FormField
         control={form.control}
         name={`workExperiences.${index}.description`}
         render={({ field }) => (
@@ -283,6 +296,23 @@ function WorkExperienceItem({
             <FormLabel>Description</FormLabel>
             <FormControl>
               <Textarea {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      /> */}
+
+      <FormField
+        control={form.control}
+        name={`workExperiences.${index}.description`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Description</FormLabel>
+            <FormControl>
+              <RichTextEditor
+                value={field.value || ""}
+                onChange={(html) => field.onChange(html)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

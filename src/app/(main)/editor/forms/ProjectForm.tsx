@@ -36,6 +36,7 @@ import { GripHorizontal } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
 import GenerateProjectButton from "./GenerateProjectButton";
+import { RichTextEditor } from "@/components/RichTextEditor";
 
 export default function ProjectForm({
   resumeData,
@@ -174,10 +175,21 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
         />
       </div>
       <div className="flex justify-center">
-        <GenerateProjectButton
+        {/* <GenerateProjectButton
           onProjectGenerated={(proj) =>
             form.setValue(`projects.${index}`, proj)
           }
+        /> */}
+        <GenerateProjectButton
+          onProjectGenerated={(proj) => {
+            // Get the current values for this project item
+            const currentProject = form.getValues(`projects.${index}`);
+            // Update only the description from the AI generated project
+            form.setValue(`projects.${index}`, {
+              ...currentProject,
+              description: proj.description,
+            });
+          }}
         />
       </div>
       <FormField
@@ -246,7 +258,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
         Leave <span className="font-semibold">end date</span> empty if this
         project is ongoing.
       </FormDescription>
-      <FormField
+      {/* <FormField
         control={form.control}
         name={`projects.${index}.description`}
         render={({ field }) => (
@@ -254,6 +266,23 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
             <FormLabel>Description</FormLabel>
             <FormControl>
               <Textarea {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      /> */}
+
+      <FormField
+        control={form.control}
+        name={`projects.${index}.description`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Description</FormLabel>
+            <FormControl>
+              <RichTextEditor
+                value={field.value || ""}
+                onChange={(html) => field.onChange(html)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

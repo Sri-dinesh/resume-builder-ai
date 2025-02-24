@@ -166,6 +166,58 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
   );
 }
 
+// function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
+//   const { workExperiences, colorHex } = resumeData;
+
+//   const workExperiencesNotEmpty = workExperiences?.filter(
+//     (exp) => Object.values(exp).filter(Boolean).length > 0,
+//   );
+
+//   if (!workExperiencesNotEmpty?.length) return null;
+
+//   return (
+//     <>
+//       <hr
+//         className="border-2"
+//         style={{
+//           borderColor: colorHex,
+//         }}
+//       />
+//       <div className="space-y-3">
+//         <p
+//           className="text-lg font-semibold"
+//           style={{
+//             color: colorHex,
+//           }}
+//         ></p>
+//         {workExperiencesNotEmpty.map((exp, index) => (
+//           <div key={index} className="break-inside-avoid space-y-1">
+//             <div
+//               className="flex items-center justify-between text-sm font-semibold"
+//               style={{
+//                 color: colorHex,
+//               }}
+//             >
+//               <span>{exp.position}</span>
+//               {exp.startDate && (
+//                 <span>
+//                   {formatDate(exp.startDate, "MM/yyyy")} -{" "}
+//                   {exp.endDate ? formatDate(exp.endDate, "MM/yyyy") : "Present"}
+//                 </span>
+//               )}
+//             </div>
+//             <div className="flex items-center justify-between">
+//               <p className="text-xs font-semibold">{exp.company}</p>
+//               <p className="text-xs font-light">{exp.locationType}</p>
+//             </div>
+//             <div className="whitespace-pre-line text-xs">{exp.description}</div>
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// }
+
 function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   const { workExperiences, colorHex } = resumeData;
 
@@ -190,7 +242,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
             color: colorHex,
           }}
         >
-          Work experience
+          Experience
         </p>
         {workExperiencesNotEmpty.map((exp, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
@@ -212,13 +264,72 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
               <p className="text-xs font-semibold">{exp.company}</p>
               <p className="text-xs font-light">{exp.locationType}</p>
             </div>
-            <div className="whitespace-pre-line text-xs">{exp.description}</div>
+            {/* Render the description as HTML */}
+            <div
+              className="prose text-xs"
+              dangerouslySetInnerHTML={{ __html: exp.description || "" }}
+            ></div>
           </div>
         ))}
       </div>
     </>
   );
 }
+
+// function ProjectSection({ resumeData }: ResumeSectionProps) {
+//   const { projects, colorHex } = resumeData;
+
+//   const projectsNotEmpty = projects?.filter(
+//     (proj) => Object.values(proj).filter(Boolean).length > 0,
+//   );
+
+//   if (!projectsNotEmpty?.length) return null;
+
+//   return (
+//     <>
+//       <hr
+//         className="border-2"
+//         style={{
+//           borderColor: colorHex,
+//         }}
+//       />
+//       <div className="space-y-3">
+//         <p
+//           className="text-lg font-semibold"
+//           style={{
+//             color: colorHex,
+//           }}
+//         >
+//           Projects
+//         </p>
+//         {projectsNotEmpty.map((proj, index) => (
+//           <div key={index} className="break-inside-avoid space-y-1">
+//             <div
+//               className="flex items-center justify-between text-sm font-semibold"
+//               style={{
+//                 color: colorHex,
+//               }}
+//             >
+//               <span>{proj.ProjectName}</span>
+//               {proj.startDate && (
+//                 <span>
+//                   {formatDate(proj.startDate, "MM/yyyy")} -{" "}
+//                   {proj.endDate
+//                     ? formatDate(proj.endDate, "MM/yyyy")
+//                     : "Present"}
+//                 </span>
+//               )}
+//             </div>
+//             <p className="text-xs font-semibold">{proj.toolsUsed}</p>
+//             <div className="whitespace-pre-line text-xs">
+//               {proj.description}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// }
 
 function ProjectSection({ resumeData }: ResumeSectionProps) {
   const { projects, colorHex } = resumeData;
@@ -265,9 +376,11 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
               )}
             </div>
             <p className="text-xs font-semibold">{proj.toolsUsed}</p>
-            <div className="whitespace-pre-line text-xs">
-              {proj.description}
-            </div>
+            {/* Render the description as HTML so formatted text appears */}
+            <div
+              className="prose text-xs"
+              dangerouslySetInnerHTML={{ __html: proj.description || "" }}
+            ></div>
           </div>
         ))}
       </div>
