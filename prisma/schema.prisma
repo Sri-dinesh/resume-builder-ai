@@ -24,6 +24,8 @@ model Resume {
   photoUrl    String?
   colorHex    String  @default("#000000")
   borderStyle String  @default("squircle")
+  fontFamily  String  @default("Arial")
+
   summary     String?
   firstName   String?
   lastName    String?
@@ -32,14 +34,18 @@ model Resume {
   country     String?
   phone       String?
   email       String?
+  linkedin    String?
+  website     String?
+  websiteName String?
 
   workExperiences WorkExperience[]
   projects        Project[]
   educations      Education[]
   skills          String[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  certifications Certification[]
 
   @@map("resumes")
 }
@@ -72,6 +78,7 @@ model Project {
   startDate   DateTime?
   endDate     DateTime?
   description String?
+  demoLink    String?
 
   resumeId String
   resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
@@ -114,6 +121,18 @@ model UserSubscription {
   @@map("user_subscriptions")
 }
 
-model certifications {
+model Certification {
   id String @id @default(cuid())
+
+  certificationName String?
+  awardedBy         String?
+  awardedDate       DateTime?
+
+  resumeId String
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("certifications")
 }

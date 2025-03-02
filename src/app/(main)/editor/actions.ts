@@ -13,8 +13,14 @@ export async function saveResume(values: ResumeValues) {
 
   console.log("received values", values);
 
-  const { photo, workExperiences, projects, educations, ...resumeValues } =
-    resumeSchema.parse(values);
+  const {
+    photo,
+    workExperiences,
+    projects,
+    educations,
+    certifications,
+    ...resumeValues
+  } = resumeSchema.parse(values);
 
   const { userId } = await auth();
 
@@ -76,6 +82,9 @@ export async function saveResume(values: ResumeValues) {
       where: { id },
       data: {
         ...resumeValues,
+        linkedin: values.linkedin || null,
+        website: values.website || null,
+        websiteName: values.websiteName || null,
         photoUrl: newPhotoUrl,
         workExperiences: {
           deleteMany: {},
@@ -99,6 +108,16 @@ export async function saveResume(values: ResumeValues) {
             ...edu,
             startDate: edu.startDate ? new Date(edu.startDate) : undefined,
             endDate: edu.endDate ? new Date(edu.endDate) : undefined,
+          })),
+        },
+        certifications: {
+          deleteMany: {},
+          create: certifications?.map((cert) => ({
+            ...cert,
+            certificationName: cert.certificationName || "",
+            awardedDate: cert.awardedDate
+              ? new Date(cert.awardedDate)
+              : undefined,
           })),
         },
         updatedAt: new Date(),
@@ -109,6 +128,9 @@ export async function saveResume(values: ResumeValues) {
       data: {
         ...resumeValues,
         userId,
+        linkedin: values.linkedin || null,
+        website: values.website || null,
+        websiteName: values.websiteName || null,
         photoUrl: newPhotoUrl,
         workExperiences: {
           create: workExperiences?.map((exp) => ({
@@ -129,6 +151,15 @@ export async function saveResume(values: ResumeValues) {
             ...edu,
             startDate: edu.startDate ? new Date(edu.startDate) : undefined,
             endDate: edu.endDate ? new Date(edu.endDate) : undefined,
+          })),
+        },
+        certifications: {
+          create: certifications?.map((cert) => ({
+            ...cert,
+            certificationName: cert.certificationName || "",
+            awardedDate: cert.awardedDate
+              ? new Date(cert.awardedDate)
+              : undefined,
           })),
         },
       },

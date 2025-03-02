@@ -5,6 +5,24 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { Roboto } from "next/font/google";
+
+// Initialize only Roboto since others are system fonts
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const fonts = {
+  Arial: undefined, // system font
+  Calibri: undefined, // system font
+  Helvetica: undefined, // system font
+  "Times New Roman": undefined, // system font
+  Georgia: undefined, // system font
+  Verdana: undefined, // system font
+  Roboto: roboto,
+};
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

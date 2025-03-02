@@ -218,6 +218,52 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           </FormItem>
         )}
       />
+      {/* <FormField
+        control={form.control}
+        name={`projects.${index}.demoLink`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Demo link</FormLabel>
+            <FormDescription>
+              Place a link to a live demo of your project.
+            </FormDescription>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      /> */}
+
+      <FormField
+        control={form.control}
+        name={`projects.${index}.demoLink`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Demo link</FormLabel>
+            <FormDescription>
+              Place a link to a live demo of your project. Ensure the link is in
+              proper format.
+            </FormDescription>
+            <div className="flex gap-2">
+              <FormControl>
+                <Input {...field} type="url" placeholder="https://..." />
+              </FormControl>
+              {field.value && (
+                <a
+                  href={field.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 min-w-20 items-center justify-center rounded-md bg-muted px-3 text-sm hover:underline"
+                >
+                  Visit ↗
+                </a>
+              )}
+            </div>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <div className="grid grid-cols-2 gap-3">
         <FormField
           control={form.control}

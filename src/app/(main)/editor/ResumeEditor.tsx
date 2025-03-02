@@ -20,7 +20,33 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   const searchParams = useSearchParams();
 
   const [resumeData, setResumeData] = useState<ResumeValues>(
-    resumeToEdit ? mapToResumeValues(resumeToEdit) : {},
+    resumeToEdit
+      ? mapToResumeValues(resumeToEdit)
+      : {
+          id: "",
+          title: undefined,
+          description: undefined,
+          photo: undefined,
+          firstName: undefined,
+          lastName: undefined,
+          jobTitle: undefined,
+          city: undefined,
+          country: undefined,
+          phone: undefined,
+          email: undefined,
+          linkedin: undefined,
+          website: undefined,
+          websiteName: undefined,
+          workExperiences: [],
+          projects: [],
+          certifications: [],
+          educations: [],
+          skills: [],
+          borderStyle: "",
+          colorHex: "",
+          fontFamily: "",
+          summary: undefined,
+        },
   );
 
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);

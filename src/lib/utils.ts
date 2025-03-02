@@ -31,6 +31,9 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     country: data.country || undefined,
     phone: data.phone || undefined,
     email: data.email || undefined,
+    linkedin: data.linkedin || undefined,
+    website: data.website || undefined,
+    websiteName: data.websiteName || undefined,
     workExperiences: data.workExperiences.map((exp) => ({
       position: exp.position || undefined,
       company: exp.company || undefined,
@@ -45,6 +48,12 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       startDate: proj.startDate?.toISOString().split("T")[0],
       endDate: proj.endDate?.toISOString().split("T")[0],
       description: proj.description || undefined,
+      demoLink: proj.demoLink || undefined,
+    })),
+    certifications: data.certifications.map((cert) => ({
+      certificationName: cert.certificationName || undefined,
+      awardedBy: cert.awardedBy || undefined,
+      awardedDate: cert.awardedDate?.toISOString().split("T")[0],
     })),
     educations: data.educations.map((edu) => ({
       degree: edu.degree || undefined,
@@ -55,6 +64,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     skills: data.skills,
     borderStyle: data.borderStyle,
     colorHex: data.colorHex,
+    fontFamily: data.fontFamily,
     summary: data.summary || undefined,
   };
 }

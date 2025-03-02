@@ -28,6 +28,9 @@ export const personalInfoSchema = z.object({
   country: optionalString,
   phone: optionalString,
   email: optionalString,
+  linkedin: optionalString,
+  website: optionalString,
+  websiteName: optionalString,
 });
 
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
@@ -61,6 +64,8 @@ export const projectSchema = z.object({
         startDate: optionalString,
         endDate: optionalString,
         description: optionalString,
+        demoLink: optionalString,
+        // demoLink: z.string().url().optional().or(z.string().length(0)), // Add URL validation
       }),
     )
     .optional(),
@@ -70,6 +75,24 @@ export type ProjectValues = z.infer<typeof projectSchema>;
 
 export type Project = NonNullable<
   z.infer<typeof projectSchema>["projects"]
+>[number];
+
+export const certificationSchema = z.object({
+  certifications: z
+    .array(
+      z.object({
+        certificationName: optionalString,
+        awardedBy: optionalString,
+        awardedDate: optionalString,
+      }),
+    )
+    .optional(),
+});
+
+export type CertificationValues = z.infer<typeof certificationSchema>;
+
+export type certification = NonNullable<
+  z.infer<typeof certificationSchema>["certifications"]
 >[number];
 
 export const educationSchema = z.object({
@@ -107,8 +130,10 @@ export const resumeSchema = z.object({
   ...educationSchema.shape,
   ...skillsSchema.shape,
   ...summarySchema.shape,
+  ...certificationSchema.shape,
   colorHex: optionalString,
   borderStyle: optionalString,
+  fontFamily: z.string().default("Arial"),
 });
 
 export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {
@@ -146,6 +171,7 @@ export const generateSummarySchema = z.object({
   ...projectSchema.shape,
   ...educationSchema.shape,
   ...skillsSchema.shape,
+  ...certificationSchema.shape,
 });
 
 export type GenerateSummaryInput = z.infer<typeof generateSummarySchema>;
