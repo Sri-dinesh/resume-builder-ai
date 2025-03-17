@@ -34,6 +34,16 @@ export const FONT_OPTIONS = [
     value: "Inter",
     preview: "Modern and professional, optimized for screen readability",
   },
+  {
+    name: "Garamond",
+    value: "Garamond",
+    preview: "Classic serif font reminiscent of Times New Roman",
+  },
+  {
+    name: "Noto Serif",
+    value: "Noto Serif",
+    preview: "Clean and versatile sans-serif font, suitable for resumes",
+  },
 ] as const;
 
 export type FontOption = (typeof FONT_OPTIONS)[number]["value"];

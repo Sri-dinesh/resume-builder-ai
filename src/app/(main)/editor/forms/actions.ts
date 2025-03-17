@@ -46,60 +46,6 @@ export async function generateSummary(input: GenerateSummaryInput) {
   const { jobTitle, workExperiences, projects, educations, skills } =
     generateSummarySchema.parse(input);
 
-  // Summary Prompt
-  // const prompt = `
-  //   Please generate a professional resume summary from this data:
-
-  //   You are a professional resume writer and career strategist specializing in ${jobTitle}. Using the provided data, craft a concise and impactful professional resume summary tailored for the role of ${jobTitle}. Ensure the summary highlights key achievements, transferable skills, technical expertise, and leadership qualities. Focus on incorporating relevant keywords from the job description to make it ATS-friendly. Use power verbs, quantify impact with measurable results (e.g., numbers, percentages, or metrics), and emphasize soft skills, certifications, and problem-solving abilities where applicable. Keep the tone modern, professional, and results-oriented.
-
-  //   Job title: ${jobTitle || "N/A"}
-
-  //   Work experience:
-  //   ${workExperiences
-  //     ?.map(
-  //       (exp) => `
-  //       Position: ${exp.position || "N/A"} at ${exp.company || "N/A"} from ${
-  //         exp.startDate || "N/A"
-  //       } to ${exp.endDate || "Present"}
-
-  //       Description:
-  //       ${exp.description || "N/A"}
-  //       `
-  //     )
-  //     .join("\n\n")}
-  //   Projects:
-  //   ${projects
-  //     ?.map(
-  //       (proj) => `
-  //       Project: ${proj.ProjectName || "N/A"} using ${
-  //         proj.toolsUsed || "N/A"
-  //       } from ${proj.startDate || "N/A"} to ${proj.endDate || "Present"}
-
-  //       Description:
-  //       ${proj.description || "N/A"}
-  //       `
-  //     )
-  //     .join("\n\n")}
-  //   Education:
-  //   ${educations
-  //     ?.map(
-  //       (edu) => `
-  //       Degree: ${edu.degree || "N/A"} at ${edu.school || "N/A"} from ${
-  //         edu.startDate || "N/A"
-  //       } to ${edu.endDate || "N/A"}
-  //       `
-  //     )
-  //     .join("\n\n")}
-
-  //   Skills:
-  //   ${skills}
-
-  //   **Instructions:**
-  //   1. Only return the professional summary—do not include any other sections or raw data in the response.
-  //   2. Tailor the summary to align with the target role and industry, emphasizing adaptability, collaborative achievements, and strategic accomplishments.
-  //   3. Ensure the summary is visually appealing, concise (no more than 4 sentences), and optimized for both human readers and applicant tracking systems (ATS).
-  //   `;
-
   const prompt = `
   As an expert ATS resume specialist, generate a highly optimized professional summary based on this data:
   
@@ -217,44 +163,53 @@ export async function generateWorkExperience(
 
   //   Work Experience Prompt
   const prompt = `
-  As an expert ATS-optimization specialist, generate a compelling work experience entry based on this description: "${description}"
+As an expert ATS-optimization specialist, generate a compelling work experience entry based on this description: "${description}"
 
-  Format requirements:
-  Job Title: <exact job title matching industry standards>
-  Company: <company name>
-  Start Date: <YYYY-MM-DD format>
-  End Date: <YYYY-MM-DD format or "Present">
-  
-  Description:
-  [Generate 5 achievement-focused bullet points following this enhanced structure]
-  • [Action Verb] [Quantifiable Achievement] by [Specific Method/Tool] resulting in [Measurable Business Impact]
-  
-  Writing Instructions:
-  1. Use powerful action verbs at the start of each bullet (e.g., Spearheaded, Implemented, Developed, Orchestrated)
-  2. Include industry-specific keywords and technical terms relevant to the role
-  3. Quantify achievements with specific metrics (%, $, time saved, efficiency gained)
-  4. Highlight tools, technologies, and methodologies used
-  5. Demonstrate progression and leadership when applicable
-  6. Keep each bullet point to 1 line only maximum for readability
-  7. Focus on STAR method (Situation, Task, Action, Result)
-  8. Include relevant technical skills and certifications mentioned in the description
-  
-  ATS Optimization Rules:
-  1. Use standard job titles that ATS systems recognize
-  2. Avoid graphics, special characters, or complex formatting
-  3. Spell out acronyms at least once
-  4. Include both hard and soft skills mentioned in the description
-  5. Use industry-standard terminology
-  6. Maintain consistent date formatting
-  7. Incorporate relevant keywords naturally within context
-  
-  Critical Requirements:
-  - Every bullet point must include at least one measurable outcome
-  - Each achievement should demonstrate clear business value
-  - Format must remain clean and parseable by ATS systems
-  - Use standard bullet points (•) only
-  - Keep technical terms consistent throughout
-  - Should be only of bullet points (•), dont include any other formatting points like (*), (-) etc.
+Format requirements:
+Job Title: <exact job title matching industry standards>
+Company: <company name>
+Start Date: <YYYY-MM-DD format>
+End Date: <YYYY-MM-DD format or "Present">
+
+Description:
+[Generate 5 achievement-focused bullet points following this enhanced structure]
+- [Action Verb] [Quantifiable Achievement] by [Specific Method/Tool] resulting in [Measurable Business Impact]
+
+Writing Instructions:
+1. STRICT LENGTH REQUIREMENT: Each bullet point MUST be limited to a single line on A4 paper width (approximately 85-95 characters).
+2. Start each bullet with powerful, varied action verbs appropriate for the role (technical or non-technical)
+3. Include role-specific keywords:
+   - For technical roles: programming languages, frameworks, methodologies, tools, platforms
+   - For non-technical roles: relevant processes, strategies, methodologies, soft skills
+4. Quantify achievements with specific metrics (%, $, time saved, efficiency gained, stakeholder satisfaction)
+5. Highlight domain-specific expertise:
+   - Technical: Technical implementations, system optimizations, code improvements
+   - Non-technical: Process improvements, relationship management, strategic initiatives
+6. Demonstrate progression, leadership, and cross-functional collaboration when applicable
+7. Follow STAR method (Situation, Task, Action, Result) in condensed format
+
+ATS Optimization Rules:
+1. Use standard job titles that ATS systems recognize within the industry (technical or non-technical)
+2. Avoid graphics, special characters, or complex formatting
+3. Spell out acronyms at least once, then use consistently
+4. Balance technical skills with transferable skills:
+   - Technical roles: Include both hard technical skills and relevant soft skills
+   - Non-technical roles: Focus on domain expertise, methodologies, and measurable impact
+5. Use industry-standard terminology relevant to the specific field
+6. Maintain consistent date formatting
+7. Incorporate relevant keywords naturally within context (no keyword stuffing)
+
+Critical Requirements:
+- STRICT LENGTH REQUIREMENT: Each bullet point MUST be limited to a single line on A4 paper width (approximately 105 characters maximum). Bullet points CANNOT wrap to a second line.
+- Every bullet point must include at least one measurable outcome
+- Each achievement should demonstrate clear business value
+- Format must remain clean and parseable by ATS systems
+- Use standard bullet points (•) only
+- Keep technical terms consistent throughout
+- Should use only bullet points (•), don't include any other formatting points like (*), (-), etc.
+- Avoid repeating the same action verbs, technical terms, or phrases across bullet points to maintain variety and avoid redundancy
+- For technical roles: Include at least one bullet highlighting technical implementation or solution
+- For non-technical roles: Include at least one bullet highlighting strategic impact or stakeholder management
 `;
 
   try {
@@ -307,7 +262,7 @@ Technologies: <comma-separated list of tools, languages, frameworks>
 Impact: <key business/technical impact in one line>
 
 Description:
-[Generate 4-5 achievement-focused bullet points using this structure]
+[Generate 4 achievement-focused bullet points using this structure]
 • [Strong Action Verb] [Technical Implementation] to [Measurable Outcome]
 
 Technical Writing Guidelines:
@@ -348,7 +303,8 @@ Format Rules:
 4. Follow standard project naming conventions
 5. Structure content for maximum ATS readability
 6. Should be only of bullet points(•), dont include any other formatting points like (*), (-) etc.
-7. Keep each bullet point to 1 line only maximum for readability
+7. Keep each bullet point ideally fit within **one line of A4 paper width** for readability.
+
 `;
 
   try {
