@@ -1,5 +1,6 @@
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 import { Metadata } from "next";
-
 export const metadata: Metadata = {
   title: "Terms of Service",
 };
@@ -7,9 +8,10 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="mx-auto max-w-prose space-y-6 p-3 py-6">
+      <Navbar />
       <h1 className="text-center text-2xl font-bold">Terms of Service</h1>
       <p className="text-center text-sm text-muted-foreground">
-        Effective Date: Oct 31, 2024
+        Effective Date: Mar 31, 2025
       </p>
       <p>
         Welcome to AI Resume Builder. These Terms of Service (&quot;Terms&quot;)
@@ -168,6 +170,7 @@ export default function Page() {
         By using AI Resume Builder, you acknowledge that you have read,
         understood, and agree to these Terms of Service.
       </p>
+      <Footer />
     </main>
   );
 }

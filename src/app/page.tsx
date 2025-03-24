@@ -1,94 +1,88 @@
-// import logo from "@/images/logo.png";
-// import resumePreview from "@/images/resume-preview.jpg";
-// import { Button } from "@/components/ui/button";
-// import Image from "next/image";
-// import Link from "next/link";
+"use client";
 
-// import Spline from "@splinetool/react-spline";
-
-// export default function Home() {
-//   return (
-//     <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 px-5 py-12 text-center text-gray-900 md:flex-row md:text-start lg:gap-12">
-//       <div className="max-w-prose space-y-3">
-//         <Image
-//           src={logo}
-//           alt="Logo"
-//           width={150}
-//           height={150}
-//           className="mx-auto md:ms-0"
-//         />
-//         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-//           Create the{" "}
-//           <span className="inline-block bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
-//             Perfect Resume
-//           </span>{" "}
-//           in Minutes
-//         </h1>
-//         <p className="text-lg text-gray-500">
-//           Our <span className="font-bold">AI resume builder</span> helps you
-//           design a professional resume, even if you&apos;re not very smart.
-//         </p>
-//         <Button asChild size="lg" variant="premium">
-//           <Link href="/resumes">Get Started</Link>
-//         </Button>
-//       </div>
-//       <div>
-//         <Image
-//           src={resumePreview}
-//           alt="Resume preview"
-//           width={600}
-//           className="shadow-md lg:rotate-[1.5deg]"
-//         />
-//       </div>
-//     </main>
-//   );
-// }
-
-import logo from "@/images/logo.png";
-// import resumePreview from "@/images/resume-preview.jpg";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-
-// Import the Spline component
-import Spline from "@splinetool/react-spline";
+import { useEffect } from "react";
+import Navbar from "@/components/navbar";
+import Hero from "@/components/hero";
+import Features from "@/components/features";
+import ResumePreview from "@/components/resume-preview";
+import Pricing from "@/components/pricing";
+import Testimonials from "@/components/testimonials";
+import StickyCTA from "@/components/sticky-cta";
+import Footer from "@/components/footer";
+import ParticleBackground from "@/components/particle-background";
+import { Toaster } from "@/components/ui/toaster";
+import Script from "next/script";
+import ContactForm from "@/components/contact-form";
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 px-5 py-12 text-center text-gray-900 md:flex-row md:text-start lg:gap-12">
-      {/* Left Section: Text and Call-to-Action */}
-      <div className="max-w-prose space-y-3">
-        <Image
-          src={logo}
-          alt="Logo"
-          width={150}
-          height={150}
-          className="mx-auto md:ms-0"
-        />
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Create the{" "}
-          <span className="inline-block bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
-            Perfect Resume
-          </span>{" "}
-          in Minutes
-        </h1>
-        <p className="text-lg text-gray-500">
-          Our <span className="font-bold">AI resume builder</span> helps you
-          design a professional resume, even if you&apos;re not very smart.
-        </p>
-        <Button asChild size="lg" variant="premium">
-          <Link href="/resumes">Get Started</Link>
-        </Button>
-      </div>
+  // Enable smooth scrolling
+  useEffect(() => {
+    // Add smooth scrolling behavior for anchor links
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[href^="#"]');
 
-      {/* Right Section: Spline Model */}
-      <div className="relative h-[700px] w-full max-w-[600px]">
-        {/* Add the Spline component */}
-        <Spline
-          scene="https://prod.spline.design/1ae0GADE6VCYShP1/scene.splinecode"
-          className="absolute inset-0 h-full w-full"
-        />
+      if (anchor) {
+        e.preventDefault();
+        const targetId = anchor.getAttribute("href");
+        if (targetId && targetId !== "#") {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+    return () => document.removeEventListener("click", handleAnchorClick);
+  }, []);
+
+  return (
+    <>
+      <div className="relative z-10 flex flex-col items-center justify-center">
+        <Navbar />
+        <main className="">
+          <Hero />
+          <Features />
+          {/* <ResumePreview /> */}
+          <Pricing />
+          <Testimonials />
+          <ContactForm />
+        </main>
+        {/* <StickyCTA /> */}
+        <Footer />
       </div>
-    </main>
+      {/* <div className="relative min-h-screen">
+        <ParticleBackground />
+      </div> */}
+      <Toaster />
+
+      {/* Structured data for SEO */}
+      <Script
+        id="schema-org"
+        type="application/ld+json"
+        strategy="afterInteractive"
+      >
+        {`
+          {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "ResumeAI",
+            "applicationCategory": "BusinessApplication",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "operatingSystem": "Web",
+            "description": "AI-powered resume builder helping professionals land their dream jobs."
+          }
+        `}
+      </Script>
+    </>
   );
 }

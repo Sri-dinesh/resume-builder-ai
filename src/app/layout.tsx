@@ -1,13 +1,16 @@
 import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
-import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 
-import { Roboto } from "next/font/google";
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
-// Initialize only Roboto since others are system fonts
 const roboto = Roboto({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
@@ -15,34 +18,70 @@ const roboto = Roboto({
 });
 
 export const fonts = {
-  Arial: undefined, // system font
-  Calibri: undefined, // system font
-  Helvetica: undefined, // system font
-  "Times New Roman": undefined, // system font
-  Georgia: undefined, // system font
-  Verdana: undefined, // system font
+  Arial: undefined,
+  Calibri: undefined,
+  Helvetica: undefined,
+  "Times New Roman": undefined,
+  Georgia: undefined,
+  Verdana: undefined,
   Roboto: roboto,
 };
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - AI Resume Builder",
-    absolute: "AI Resume Builder",
+    template: "%s - Spark CV",
+    absolute: "Spark CV",
   },
   description:
-    "AI Resume Builder is the easiest way to create a professional resume that will help you land your dream job.",
+    "Why blend in when you were born to stand out? SparkCV’s AI builds resumes that highlight your strengths and make recruiters take notice. Take the first step to your dream role! 🚀",
+  keywords:
+    "sparkcv, spark, cvspark, sparkresume, airesume, cv builder, spark cv builder, ai cv, resume builder, AI resume, professional resume, job application, ATS-friendly resume, career, job search, CV builder, AI resume builder, AI-powered resume builder, AI resume generator, AI CV builder, AI CV generator, online resume builder, best resume builder, free resume builder, resume maker online, CV maker AI, job-winning resume, ATS-friendly resume, AI job application, resume optimization tool, resume ranking AI, AI career assistant, resume checker online, professional resume builder, AI-generated resume, resume review AI, resume formatting AI, resume writing assistant, resume design AI, resume builder with templates, resume customization AI, resume templates AI, resume PDF generator, resume spell checker AI, AI resume proofreading, resume auto-fill AI, AI resume builder for students, resume builder for professionals, resume builder for freshers, resume builder for freelancers, resume builder for IT jobs, resume builder for engineers, resume builder for designers, resume builder for healthcare jobs, resume builder for finance jobs, resume builder for developers, ATS resume checker, AI resume ATS optimization, resume keyword optimization, AI resume job match, AI resume keyword ranking, resume ranking tool, AI resume screening, resume parsing AI, AI resume feedback, resume scoring AI, AI resume for LinkedIn, LinkedIn resume optimization, resume builder for LinkedIn, job application AI tool, resume analysis AI, AI job application booster, smart job application AI, resume builder for remote jobs, AI job match system, resume comparison AI, resume content generator AI, resume writing AI assistant, resume cover letter generator, AI-powered cover letter builder, resume grammar checker AI, AI resume formatting tool, resume spell-check AI, resume builder with AI feedback, resume headline generator AI, resume career summary AI, AI-powered resume optimization, smart resume builder online, resume tips AI assistant, best AI resume software, resume builder for startups, AI-generated professional resume, resume customization AI tool, resume suggestions AI, one-click resume generator, resume tracking AI, AI-powered resume optimization, resume builder with free trial, resume builder subscription model, AI resume SaaS, resume builder with premium features, paid resume builder AI, free vs paid resume builders, resume generator with payment options, AI resume builder lifetime access, AI resume builder monthly plan, AI resume builder affordable pricing, Spark Resume, Resume Spark, CV Spark, SparkCV, Resume AI Spark, AI Resume Spark, Smart Resume Spark, Spark Resume Builder, AI CV Spark, AI Resume Generator Spark",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+      <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+        <head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+          />
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/site.webmanifest" />
+          <script type="application/ld+json" suppressHydrationWarning>
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Spark CV - AI Resume Builder",
+              url: "https://sparkcv.vercel.app/",
+              description: metadata.description,
+              publisher: {
+                "@type": "Organization",
+                name: "SparkCV",
+              },
+            })}
+          </script>
+        </head>
+        <body
+          className={`${inter.className} min-h-screen overflow-x-hidden antialiased`}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
