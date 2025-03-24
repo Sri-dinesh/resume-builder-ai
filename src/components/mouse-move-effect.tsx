@@ -1,35 +1,41 @@
-"use client"
+"use client";
 
-import { useEffect, useState, useCallback } from "react"
-import { throttle } from "lodash"
+declare global {
+  interface Window {
+    moveTimeout: number;
+  }
+}
+
+import { useEffect, useState, useCallback } from "react";
+import { throttle } from "lodash";
 
 export default function MouseMoveEffect() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isMoving, setIsMoving] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMoving, setIsMoving] = useState(false);
 
   // Throttle the mouse move handler to improve performance
   const handleMouseMove = useCallback(
     throttle((event: MouseEvent) => {
-      setMousePosition({ x: event.clientX, y: event.clientY })
-      setIsMoving(true)
+      setMousePosition({ x: event.clientX, y: event.clientY });
+      setIsMoving(true);
 
       // Reset the moving state after a delay
-      clearTimeout(window.moveTimeout)
+      clearTimeout(window.moveTimeout);
       window.moveTimeout = setTimeout(() => {
-        setIsMoving(false)
-      }, 300) as unknown as number
+        setIsMoving(false);
+      }, 300) as unknown as number;
     }, 50),
     [],
-  )
+  );
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      clearTimeout(window.moveTimeout)
-    }
-  }, [handleMouseMove])
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(window.moveTimeout);
+    };
+  }, [handleMouseMove]);
 
   return (
     <>
@@ -48,6 +54,5 @@ export default function MouseMoveEffect() {
         }}
       />
     </>
-  )
+  );
 }
-
