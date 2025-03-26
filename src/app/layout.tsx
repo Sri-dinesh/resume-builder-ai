@@ -59,6 +59,10 @@ export default function RootLayout({
       <html lang="en" className="scroll-smooth" suppressHydrationWarning>
         <head>
           <meta
+            name="google-site-verification"
+            content="IxhpEchCtN13IET3Rco_2tzGFES6y4ta28iAQgLYIxU"
+          />
+          <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
           />
