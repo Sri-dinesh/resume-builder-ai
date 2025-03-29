@@ -23,7 +23,7 @@ Key Features:
 
 ## 🚀 Quick Walkthrough
 
-![Project Overview]("")
+![Project Overview]("https://raw.githubusercontent.com/Sri-dinesh/resume-builder-ai/refs/heads/main/src/images/MockupBanner.png")
 
 ## 📜 License
 
