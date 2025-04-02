@@ -1,9 +1,5 @@
 import type { NextConfig } from "next";
-import { hostname } from "os";
-
 const nextConfig: NextConfig = {
-  /* config options here */
-
   experimental: {
     serverActions: {
       bodySizeLimit: "4mb",
@@ -17,14 +13,5 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/robots.txt",
-        destination: "/api/robots",
-      },
-    ];
-  },
 };
-
 export default nextConfig;

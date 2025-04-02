@@ -36,7 +36,6 @@ const testimonials = [
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
 
   const nextTestimonial = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % testimonials.length);
@@ -48,28 +47,12 @@ export default function Testimonials() {
     );
   }, []);
 
-  // Autoplay functionality
-  useEffect(() => {
-    if (!autoplay) return;
-
-    const interval = setInterval(() => {
-      nextTestimonial();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [autoplay, nextTestimonial]);
-
   return (
     <section
       id="testimonials"
       className="bg-muted/30 py-20 md:py-32"
       aria-labelledby="testimonials-heading"
     >
-      {/* <div className="absolute left-0 top-1/3 w-20 h-20 bg-primary/5 rounded-full blur-xl" aria-hidden="true"></div> */}
-      {/* <div
-        className="absolute right-0 bottom-1/4 w-24 h-24 bg-violet-500/5 rounded-full blur-xl"
-        aria-hidden="true"
-      ></div> */}
       <div className="container px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -96,8 +79,6 @@ export default function Testimonials() {
               variant="ghost"
               size="icon"
               onClick={prevTestimonial}
-              onMouseEnter={() => setAutoplay(false)}
-              onMouseLeave={() => setAutoplay(true)}
               className="rounded-full bg-background/80 shadow-md backdrop-blur-sm hover:bg-background"
               aria-label="Previous testimonial"
             >
@@ -110,8 +91,6 @@ export default function Testimonials() {
               variant="ghost"
               size="icon"
               onClick={nextTestimonial}
-              onMouseEnter={() => setAutoplay(false)}
-              onMouseLeave={() => setAutoplay(true)}
               className="rounded-full bg-background/80 shadow-md backdrop-blur-sm hover:bg-background"
               aria-label="Next testimonial"
             >
@@ -229,8 +208,6 @@ export default function Testimonials() {
                 key={index}
                 onClick={() => {
                   setActiveIndex(index);
-                  setAutoplay(false);
-                  setTimeout(() => setAutoplay(true), 5000);
                 }}
                 className={`h-2 w-2 rounded-full transition-colors ${
                   index === activeIndex
