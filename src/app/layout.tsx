@@ -47,6 +47,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: "https://sparkcv.vercel.app",
+  },
 };
 
 export default function RootLayout({
