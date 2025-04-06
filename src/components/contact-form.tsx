@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -29,6 +31,13 @@ export default function ContactForm() {
     setLoading(true);
     setError("");
 
+    // Validate email format
+    if (!EMAIL_REGEX.test(formData.email)) {
+      setError("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -36,9 +45,12 @@ export default function ContactForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY, // Your Web3Forms Access Key
-          ...formData,
-          to_email: "santhisridinesh@gmail.com", // Recipient email
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          name: formData.firstName,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: "santhisridinesh@gmail.com",
         }),
       });
 
