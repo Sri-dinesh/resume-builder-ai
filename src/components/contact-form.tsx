@@ -39,24 +39,17 @@ export default function ContactForm() {
     }
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-          name: formData.firstName,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_email: "santhisridinesh@gmail.com",
-        }),
+        body: JSON.stringify(formData),
       });
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok) {
         setSuccess(true);
         setFormData({
           firstName: "",
@@ -65,7 +58,7 @@ export default function ContactForm() {
           message: "",
         });
       } else {
-        setError(result.message || "Something went wrong.");
+        setError(result.error || "Something went wrong.");
       }
     } catch (err) {
       setError("Failed to send the message.");
