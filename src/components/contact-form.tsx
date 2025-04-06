@@ -30,17 +30,21 @@ export default function ContactForm() {
     setError("");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY, // Your Web3Forms Access Key
+          ...formData,
+          to_email: "santhisridinesh@gmail.com", // Recipient email
+        }),
       });
 
       const result = await response.json();
 
-      if (response.ok) {
+      if (result.success) {
         setSuccess(true);
         setFormData({
           firstName: "",
@@ -49,7 +53,7 @@ export default function ContactForm() {
           message: "",
         });
       } else {
-        setError(result.error || "Something went wrong.");
+        setError(result.message || "Something went wrong.");
       }
     } catch (err) {
       setError("Failed to send the message.");
