@@ -4,7 +4,7 @@ import favicon from "@/images/favicon.svg";
 import ThemeToggle from "@/components/ThemeToggle";
 import { UserButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { CreditCard, FileText } from "lucide-react";
+import { CreditCard, FileText, TrendingUp } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,9 +30,17 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/resumes"
+            title="Resumes"
             className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/70 backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)]"
           >
             <FileText className="h-5 w-5 text-white" />
+          </Link>
+          <Link
+            href="/score"
+            title="Score Resume"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/70 backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)]"
+          >
+            <TrendingUp className="h-5 w-5 text-white" />
           </Link>
           <ThemeToggle />
           <UserButton

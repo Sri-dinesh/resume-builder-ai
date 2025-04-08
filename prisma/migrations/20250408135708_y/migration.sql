@@ -7,6 +7,7 @@ CREATE TABLE "resumes" (
     "photoUrl" TEXT,
     "colorHex" TEXT NOT NULL DEFAULT '#000000',
     "borderStyle" TEXT NOT NULL DEFAULT 'squircle',
+    "fontFamily" TEXT NOT NULL DEFAULT 'Arial',
     "summary" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
@@ -15,6 +16,9 @@ CREATE TABLE "resumes" (
     "country" TEXT,
     "phone" TEXT,
     "email" TEXT,
+    "linkedin" TEXT,
+    "website" TEXT,
+    "websiteName" TEXT,
     "skills" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -30,6 +34,7 @@ CREATE TABLE "work_experiences" (
     "startDate" TIMESTAMP(3),
     "endDate" TIMESTAMP(3),
     "description" TEXT,
+    "locationType" TEXT,
     "resumeId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -45,6 +50,7 @@ CREATE TABLE "projects" (
     "startDate" TIMESTAMP(3),
     "endDate" TIMESTAMP(3),
     "description" TEXT,
+    "demoLink" TEXT,
     "resumeId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -81,6 +87,19 @@ CREATE TABLE "user_subscriptions" (
     CONSTRAINT "user_subscriptions_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "certifications" (
+    "id" TEXT NOT NULL,
+    "certificationName" TEXT,
+    "awardedBy" TEXT,
+    "awardedDate" TIMESTAMP(3),
+    "resumeId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "certifications_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "user_subscriptions_userId_key" ON "user_subscriptions"("userId");
 
@@ -98,3 +117,6 @@ ALTER TABLE "projects" ADD CONSTRAINT "projects_resumeId_fkey" FOREIGN KEY ("res
 
 -- AddForeignKey
 ALTER TABLE "educations" ADD CONSTRAINT "educations_resumeId_fkey" FOREIGN KEY ("resumeId") REFERENCES "resumes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "certifications" ADD CONSTRAINT "certifications_resumeId_fkey" FOREIGN KEY ("resumeId") REFERENCES "resumes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
