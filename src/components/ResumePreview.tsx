@@ -211,7 +211,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           }}
         />
       )}
-      <div className="space-y-2.5">
+      <div className="space-y-1">
         <div className="space-y-1">
           <p
             className="text-3xl font-bold"
@@ -262,29 +262,6 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
             </a>
           )}
         </p>
-        {/* <p className="text-xs text-gray-500">
-          {linkedin && (
-            <a
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              LinkedIn
-            </a>
-          )}
-          {linkedin && website ? " • " : ""}
-          {website && (
-            <a
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              {websiteName || website}
-            </a>
-          )}
-        </p> */}
       </div>
     </div>
   );
@@ -297,13 +274,8 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr
-        className="border-2"
-        style={{
-          borderColor: colorHex,
-        }}
-      />
-      <div className="break-inside-avoid space-y-3">
+      {/* <div className="break-inside-avoid space-y-3"> */}
+      <div className="space-y-1">
         <p
           className="text-lg font-semibold"
           style={{
@@ -312,6 +284,12 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
         >
           SUMMARY
         </p>
+        <hr
+          className="border-2"
+          style={{
+            borderColor: colorHex,
+          }}
+        />
         <div className="whitespace-pre-line text-justify text-sm">
           {summary}
         </div>
@@ -331,12 +309,6 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr
-        className="border-2"
-        style={{
-          borderColor: colorHex,
-        }}
-      />
       <div className="space-y-1">
         <p
           className="text-lg font-semibold"
@@ -346,6 +318,12 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
         >
           EXPERIENCE
         </p>
+        <hr
+          className="border-2"
+          style={{
+            borderColor: colorHex,
+          }}
+        />
         {workExperiencesNotEmpty.map((exp, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
             <div
@@ -391,12 +369,6 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr
-        className="border-2"
-        style={{
-          borderColor: colorHex,
-        }}
-      />
       <div className="space-y-1">
         <p
           className="text-lg font-semibold"
@@ -406,6 +378,12 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
         >
           PROJECTS
         </p>
+        <hr
+          className="border-2"
+          style={{
+            borderColor: colorHex,
+          }}
+        />
         {projectsNotEmpty.map((proj, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
             <div
@@ -416,7 +394,7 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
                 }
               }
             >
-              <span>{proj.ProjectName}</span>
+              <span className="text-base">{proj.ProjectName}</span>
               {proj.startDate && (
                 <span>
                   {formatDate(proj.startDate, "MM/yyyy")} -{" "}
@@ -465,12 +443,6 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr
-        className="border-2"
-        style={{
-          borderColor: colorHex,
-        }}
-      />
       <div className="space-y-1">
         <p
           className="text-lg font-semibold"
@@ -480,6 +452,12 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
         >
           EDUCATION
         </p>
+        <hr
+          className="border-2"
+          style={{
+            borderColor: colorHex,
+          }}
+        />
         {educationsNotEmpty.map((edu, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
             <div
@@ -513,12 +491,6 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr
-        className="border-2"
-        style={{
-          borderColor: colorHex,
-        }}
-      />
       <div className="break-inside-avoid space-y-1">
         <p
           className="text-lg font-semibold"
@@ -528,6 +500,12 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
         >
           SKILLS
         </p>
+        <hr
+          className="border-2"
+          style={{
+            borderColor: colorHex,
+          }}
+        />
         <div className="flex break-inside-avoid flex-wrap gap-2">
           {skills.map((skill, index) => (
             <span key={index} className="text-base">
@@ -554,12 +532,6 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr
-        className="border-2"
-        style={{
-          borderColor: colorHex,
-        }}
-      />
       <div className="space-y-1">
         <p
           className="text-lg font-semibold"
@@ -569,6 +541,12 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
         >
           CERTIFICATIONS
         </p>
+        <hr
+          className="border-2"
+          style={{
+            borderColor: colorHex,
+          }}
+        />
         {certificationsNotEmpty.map((cert, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
             {/* Certification Name */}
