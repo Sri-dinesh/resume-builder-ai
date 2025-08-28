@@ -176,7 +176,18 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
           <FormItem>
             <FormLabel>Degree</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input
+                {...field}
+                autoFocus
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s.+-]/g, "") // allow letters, numbers, spaces, ., +, -
+                      .substring(0, 50) // max length 50 chars
+                      .trim(), // remove leading/trailing spaces
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -187,9 +198,19 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         name={`educations.${index}.school`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>School</FormLabel>
+            <FormLabel>College/University Name</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input
+                {...field}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s&.,'-]/g, "") // allow letters, numbers, spaces, &, ., ,, -, '
+                      .substring(0, 100) // max length 100 chars
+                      .trim(), // remove leading/trailing spaces
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

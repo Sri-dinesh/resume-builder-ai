@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import DOMPurify from "dompurify";
 import {
   Form,
   FormControl,
@@ -206,7 +207,17 @@ function WorkExperienceItem({
           <FormItem>
             <FormLabel>Job title</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input
+                {...field}
+                autoFocus
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z\s.'-]/g, "") // allow only letters, spaces, dot, apostrophe, hyphen
+                      .substring(0, 50), // limit length to 50 chars
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -219,7 +230,17 @@ function WorkExperienceItem({
           <FormItem>
             <FormLabel>Company</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input
+                {...field}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s&.,'\-()]/g, "") // allow letters, numbers, spaces, & , . ' - ()
+                      .substring(0, 100) // limit length to 100 chars
+                      .trim(),
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -311,7 +332,25 @@ function WorkExperienceItem({
             <FormControl>
               <RichTextEditor
                 value={field.value || ""}
-                onChange={(html) => field.onChange(html)}
+                // onChange={(html) => field.onChange(html)}
+                onChange={(html) => {
+                  const cleaned = DOMPurify.sanitize(html, {
+                    ALLOWED_TAGS: [
+                      "b",
+                      "i",
+                      "u",
+                      "p",
+                      "br",
+                      "ul",
+                      "ol",
+                      "li",
+                      "strong",
+                      "em",
+                    ],
+                    ALLOWED_ATTR: [],
+                  });
+                  field.onChange(cleaned);
+                }}
               />
             </FormControl>
             <FormMessage />

@@ -97,7 +97,14 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>First name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(
+                          e.target.value.replace(/[^a-zA-Z'-]/g, ""),
+                        )
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,7 +117,14 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>Last name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(
+                          e.target.value.replace(/[^a-zA-Z'-]/g, ""),
+                        )
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -124,7 +138,16 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Job title</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value
+                          .replace(/[^a-zA-Z0-9\s\-,.&()'/]/g, "")
+                          .substring(0, 50),
+                      )
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,7 +161,15 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      onChange={(e) =>
+                        // Allow letters, spaces, apostrophes, and hyphens
+                        field.onChange(
+                          e.target.value.replace(/[^a-zA-Z\s\-']/g, ""),
+                        )
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -151,7 +182,15 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>Country</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      onChange={(e) =>
+                        // Allow letters, spaces, apostrophes, and hyphens
+                        field.onChange(
+                          e.target.value.replace(/[^\p{L}\s\-']/gu, ""),
+                        )
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -165,7 +204,17 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" />
+                  <Input
+                    {...field}
+                    type="tel"
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value
+                          .replace(/[^0-9+\-\s()]/g, "")
+                          .substring(0, 20),
+                      )
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

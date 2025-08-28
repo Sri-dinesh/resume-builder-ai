@@ -607,6 +607,12 @@ export default function SkillsForm({
                         .map((s) => s.trim());
                       field.onChange(skills);
                       autoResizeTextarea(); // Resize on input change
+                      field.onChange(
+                        e.target.value
+                          .replace(/[^a-zA-Z0-9\s.,+#&/-]/g, "") // allow letters, numbers, spaces, ., ,, +, #, &, -, /
+                          .substring(0, 200) // max length 200 chars
+                          .trim(), // remove leading/trailing spaces
+                      );
                     }}
                     style={{
                       borderColor: `hsl(var(--border))`,

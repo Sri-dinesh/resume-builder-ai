@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import DOMPurify from "dompurify";
 import {
   Form,
   FormControl,
@@ -199,7 +200,18 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           <FormItem>
             <FormLabel>Project name</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input
+                {...field}
+                autoFocus
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s&._-]/g, "") // allow letters, numbers, spaces, &, ., _, -
+                      .substring(0, 50) // max length 50 chars
+                      .trim(), // remove leading/trailing spaces
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -212,7 +224,17 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           <FormItem>
             <FormLabel>Tools used</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input
+                {...field}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s&.+\-\/]/g, "") // allow letters, numbers, spaces, &, ., +, -, /
+                      .substring(0, 100) // max length 100 chars
+                      .trim(), // remove leading/trailing spaces
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -327,7 +349,25 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
             <FormControl>
               <RichTextEditor
                 value={field.value || ""}
-                onChange={(html) => field.onChange(html)}
+                // onChange={(html) => field.onChange(html)}
+                onChange={(html) => {
+                  const cleaned = DOMPurify.sanitize(html, {
+                    ALLOWED_TAGS: [
+                      "b",
+                      "i",
+                      "u",
+                      "p",
+                      "br",
+                      "ul",
+                      "ol",
+                      "li",
+                      "strong",
+                      "em",
+                    ],
+                    ALLOWED_ATTR: [],
+                  });
+                  field.onChange(cleaned);
+                }}
               />
             </FormControl>
             <FormMessage />

@@ -182,7 +182,18 @@ function CertificationItem({
           <FormItem>
             <FormLabel>Certification Name</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input
+                {...field}
+                autoFocus
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s&.,'+-]/g, "") // allow letters, numbers, spaces, &, ., ,, ', +, -
+                      .substring(0, 100) // max length 100 chars
+                      .trim(), // remove leading/trailing spaces
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -196,7 +207,18 @@ function CertificationItem({
           <FormItem>
             <FormLabel>Awarded By</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input
+                {...field}
+                autoFocus
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .replace(/[^a-zA-Z0-9\s&.,'-]/g, "") // allow letters, numbers, spaces, &, ., ,, ', -
+                      .substring(0, 100) // max length 100 chars
+                      .trim(), // remove leading/trailing spaces
+                  )
+                }
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

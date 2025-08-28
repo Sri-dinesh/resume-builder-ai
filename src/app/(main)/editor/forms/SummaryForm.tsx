@@ -55,6 +55,14 @@ export default function SummaryForm({
                   <Textarea
                     {...field}
                     placeholder="A brief, engaging text about yourself"
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value
+                          .replace(/[^a-zA-Z0-9\s.,'":;!?()-]/g, "") // allow letters, numbers, spaces, basic punctuation
+                          .substring(0, 1000) // max length 1000 chars
+                          .trim(), // remove leading/trailing spaces
+                      )
+                    }
                   />
                 </FormControl>
                 <FormMessage />
