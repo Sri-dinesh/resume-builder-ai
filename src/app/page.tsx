@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import Features from "@/components/features";
-import ResumePreview from "@/components/resume-preview";
+import ResumePreview from "@/components/ResumePreview";
 import Pricing from "@/components/pricing";
 import Testimonials from "@/components/testimonials";
 import StickyCTA from "@/components/sticky-cta";
