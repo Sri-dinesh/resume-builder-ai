@@ -21,7 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ResumeServerData } from "@/lib/types";
 import { mapToResumeValues } from "@/lib/utils";
 import { formatDate } from "date-fns";
-import { MoreVertical, Printer, Trash2 } from "lucide-react";
+import { Download, MoreVertical, Printer, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useTransition } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -93,7 +93,7 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-0.5 top-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+            className="absolute right-0.5 top-0.5"
           >
             <MoreVertical className="size-4" />
           </Button>
@@ -112,6 +112,13 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
           >
             <Printer className="size-4" />
             Print
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center gap-2"
+            onClick={onPrintClick}
+          >
+            <Download className="size-4" />
+            Download
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

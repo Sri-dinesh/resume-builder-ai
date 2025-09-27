@@ -106,7 +106,7 @@ export default function ResumePreview({
       ref={containerRef}
     >
       <div
-        className={cn("space-y-6 p-6", !width && "invisible")}
+        className={cn("space-y-2 p-6", !width && "invisible")}
         style={{
           zoom: (1 / 794) * width,
           fontFamily: getFontFamily(),
@@ -211,8 +211,8 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           }}
         />
       )}
-      <div className="space-y-1">
-        <div className="space-y-1">
+      <div className="space-y-0.5">
+        <div className="space-y-0.5">
           <p
             className="text-3xl font-bold"
             style={{
@@ -325,7 +325,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
           }}
         />
         {workExperiencesNotEmpty.map((exp, index) => (
-          <div key={index} className="break-inside-avoid space-y-1">
+          <div key={index} className="break-inside-avoid space-y-0.5">
             <div
               className="flex items-center justify-between text-sm font-semibold"
               style={
@@ -385,7 +385,7 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
           }}
         />
         {projectsNotEmpty.map((proj, index) => (
-          <div key={index} className="break-inside-avoid space-y-1">
+          <div key={index} className="break-inside-avoid space-y-0.5">
             <div
               className="flex items-center justify-between text-sm font-semibold"
               style={
@@ -459,7 +459,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
           }}
         />
         {educationsNotEmpty.map((edu, index) => (
-          <div key={index} className="break-inside-avoid space-y-1">
+          <div key={index} className="break-inside-avoid space-y-0.5">
             <div
               className="flex items-center justify-between text-sm font-semibold"
               style={
@@ -548,7 +548,7 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
           }}
         />
         {certificationsNotEmpty.map((cert, index) => (
-          <div key={index} className="break-inside-avoid space-y-1">
+          <div key={index} className="break-inside-avoid space-y-0.5">
             {/* Certification Name */}
             <div
               className="flex items-center justify-between text-sm font-semibold"

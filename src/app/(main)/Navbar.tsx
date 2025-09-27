@@ -35,7 +35,7 @@ export default function Navbar() {
           <Link
             href="/resumes"
             title="Resumes"
-            className="flex items-center gap-1.5 rounded-full bg-primary/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] sm:flex sm:gap-1.5 md:gap-2 lg:gap-2"
+            className="flex items-center gap-1.5 rounded-sm bg-primary/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] sm:flex sm:gap-1.5 md:gap-2 lg:gap-2"
           >
             <FileText className="h-4 w-4" />
             <span className="hidden sm:inline">Resumes</span>
@@ -45,7 +45,7 @@ export default function Navbar() {
           <Link
             href="/score"
             title="Score Resume"
-            className="flex items-center gap-1.5 rounded-full bg-primary/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] sm:flex sm:gap-1.5 md:gap-2 lg:gap-2"
+            className="flex items-center gap-1.5 rounded-sm bg-primary/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] sm:flex sm:gap-1.5 md:gap-2 lg:gap-2"
           >
             <Lightbulb className="h-4 w-4" />
             <span className="hidden sm:inline">Score Resume</span>
@@ -55,7 +55,7 @@ export default function Navbar() {
           <Link
             href="/enhance"
             title="Enhance Resume"
-            className="flex items-center gap-1.5 rounded-full bg-primary/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] sm:flex sm:gap-1.5 md:gap-2 lg:gap-2"
+            className="flex items-center gap-1.5 rounded-sm bg-primary/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] sm:flex sm:gap-1.5 md:gap-2 lg:gap-2"
           >
             <WandSparkles className="h-4 w-4" />
             <span className="hidden sm:inline">Enhance Resume</span>
