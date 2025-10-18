@@ -68,6 +68,7 @@
     "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^12.5.0",
+    "globby": "^15.0.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.3",
     "input-otp": "^1.4.2",
