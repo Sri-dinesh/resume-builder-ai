@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Menu, X } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import ThemeToggle from "@/components/theme-toggle";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -28,7 +27,7 @@ export default function Navbar() {
     toast({
       title: "Free trial activated!",
       description:
-        "Welcome to ResumeAI. Start building your professional resume now.",
+        "Welcome to SparkCV. Start building your professional resume now.",
       variant: "default",
     }),
       router.push("/resumes");
@@ -49,7 +48,7 @@ export default function Navbar() {
           <Link
             href="/"
             className="group mr-2 flex items-center space-x-2 sm:mr-4"
-            aria-label="ResumeAI"
+            aria-label="SparkCV"
           >
             <motion.div
               whileHover={{ rotate: [0, -10, 10, -10, 0] }}
@@ -62,7 +61,7 @@ export default function Navbar() {
             </motion.div>
             <motion.span
               className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-base font-bold text-transparent sm:text-lg"
-              whileHover={{ scale: 1.05 }}
+              // whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
               SparkCV
@@ -72,7 +71,6 @@ export default function Navbar() {
           <nav className="hidden items-center space-x-3 text-sm font-medium md:flex lg:space-x-4">
             {[
               { name: "Features", href: "#features" },
-              // { name: "Templates", href: "#templates" },
               { name: "Pricing", href: "#pricing" },
               { name: "Testimonials", href: "#testimonials" },
               { name: "Contact", href: "#contact" },
@@ -80,7 +78,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative rounded-md px-2 py-1 transition-colors hover:text-violet-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="relative rounded-md px-2 py-1 transition-colors hover:text-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <span>{item.name}</span>
                 <motion.span
@@ -94,8 +92,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center space-x-2">
-            <ThemeToggle />
+          {/* <div className="ml-auto flex items-center space-x-2">
             <motion.div
               className="hidden md:block"
               whileHover={{ scale: 1.05 }}
@@ -103,7 +100,7 @@ export default function Navbar() {
             >
               <Button
                 size="sm"
-                className="rounded-3xl bg-primary transition-all duration-300 hover:bg-primary/90 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="rounded-3xl bg-primary transition-all duration-300 hover:bg-primary/90 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ml-4"
                 onClick={handleTryFree}
               >
                 Try Free
@@ -125,7 +122,7 @@ export default function Navbar() {
                 <Menu className="h-4 w-4" aria-hidden="true" />
               )}
             </Button>
-          </div>
+          </div> */}
         </div>
       </motion.header>
 
@@ -143,7 +140,6 @@ export default function Navbar() {
               <nav className="flex flex-col space-y-2 text-sm font-medium">
                 {[
                   { name: "Features", href: "#features" },
-                  // { name: "Templates", href: "#templates" },
                   { name: "Pricing", href: "#pricing" },
                   { name: "Testimonials", href: "#testimonials" },
                   { name: "Contact", href: "#contact" },

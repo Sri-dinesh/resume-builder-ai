@@ -62,7 +62,7 @@ export default function Navbar() {
           </Link>
 
           {/* Theme Toggle */}
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
 
           {/* User Button */}
           <UserButton
