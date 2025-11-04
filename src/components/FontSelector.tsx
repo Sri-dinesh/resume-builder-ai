@@ -6,31 +6,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CheckIcon } from "lucide-react";
-import usePremiumModal from "@/hooks/usePremiumModal";
-import { canUseCustomizations } from "@/lib/permissions";
-import { useSubscriptionLevel } from "@/app/(main)/SubscriptionLevelProvider";
 
 interface FontSelectorProps {
-  value: string; // Currently selected font
-  onValueChange: (value: string) => void; // Callback to update the selected font
+  value: string;
+  onValueChange: (value: string) => void;
 }
 
 export function FontSelector({ value, onValueChange }: FontSelectorProps) {
-  const subscriptionLevel = useSubscriptionLevel();
-  const premiumModal = usePremiumModal();
+  // const subscriptionLevel = useSubscriptionLevel();
+  // const premiumModal = usePremiumModal();
 
   function handleFontChange(newValue: string) {
-    if (!canUseCustomizations(subscriptionLevel)) {
-      premiumModal.setOpen(true);
-      return;
-    }
-    onValueChange(newValue); // Update the font only if the user has permission
+    // if (!canUseCustomizations(subscriptionLevel)) {
+    //   premiumModal.setOpen(true);
+    //   return;
+    // }
+    onValueChange(newValue);
   }
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        {/* Font Selector Button */}
         <Button variant="outline" size="icon" title="Change font style">
           <span
             className="size-5 font-bold"
@@ -41,19 +37,26 @@ export function FontSelector({ value, onValueChange }: FontSelectorProps) {
         </Button>
       </PopoverTrigger>
 
-      {/* Font Options Popover Content */}
       <PopoverContent className="w-48 p-2" align="start">
-        <div className="space-y-1">
+        <div className="max-h-80 space-y-1 overflow-y-auto">
           {FONT_OPTIONS.map((font) => (
             <Button
               key={font.value}
               variant={value === font.value ? "secondary" : "ghost"}
-              className="w-full justify-start"
+              className="h-auto w-full justify-start py-2 text-left"
               onClick={() => handleFontChange(font.value)}
               style={{ fontFamily: font.value }}
             >
-              {value === font.value && <CheckIcon className="mr-2 size-4" />}
-              {font.name}
+              {/* {value === font.value && <CheckIcon className="mr-2 size-4" />}
+              {font.name} */}
+              <div className="flex w-full items-start">
+                {value === font.value && (
+                  <CheckIcon className="mr-2 mt-0.5 size-4 flex-shrink-0" />
+                )}
+                <div className="min-w-0 flex-1">
+                  <div className="truncate font-medium">{font.name}</div>
+                </div>
+              </div>
             </Button>
           ))}
         </div>
