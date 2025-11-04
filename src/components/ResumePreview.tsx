@@ -404,9 +404,8 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
                 </span>
               )}
             </div>
-            {/* <p className="text-xs font-semibold">{proj.toolsUsed}</p> */}
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold">{proj.toolsUsed}</p>
+              <p className="text-sm font-light italic">{proj.toolsUsed}</p>
               {proj.demoLink && proj.demoLink.startsWith("http") && (
                 <a
                   href={proj.demoLink}
@@ -506,11 +505,11 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
             borderColor: colorHex,
           }}
         />
-        <div className="flex break-inside-avoid flex-wrap gap-2">
+        <div className="flex break-inside-avoid flex-wrap gap-y-0">
           {skills.map((skill, index) => (
-            <span key={index} className="text-base">
+            <span key={index} className="text-sm">
               {skill}
-              {index !== skills.length - 1 && ", "}
+              {index !== skills.length - 1 && ",\u00A0"}
             </span>
           ))}
         </div>
@@ -571,21 +570,6 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
                 <span>{formatDate(cert.awardedDate, "MM/yyyy")}</span>
               )}
             </div>
-
-            {/* Optional: Additional details or styling */}
-            {/* Example: Add a link to the certification if available */}
-            {/* Uncomment and adapt if needed */}
-            {/* cert.certificationLink && (
-              <a
-                href={cert.certificationLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-light hover:underline"
-                style={{ color: colorHex }}
-              >
-                View Certification
-              </a>
-            ) */}
           </div>
         ))}
       </div>

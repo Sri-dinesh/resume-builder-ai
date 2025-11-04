@@ -1,15 +1,36 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import * as pdfjsLib from "pdfjs-dist";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import DownloadableResume from "@/components/DownloadableResume";
 
-// Initialize PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// Lazy load heavy libraries only when needed
+let pdfLib: any = null;
+let html2canvasLib: any = null;
+let jsPDFLib: any = null;
+
+const loadPdfLib = async () => {
+  if (!pdfLib) {
+    pdfLib = await import("pdfjs-dist");
+    pdfLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfLib.version}/pdf.worker.min.js`;
+  }
+  return pdfLib;
+};
+
+const loadHtml2Canvas = async () => {
+  if (!html2canvasLib) {
+    html2canvasLib = (await import("html2canvas")).default;
+  }
+  return html2canvasLib;
+};
+
+const loadJsPDF = async () => {
+  if (!jsPDFLib) {
+    jsPDFLib = (await import("jspdf")).default;
+  }
+  return jsPDFLib;
+};
 
 interface CachedData {
   parsedText: string;
@@ -95,6 +116,7 @@ const ResumeUploadPage: React.FC = () => {
     setFile(file);
     try {
       setLoading(true);
+      const pdfjsLib = await loadPdfLib();
       const arrayBuffer = await file.arrayBuffer();
       const loadingTask = pdfjsLib.getDocument(arrayBuffer);
       const pdf = await loadingTask.promise;
@@ -123,6 +145,9 @@ const ResumeUploadPage: React.FC = () => {
     if (!content) return;
     try {
       setLoading(true);
+      const html2canvas = await loadHtml2Canvas();
+      const jsPDF = await loadJsPDF();
+
       // Clone the element for manipulation
       const clonedContent = content.cloneNode(true) as HTMLElement;
       clonedContent.style.width = "210mm";
