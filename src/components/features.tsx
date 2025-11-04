@@ -103,7 +103,7 @@ const features = [
   },
 ];
 
-export default function Features() {
+function Features() {
   return (
     <section
       id="features"
@@ -174,3 +174,5 @@ export default function Features() {
     </section>
   );
 }
+
+export default Features;

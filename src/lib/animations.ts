@@ -1,4 +1,4 @@
-// Animation variants for Framer Motion
+// Animation variants for Framer Motion - Optimized for performance
 export const fadeIn = {
   initial: {
     opacity: 0,
@@ -8,26 +8,29 @@ export const fadeIn = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
-      delay: custom * 0.1,
+      duration: 0.4, // Reduced from 0.5
+      delay: custom * 0.08, // Reduced from 0.1
+      ease: "easeOut", // More performant easing
     },
   }),
   exit: {
     opacity: 0,
     y: 20,
     transition: {
-      duration: 0.3,
+      duration: 0.2, // Reduced from 0.3
+      ease: "easeIn",
     },
   },
-}
+};
 
 export const stagger = {
   animate: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08, // Reduced from 0.1
+      delayChildren: 0.05,
     },
   },
-}
+};
 
 export const scaleUp = {
   initial: {
@@ -38,21 +41,19 @@ export const scaleUp = {
     scale: 1,
     opacity: 1,
     transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 10,
-      delay: custom * 0.1,
+      duration: 0.3, // Changed from spring to duration for better performance
+      delay: custom * 0.08,
+      ease: "easeOut",
     },
   }),
   hover: {
-    scale: 1.05,
+    scale: 1.03, // Reduced from 1.05
     transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 10,
+      duration: 0.2,
+      ease: "easeOut",
     },
   },
-}
+};
 
 export const slideInFromLeft = {
   initial: {
@@ -69,7 +70,7 @@ export const slideInFromLeft = {
       delay: custom * 0.1,
     },
   }),
-}
+};
 
 export const slideInFromRight = {
   initial: {
@@ -86,7 +87,7 @@ export const slideInFromRight = {
       delay: custom * 0.1,
     },
   }),
-}
+};
 
 export const slideInFromBottom = {
   initial: {
@@ -103,7 +104,7 @@ export const slideInFromBottom = {
       delay: custom * 0.1,
     },
   }),
-}
+};
 
 export const buttonHover = {
   initial: {
@@ -120,7 +121,7 @@ export const buttonHover = {
   tap: {
     scale: 0.98,
   },
-}
+};
 
 export const cardHover = {
   initial: {
@@ -129,14 +130,15 @@ export const cardHover = {
   },
   hover: {
     y: -5,
-    boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)",
+    boxShadow:
+      "0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)",
     transition: {
       type: "spring",
       stiffness: 400,
       damping: 10,
     },
   },
-}
+};
 
 export const pulse = {
   initial: {
@@ -152,7 +154,7 @@ export const pulse = {
       repeatType: "reverse",
     },
   },
-}
+};
 
 export const rotateIcon = {
   initial: {
@@ -164,7 +166,7 @@ export const rotateIcon = {
       duration: 0.5,
     },
   },
-}
+};
 
 export const lineDrawing = {
   initial: {
@@ -179,5 +181,4 @@ export const lineDrawing = {
       opacity: { duration: 0.3 },
     },
   },
-}
-
+};

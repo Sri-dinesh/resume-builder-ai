@@ -54,10 +54,6 @@ export default function Navbar() {
               whileHover={{ rotate: [0, -10, 10, -10, 0] }}
               transition={{ duration: 0.5 }}
             >
-              <Sparkles
-                className="h-4 w-4 text-primary transition-transform group-hover:scale-110 sm:h-5 sm:w-5"
-                aria-hidden="true"
-              />
             </motion.div>
             <motion.span
               className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-base font-bold text-transparent sm:text-lg"
@@ -72,7 +68,7 @@ export default function Navbar() {
             {[
               { name: "Features", href: "#features" },
               { name: "Pricing", href: "#pricing" },
-              { name: "Testimonials", href: "#testimonials" },
+              // { name: "Testimonials", href: "#testimonials" },
               { name: "Contact", href: "#contact" },
             ].map((item) => (
               <Link

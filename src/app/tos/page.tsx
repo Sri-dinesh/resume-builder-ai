@@ -1,4 +1,3 @@
-import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { Metadata } from "next";
 export const metadata: Metadata = {
@@ -170,7 +169,6 @@ export default function Page() {
         By using AI Resume Builder, you acknowledge that you have read,
         understood, and agree to these Terms of Service.
       </p>
-      <Footer />
     </main>
   );
 }

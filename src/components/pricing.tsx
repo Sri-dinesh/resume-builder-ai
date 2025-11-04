@@ -59,7 +59,7 @@ const tiers = [
   },
 ];
 
-export default function Pricing() {
+function Pricing() {
   const router = useRouter();
 
   return (
@@ -216,3 +216,5 @@ export default function Pricing() {
     </section>
   );
 }
+
+export default Pricing;

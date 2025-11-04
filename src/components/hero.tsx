@@ -6,14 +6,19 @@ import { motion } from "framer-motion";
 import { fadeIn, stagger } from "@/lib/animations";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import LightRays from "./LightRays"; 
+import LightRays from "./LightRays";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => setMounted(true), []);
 
+  const handleBuildResume = async () => {
+    setIsLoading(true);
+    router.push("/editor");
+  };
 
   const benefits = [
     "AI-powered content generation",
@@ -22,7 +27,24 @@ export default function Hero() {
   ];
 
   if (!mounted) {
-    return null;
+    return (
+      <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 pb-12 pt-24 sm:px-6 md:pt-32 lg:px-8 lg:pt-36">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
+        <div className="flex max-w-3xl flex-col items-center space-y-6 text-center">
+          <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20">
+            <Sparkles className="mr-2 h-4 w-4" />
+            <span className="text-white">AI-Powered Resume Builder</span>
+          </span>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+            Create a{" "}
+            <span className="bg-gradient-to-r from-primary to-violet-100 bg-clip-text text-transparent dark:to-indigo-300">
+              professional resume
+            </span>{" "}
+            in minutes with AI
+          </h1>
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -30,7 +52,12 @@ export default function Hero() {
       className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 pb-12 pt-24 sm:px-6 md:pt-32 lg:px-8 lg:pt-36"
       aria-labelledby="hero-heading"
     >
-      <div className="absolute inset-0 -z-10">
+      <div
+        className="fixed inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="absolute inset-0 -z-20">
         <LightRays
           raysOrigin="top-center"
           raysColor="#6366f1"
@@ -44,7 +71,7 @@ export default function Hero() {
           pulsating={true}
           fadeDistance={0.9}
           saturation={0.9}
-          className="w-full h-full"
+          className="h-full w-full"
         />
       </div>
 
@@ -67,9 +94,8 @@ export default function Hero() {
         <motion.h1
           id="hero-heading"
           variants={fadeIn}
-          style={{ maxWidth: '85ch', lineHeight: '1.1' }}
+          style={{ maxWidth: "85ch", lineHeight: "1.1" }}
           className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
-
         >
           Create a{" "}
           <span className="bg-gradient-to-r from-primary to-violet-100 bg-clip-text text-transparent dark:to-indigo-300">
@@ -89,15 +115,25 @@ export default function Hero() {
         <motion.div variants={fadeIn} className="pt-2">
           <Button
             size="lg"
-            onClick={() => router.push("/editor")}
-            className="group relative overflow-hidden bg-primary hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            onClick={handleBuildResume}
+            disabled={isLoading}
+            className="group relative overflow-hidden bg-primary hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
           >
             <span className="relative z-10 flex items-center">
-              Build Your Resume
-              <ArrowRight
-                className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                aria-hidden="true"
-              />
+              {isLoading ? (
+                <>
+                  <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Loading...
+                </>
+              ) : (
+                <>
+                  Build Your Resume
+                  <ArrowRight
+                    className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </>
+              )}
             </span>
             <span
               className="absolute inset-0 bg-gradient-to-r from-primary to-violet-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-indigo-500"

@@ -34,7 +34,7 @@ const testimonials = [
   },
 ];
 
-export default function Testimonials() {
+function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const nextTestimonial = useCallback(() => {
@@ -226,3 +226,5 @@ export default function Testimonials() {
     </section>
   );
 }
+
+export default Testimonials;

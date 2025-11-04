@@ -38,9 +38,6 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 flex items-center text-lg font-semibold">
               SparkCV
-              <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
-                Beta
-              </span>
             </h3>
             <p className="text-muted-foreground">
               AI-powered resume builder helping professionals land their dream
