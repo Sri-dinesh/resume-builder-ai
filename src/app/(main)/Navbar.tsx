@@ -1,6 +1,6 @@
 "use client";
 
-import favicon from "@/images/favicon.svg";
+import logo from "@/images/CircleLogo.png";
 import { UserButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { CreditCard, FileText, Lightbulb, WandSparkles } from "lucide-react";
@@ -62,7 +62,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src={favicon}
+            src={logo}
             alt="Logo"
             width={35}
             height={35}
