@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .replace('src/app/(main)', '')
       .replace('/page.tsx', '')
       .replace('/index', '');
-    return path;
+    return path === '/index' ? '' : path;
   });
 
   const allRoutes = [...staticRoutes, ...routes];

@@ -13,6 +13,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 },
+      );
+    }
+
     // Send data to Web3Forms
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
