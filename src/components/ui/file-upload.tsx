@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React, { useRef, useState } from "react";
 import { motion } from "motion/react";
-import { IconUpload } from "@tabler/icons-react";
+import { IconUpload, IconX } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
 
 const mainVariant = {
@@ -27,15 +27,41 @@ const secondaryVariant = {
 
 export const FileUpload = ({
   onChange,
+  maxFiles = 0, // 0 means unlimited
 }: {
   onChange?: (files: File[]) => void;
+  maxFiles?: number;
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
+    let updatedFiles = [];
+    if (maxFiles === 1) {
+      // Replace existing file
+      updatedFiles = newFiles.slice(0, 1);
+    } else {
+      // Append
+      updatedFiles = [...files, ...newFiles];
+      if (maxFiles > 0 && updatedFiles.length > maxFiles) {
+        updatedFiles = updatedFiles.slice(0, maxFiles);
+      }
+    }
+    
+    setFiles(updatedFiles);
+    onChange && onChange(updatedFiles);
+  };
+
+  const removeFile = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the upload click
+    const updatedFiles = files.filter((_, i) => i !== index);
+    setFiles(updatedFiles);
+    onChange && onChange(updatedFiles);
+    
+    // Reset input value to allow re-uploading the same file if needed
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleClick = () => {
@@ -43,7 +69,7 @@ export const FileUpload = ({
   };
 
   const { getRootProps, isDragActive } = useDropzone({
-    multiple: false,
+    multiple: maxFiles !== 1,
     noClick: true,
     onDrop: handleFileChange,
     onDropRejected: (error) => {
@@ -62,6 +88,7 @@ export const FileUpload = ({
           ref={fileInputRef}
           id="file-upload-handle"
           type="file"
+          multiple={maxFiles !== 1}
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
@@ -95,14 +122,22 @@ export const FileUpload = ({
                     >
                       {file.name}
                     </motion.p>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      layout
-                      className="w-fit shrink-0 rounded-lg px-2 py-1 text-sm text-neutral-600 shadow-input dark:bg-neutral-800 dark:text-white"
-                    >
-                      {(file.size / (1024 * 1024)).toFixed(2)} MB
-                    </motion.p>
+                    <div className="flex items-center gap-2">
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        layout
+                        className="w-fit shrink-0 rounded-lg px-2 py-1 text-sm text-neutral-600 shadow-input dark:bg-neutral-800 dark:text-white"
+                      >
+                        {(file.size / (1024 * 1024)).toFixed(2)} MB
+                      </motion.p>
+                      <button
+                        onClick={(e) => removeFile(idx, e)}
+                        className="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-neutral-800"
+                      >
+                        <IconX className="h-4 w-4 text-neutral-500" />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="mt-2 flex w-full flex-col items-start justify-between text-sm text-neutral-600 dark:text-neutral-400 md:flex-row md:items-center">

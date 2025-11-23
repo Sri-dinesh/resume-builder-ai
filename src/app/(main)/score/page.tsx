@@ -2,26 +2,40 @@
 import React, { useState } from "react";
 import { getDocument, GlobalWorkerOptions, PDFDocumentProxy } from "pdfjs-dist";
 import { FileUpload } from "@/components/ui/file-upload";
+import { ScoreDashboard } from "@/components/score/ScoreDashboard";
+import { Loader2 } from "lucide-react";
 
 GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js";
 
 interface AnalysisResult {
   score: number;
-  suggestions: string[];
+  summary: string;
+  sections: {
+    impact: { score: number; feedback: string[] };
+    brevity: { score: number; feedback: string[] };
+    style: { score: number; feedback: string[] };
+    structure: { score: number; feedback: string[] };
+    skills: { score: number; feedback: string[] };
+  };
+  keywords: {
+    present: string[];
+    missing: string[];
+  };
 }
 
 export default function ScorePage() {
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [parsedText, setParsedText] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingStep, setLoadingStep] = useState<string>("");
+  const [analysisMode, setAnalysisMode] = useState<"general" | "jd">("general");
+  const [jobDescription, setJobDescription] = useState<string>("");
 
   const handleFileUpload = (files: File[]) => {
     setError("");
     setResult(null);
-    setParsedText(null);
     if (files.length > 0) {
       const selectedFile = files[0];
       if (selectedFile.type !== "application/pdf") {
@@ -29,7 +43,6 @@ export default function ScorePage() {
         return;
       }
       setFile(selectedFile);
-      console.log(files);
     }
   };
 
@@ -43,7 +56,13 @@ export default function ScorePage() {
       return;
     }
 
+    if (analysisMode === "jd" && !jobDescription.trim()) {
+      setError("Please enter a job description.");
+      return;
+    }
+
     setLoading(true);
+    setLoadingStep("Parsing PDF...");
 
     try {
       const arrayBuffer = await file.arrayBuffer();
@@ -62,89 +81,124 @@ export default function ScorePage() {
             ),
         ),
       );
-      const extractedText = pageTexts.join("\n");
-      const trimmedText = extractedText.trim();
-      setParsedText(trimmedText);
+      const extractedText = pageTexts.join("\n").trim();
+
+      setLoadingStep("Analyzing...");
 
       // Send parsed content for analysis.
       const formData = new FormData();
-      formData.append("content", trimmedText);
+      formData.append("content", extractedText);
       formData.append("filename", file.name);
+      if (analysisMode === "jd") {
+        formData.append("jobDescription", jobDescription);
+      }
 
       const res = await fetch("/api/score", {
         method: "POST",
         body: formData,
       });
+      
       if (!res.ok) {
-        throw new Error("Failed to analyze resume.");
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to analyze resume.");
       }
+      
       const analysis: AnalysisResult = await res.json();
       setResult(analysis);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error processing resume:", err);
-      setError("An error occurred while processing your resume.");
+      setError(err.message || "An error occurred while processing your resume.");
     } finally {
       setLoading(false);
+      setLoadingStep("");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-10 dark:from-gray-900 dark:to-gray-800">
-      <div className="mx-auto max-w-3xl">
-        <h1 className="mb-4 text-center text-4xl font-bold text-gray-800 dark:text-white">
-          Resume Parsing & Analysis
-        </h1>
-        <p className="mb-10 text-center text-gray-600 dark:text-gray-300">
-          This analysis might not be 100% accurate, but it gives you a basic
-          understanding of your resume level along with a few suggestions to
-          improve it.
-        </p>
+    <div className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-900">
+      <div className="mx-auto max-w-5xl space-y-12">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+            AI Resume Scorer
+          </h1>
+          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+            Get a detailed analysis of your resume. Choose between a general evaluation or a targeted check against a specific job description.
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="mx-auto w-full rounded-xl border-2 border-dashed border-gray-300 bg-white p-8 shadow-lg dark:border-gray-700 dark:bg-gray-800">
-            <FileUpload onChange={handleFileUpload} />
-          </div>
-          {error && <p className="text-center text-red-500">{error}</p>}
-          <div className="text-center">
+        {/* Upload Section */}
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-8 flex justify-center gap-4">
             <button
-              type="submit"
-              className="mt-4 inline-block rounded bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              disabled={loading}
+              onClick={() => setAnalysisMode("general")}
+              className={`rounded-full px-6 py-2 font-medium transition-all ${
+                analysisMode === "general"
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
+              }`}
             >
-              {loading ? "Processing..." : "Upload and Analyze"}
+              General Analysis
+            </button>
+            <button
+              onClick={() => setAnalysisMode("jd")}
+              className={`rounded-full px-6 py-2 font-medium transition-all ${
+                analysisMode === "jd"
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
+              }`}
+            >
+              Match Job Description
             </button>
           </div>
-        </form>
 
-        {result && (
-          <div className="mt-12 rounded-xl border border-gray-300 bg-white p-8 shadow-xl dark:border-gray-700 dark:bg-gray-800">
-            <h2 className="mb-4 text-3xl font-semibold text-gray-800 dark:text-white">
-              Analysis Results
-            </h2>
-            <p className="mb-4 text-xl text-gray-700 dark:text-gray-300">
-              Score: {result.score.toFixed(1)}/10
-            </p>
-            <h3 className="mb-2 text-2xl font-medium text-gray-800 dark:text-white">
-              Suggestions:
-            </h3>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 dark:text-gray-300">
-              {result.suggestions.map((sugg, idx) => (
-                <li key={idx}>{sugg}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {parsedText && !result && (
-          <div className="mt-8 rounded-xl border border-gray-300 bg-white p-8 shadow-lg dark:border-gray-700 dark:bg-gray-800">
-            <h2 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-white">
-              Parsed Resume Content
-            </h2>
-            <div className="max-h-96 overflow-auto whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-300">
-              {parsedText}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="overflow-hidden rounded-2xl border-2 border-dashed border-gray-300 bg-white p-8 shadow-sm transition-all hover:border-blue-500 dark:border-gray-700 dark:bg-gray-800">
+              <FileUpload onChange={handleFileUpload} maxFiles={1} />
             </div>
-          </div>
-        )}
+
+            {analysisMode === "jd" && (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Paste Job Description
+                </label>
+                <textarea
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  placeholder="Paste the full job description here..."
+                  className="h-40 w-full rounded-lg border border-gray-300 p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                />
+              </div>
+            )}
+            
+            {error && (
+              <div className="rounded-lg bg-red-50 p-4 text-center text-red-600 dark:bg-red-900/20 dark:text-red-400">
+                {error}
+              </div>
+            )}
+
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                disabled={loading || !file}
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-blue-600 px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:cursor-not-allowed disabled:opacity-70 dark:focus:ring-blue-800"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    {loadingStep}
+                  </>
+                ) : (
+                  "Analyze Resume"
+                )}
+                <div className="absolute inset-0 -z-10 h-full w-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 transition-opacity group-hover:opacity-100" />
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Results Section */}
+        {result && <ScoreDashboard analysis={result} />}
       </div>
     </div>
   );
