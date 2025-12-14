@@ -3,7 +3,13 @@
 import logo from "@/images/CircleLogo.png";
 import { UserButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { CreditCard, FileText, Lightbulb, WandSparkles } from "lucide-react";
+import {
+  CreditCard,
+  FileText,
+  Lightbulb,
+  WandSparkles,
+  Mail,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -97,6 +103,14 @@ export default function Navbar() {
             icon={<WandSparkles className="h-4 w-4" />}
             label="Enhance Resume"
             title="Enhance Resume"
+          />
+
+          {/* Cover Letter Link */}
+          <NavLink
+            href="/cover-letter"
+            icon={<Mail className="h-4 w-4" />}
+            label="Cover Letter"
+            title="Cover Letter Generator"
           />
 
           {/* Theme Toggle */}

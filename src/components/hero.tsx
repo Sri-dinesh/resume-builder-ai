@@ -135,6 +135,7 @@ export default function Hero() {
                 </>
               )}
             </span>
+            if(sign)
             <span
               className="absolute inset-0 bg-gradient-to-r from-primary to-violet-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-indigo-500"
               aria-hidden="true"
