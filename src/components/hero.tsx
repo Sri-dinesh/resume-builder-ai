@@ -1,23 +1,36 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, CheckCircle } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  CheckCircle,
+  LayoutDashboard,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeIn, stagger } from "@/lib/animations";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 import LightRays from "./LightRays";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [dashboardLoading, setDashboardLoading] = useState(false);
   const router = useRouter();
+  const { isSignedIn } = useAuth();
 
   useEffect(() => setMounted(true), []);
 
   const handleBuildResume = async () => {
     setIsLoading(true);
     router.push("/editor");
+  };
+
+  const handleDashboard = () => {
+    setDashboardLoading(true);
+    router.push("/resumes");
   };
 
   const benefits = [
@@ -112,11 +125,14 @@ export default function Hero() {
           faster with tailored content and ATS-optimized templates.
         </motion.p>
 
-        <motion.div variants={fadeIn} className="pt-2">
+        <motion.div
+          variants={fadeIn}
+          className="flex flex-wrap items-center justify-center gap-4 pt-2"
+        >
           <Button
             size="lg"
             onClick={handleBuildResume}
-            disabled={isLoading}
+            disabled={isLoading || dashboardLoading}
             className="group relative overflow-hidden bg-primary hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
           >
             <span className="relative z-10 flex items-center">
@@ -135,12 +151,38 @@ export default function Hero() {
                 </>
               )}
             </span>
-            if(sign)
             <span
               className="absolute inset-0 bg-gradient-to-r from-primary to-violet-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:to-indigo-500"
               aria-hidden="true"
             />
           </Button>
+
+          {isSignedIn && (
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={handleDashboard}
+              disabled={isLoading || dashboardLoading}
+              className="group border-primary/30 hover:border-primary hover:bg-primary/10"
+            >
+              <span className="flex items-center">
+                {dashboardLoading ? (
+                  <>
+                    <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    Loading...
+                  </>
+                ) : (
+                  <>
+                    <LayoutDashboard
+                      className="mr-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    Dashboard
+                  </>
+                )}
+              </span>
+            </Button>
+          )}
         </motion.div>
 
         <motion.div variants={fadeIn} className="pt-4">
