@@ -1,16 +1,27 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
 import { ResumeServerData } from "@/lib/types";
 import { cn, mapToResumeValues } from "@/lib/utils";
 import { ResumeValues } from "@/lib/validation";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Breadcrumbs from "./Breadcrumbs";
 import Footer from "./Footer";
-import ResumePreviewSection from "./ResumePreviewSection";
 import { steps } from "./steps";
 import useAutoSaveResume from "./useAutoSaveResume";
+import { Loader2 } from "lucide-react";
+
+// Dynamically import the heavy ResumePreviewSection component
+const ResumePreviewSection = dynamic(() => import("./ResumePreviewSection"), {
+  loading: () => (
+    <div className="hidden w-1/2 items-center justify-center bg-secondary md:flex">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  ),
+  ssr: false,
+});
 
 interface ResumeEditorProps {
   resumeToEdit: ResumeServerData | null;
