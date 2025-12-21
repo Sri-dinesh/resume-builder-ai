@@ -4,11 +4,10 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import DownloadableResume from "@/components/DownloadableResume";
+import ResumePDF from "@/components/ResumePDF";
 
 // Lazy load heavy libraries only when needed
 let pdfLib: any = null;
-let html2canvasLib: any = null;
-let jsPDFLib: any = null;
 
 const loadPdfLib = async () => {
   if (!pdfLib) {
@@ -16,20 +15,6 @@ const loadPdfLib = async () => {
     pdfLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfLib.version}/pdf.worker.min.js`;
   }
   return pdfLib;
-};
-
-const loadHtml2Canvas = async () => {
-  if (!html2canvasLib) {
-    html2canvasLib = (await import("html2canvas")).default;
-  }
-  return html2canvasLib;
-};
-
-const loadJsPDF = async () => {
-  if (!jsPDFLib) {
-    jsPDFLib = (await import("jspdf")).default;
-  }
-  return jsPDFLib;
 };
 
 interface CachedData {
@@ -141,41 +126,19 @@ const ResumeUploadPage: React.FC = () => {
   };
 
   const handleDownloadPDF = async () => {
-    const content = document.getElementById("downloadableResume");
-    if (!content) return;
     try {
       setLoading(true);
-      const html2canvas = await loadHtml2Canvas();
-      const jsPDF = await loadJsPDF();
-
-      // Clone the element for manipulation
-      const clonedContent = content.cloneNode(true) as HTMLElement;
-      clonedContent.style.width = "210mm";
-      clonedContent.style.height = "297mm";
-      clonedContent.style.position = "absolute";
-      clonedContent.style.left = "-9999px";
-      document.body.appendChild(clonedContent);
-
-      const canvas = await html2canvas(clonedContent, {
-        scale: 2,
-        useCORS: true,
-        logging: true,
-        width: 794, // A4 width in px at 96 DPI
-        height: 1123, // A4 height in px at 96 DPI
-        windowWidth: 794,
-        windowHeight: 1123,
-      });
-      // Remove the cloned element
-      document.body.removeChild(clonedContent);
-
-      const imgData = canvas.toDataURL("image/jpeg", 1.0);
-      const pdf = new jsPDF({
-        format: "a4",
-        unit: "mm",
-      });
-
-      pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-      pdf.save("enhanced-resume.pdf");
+      // Dynamically import to avoid SSR issues
+      const { pdf } = await import("@react-pdf/renderer");
+      const blob = await pdf(<ResumePDF resumeData={enhancedText} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "enhanced-resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error generating PDF:", error);
       setError("Failed to generate PDF");
