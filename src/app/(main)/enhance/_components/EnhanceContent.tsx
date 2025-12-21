@@ -6,6 +6,7 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { ResumeValues } from "@/lib/validation";
 
 // Dynamically import heavy components
 const DownloadableResume = dynamic(
@@ -33,7 +34,7 @@ const loadPdfLib = async () => {
 
 interface CachedData {
   parsedText: string;
-  enhancedText: any;
+  enhancedText: ResumeValues;
   timestamp: number;
 }
 
@@ -41,33 +42,37 @@ export default function EnhanceContent() {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [parsedText, setParsedText] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      const cached = localStorage.getItem("cachedResumeData");
-      if (cached) {
-        try {
-          const { parsedText } = JSON.parse(cached) as CachedData;
-          return parsedText;
-        } catch (e) {
-          console.error("Failed to parse cached resume data", e);
-        }
-      }
+  const [parsedText, setParsedText] = useState(() => {
+    if (typeof window === "undefined") {
+      return "";
     }
-    return "";
+    try {
+      const cached = localStorage.getItem("cachedResumeData");
+      if (!cached) {
+        return "";
+      }
+      const { parsedText } = JSON.parse(cached) as CachedData;
+      return parsedText || "";
+    } catch (e) {
+      console.error("Failed to parse cached resume data", e);
+      return "";
+    }
   });
-  const [enhancedText, setEnhancedText] = useState<any>(() => {
-    if (typeof window !== "undefined") {
-      const cached = localStorage.getItem("cachedResumeData");
-      if (cached) {
-        try {
-          const { enhancedText } = JSON.parse(cached) as CachedData;
-          return enhancedText;
-        } catch (e) {
-          console.error("Failed to parse cached resume data", e);
-        }
-      }
+  const [enhancedText, setEnhancedText] = useState<ResumeValues | null>(() => {
+    if (typeof window === "undefined") {
+      return null;
     }
-    return null;
+    try {
+      const cached = localStorage.getItem("cachedResumeData");
+      if (!cached) {
+        return null;
+      }
+      const { enhancedText } = JSON.parse(cached) as CachedData;
+      return enhancedText || null;
+    } catch (e) {
+      console.error("Failed to parse cached resume data", e);
+      return null;
+    }
   });
   const [isEnhancing, setIsEnhancing] = useState(false);
 

@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
+import withBundleAnalyzerBase from "@next/bundle-analyzer";
 
-// @ts-ignore - bundle-analyzer has no types
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+const withBundleAnalyzer = withBundleAnalyzerBase({
   enabled: process.env.ANALYZE === "true",
-});
+}) as (config: NextConfig) => NextConfig;
 
 const nextConfig: NextConfig = {
   // Compiler optimizations

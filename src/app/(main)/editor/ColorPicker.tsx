@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/popover";
 import usePremiumModal from "@/hooks/usePremiumModal";
 import { canUseCustomizations } from "@/lib/permissions";
-import { PaletteIcon } from "lucide-react";
+import { Palette } from "lucide-react";
 import { useState } from "react";
 import { Color, ColorChangeHandler, TwitterPicker } from "react-color";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
@@ -38,7 +38,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
             setShowPopover(true);
           }}
         >
-          <PaletteIcon className="size-5" />
+          <Palette className="size-5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent

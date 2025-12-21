@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CheckIcon } from "lucide-react";
+import { Check } from "lucide-react";
 
 interface FontSelectorProps {
   value: string;
@@ -47,11 +47,11 @@ export function FontSelector({ value, onValueChange }: FontSelectorProps) {
               onClick={() => handleFontChange(font.value)}
               style={{ fontFamily: font.value }}
             >
-              {/* {value === font.value && <CheckIcon className="mr-2 size-4" />}
+              {/* {value === font.value && <Check className="mr-2 size-4" />}
               {font.name} */}
               <div className="flex w-full items-start">
                 {value === font.value && (
-                  <CheckIcon className="mr-2 mt-0.5 size-4 flex-shrink-0" />
+                  <Check className="mr-2 mt-0.5 size-4 flex-shrink-0" />
                 )}
                 <div className="min-w-0 flex-1">
                   <div className="truncate font-medium">{font.name}</div>

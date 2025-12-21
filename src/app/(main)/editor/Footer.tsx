@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FileUserIcon, PenLineIcon } from "lucide-react";
+import { FileUser, PenLine } from "lucide-react";
 import Link from "next/link";
 import { steps } from "./steps";
 
@@ -56,7 +56,7 @@ export default function Footer({
             showSmResumePreview ? "Show input form" : "Show resume preview"
           }
         >
-          {showSmResumePreview ? <PenLineIcon /> : <FileUserIcon />}
+          {showSmResumePreview ? <PenLine /> : <FileUser />}
         </Button>
         <div className="flex items-center gap-3">
           <Button variant="secondary" asChild>

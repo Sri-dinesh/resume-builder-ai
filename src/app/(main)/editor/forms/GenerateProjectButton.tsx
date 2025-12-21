@@ -25,7 +25,7 @@ import {
   Project,
 } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { WandSparklesIcon } from "lucide-react";
+import { WandSparkles } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSubscriptionLevel } from "../../SubscriptionLevelProvider";
@@ -57,7 +57,7 @@ export default function GenerateProjectButton({
           setShowInputDialog(true);
         }}
       >
-        <WandSparklesIcon className="size-4" />
+        <WandSparkles className="size-4" />
         Smart fill (AI)
       </Button>
       <InputDialog
