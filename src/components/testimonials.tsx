@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
@@ -178,7 +178,7 @@ function Testimonials() {
                           aria-hidden="true"
                         />
                         <p className="mb-4 text-base italic sm:text-lg">
-                          "{testimonials[activeIndex].quote}"
+                          &quot;{testimonials[activeIndex].quote}&quot;
                         </p>
                         <div>
                           <p className="font-semibold">

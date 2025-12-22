@@ -98,15 +98,12 @@ export default function ScoreContent() {
 
       const pageTexts = await Promise.all(
         Array.from({ length: pdf.numPages }, (_, index) =>
-          pdf
-            .getPage(index + 1)
-            .then((page) =>
-              page
-                .getTextContent()
-                .then((content) =>
-                  content.items.map((item: any) => item.str).join(" "),
-                ),
+          pdf.getPage(index + 1).then((page) =>
+            page.getTextContent().then((content) =>
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              content.items.map((item: any) => item.str).join(" "),
             ),
+          ),
         ),
       );
       const extractedText = pageTexts.join("\n").trim();
@@ -133,10 +130,12 @@ export default function ScoreContent() {
 
       const analysis: AnalysisResult = await res.json();
       setResult(analysis);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error processing resume:", err);
       setError(
-        err.message || "An error occurred while processing your resume.",
+        err instanceof Error
+          ? err.message
+          : "An error occurred while processing your resume.",
       );
     } finally {
       setLoading(false);

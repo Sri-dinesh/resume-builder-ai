@@ -98,6 +98,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
   `;
 
   // Helper functions to format the input data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function formatExperiences(experiences?: any[]) {
     return experiences?.length
       ? `Work Experience: ${
@@ -106,18 +107,21 @@ export async function generateSummary(input: GenerateSummaryInput) {
       : "";
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function formatProjects(projects?: any[]) {
     return projects?.length
       ? `Project Experience: ${projects.length} major projects`
       : "";
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function formatEducation(education?: any[]) {
     return education?.length
       ? `Education: ${education.map((edu) => edu.degree).join(", ")}`
       : "";
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function calculateTotalYears(experiences: any[]) {
     // Implementation for calculating total years of experience
     return experiences.reduce((total, exp) => {

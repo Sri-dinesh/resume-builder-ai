@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -29,8 +28,8 @@ export default function Navbar() {
       description:
         "Welcome to SparkCV. Start building your professional resume now.",
       variant: "default",
-    }),
-      router.push("/resumes");
+    });
+    router.push("/resumes");
   };
 
   return (
@@ -53,8 +52,7 @@ export default function Navbar() {
             <motion.div
               whileHover={{ rotate: [0, -10, 10, -10, 0] }}
               transition={{ duration: 0.5 }}
-            >
-            </motion.div>
+            ></motion.div>
             <motion.span
               className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-base font-bold text-transparent sm:text-lg"
               // whileHover={{ scale: 1.05 }}

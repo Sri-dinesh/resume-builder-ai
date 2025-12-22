@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const footerLinks = [
   {
@@ -24,7 +24,7 @@ const footerLinks = [
 ];
 
 export default function Footer() {
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentYear] = useState(new Date().getFullYear());
 
   return (
     <footer className="border-t" aria-labelledby="footer-heading">

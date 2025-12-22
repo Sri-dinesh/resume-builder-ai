@@ -47,17 +47,17 @@ export const FileUpload = ({
         updatedFiles = updatedFiles.slice(0, maxFiles);
       }
     }
-    
+
     setFiles(updatedFiles);
-    onChange && onChange(updatedFiles);
+    onChange?.(updatedFiles);
   };
 
   const removeFile = (index: number, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent triggering the upload click
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
-    onChange && onChange(updatedFiles);
-    
+    onChange?.(updatedFiles);
+
     // Reset input value to allow re-uploading the same file if needed
     if (fileInputRef.current) {
       fileInputRef.current.value = "";

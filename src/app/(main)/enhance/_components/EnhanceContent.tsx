@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Card } from "@/components/ui/card";
@@ -22,6 +22,7 @@ const DownloadableResume = dynamic(
 );
 
 // Lazy load heavy libraries only when needed
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let pdfLib: any = null;
 
 const loadPdfLib = async () => {
@@ -39,7 +40,6 @@ interface CachedData {
 }
 
 export default function EnhanceContent() {
-  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [parsedText, setParsedText] = useState(() => {
@@ -116,16 +116,15 @@ export default function EnhanceContent() {
         throw new Error(data.error || "Failed to enhance resume");
       }
       setEnhancedText(data.enhancedText);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error enhancing resume:", err);
-      setError(err.message || "Failed to enhance resume");
+      setError(err instanceof Error ? err.message : "Failed to enhance resume");
     } finally {
       setIsEnhancing(false);
     }
   };
 
   const handleFileChange = async (file: File) => {
-    setFile(file);
     try {
       setLoading(true);
       const pdfjsLib = await loadPdfLib();
@@ -138,6 +137,7 @@ export default function EnhanceContent() {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
         const pageText = textContent.items
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .map((item: any) => item.str)
           .join(" ");
         fullText += pageText + "\n";
@@ -155,6 +155,10 @@ export default function EnhanceContent() {
   const handleDownloadPDF = async () => {
     try {
       setLoading(true);
+      if (!enhancedText) {
+        setError("Resume data is not available");
+        return;
+      }
       // Dynamically import to avoid SSR issues and reduce initial bundle
       const [{ pdf }, { default: ResumePDF }] = await Promise.all([
         import("@react-pdf/renderer"),

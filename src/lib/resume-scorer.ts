@@ -39,13 +39,13 @@ export class ResumeScorer {
         contactScore.score +
           sectionScore.score +
           contentScore.score +
-          keywordScore.score
-      )
+          keywordScore.score,
+      ),
     );
 
     return {
       score: totalScore,
-      summary: this.generateSummary(totalScore, contactScore, sectionScore),
+      summary: this.generateSummary(totalScore),
       sections: {
         structure: {
           score: Math.min(100, (contactScore.score / 15) * 100),
@@ -87,9 +87,7 @@ export class ResumeScorer {
     }
 
     // Phone
-    if (
-      /(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/.test(this.text)
-    ) {
+    if (/(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/.test(this.text)) {
       score += 5;
     } else {
       feedback.push("Missing phone number.");
@@ -111,7 +109,11 @@ export class ResumeScorer {
     let score = 0;
     const feedback: string[] = [];
     const sections = [
-      { name: "Experience", regex: /experience|employment|work history/i, val: 10 },
+      {
+        name: "Experience",
+        regex: /experience|employment|work history/i,
+        val: 10,
+      },
       { name: "Education", regex: /education|academic|degree/i, val: 5 },
       { name: "Skills", regex: /skills|technologies|competencies/i, val: 5 },
       { name: "Projects", regex: /projects|portfolio/i, val: 5 },
@@ -167,7 +169,7 @@ export class ResumeScorer {
 
   private checkKeywords() {
     let targetKeywords: string[] = [];
-    
+
     if (this.jobDescription && this.jobDescription.trim().length > 20) {
       // Extract keywords from JD
       targetKeywords = this.extractKeywordsFromJD(this.jobDescription);
@@ -196,9 +198,14 @@ export class ResumeScorer {
     const missing: string[] = [];
     let score = 0;
     const totalKeywords = targetKeywords.length;
-    
+
     if (totalKeywords === 0) {
-       return { score: 30, present: [], missing: [], feedback: ["No specific keywords to check against."] };
+      return {
+        score: 30,
+        present: [],
+        missing: [],
+        feedback: ["No specific keywords to check against."],
+      };
     }
 
     targetKeywords.forEach((kw) => {
@@ -208,7 +215,7 @@ export class ResumeScorer {
         missing.push(kw);
       }
     });
-    
+
     // Calculate score based on percentage of matches
     const matchPercentage = present.length / totalKeywords;
     score = Math.round(matchPercentage * 30);
@@ -216,35 +223,203 @@ export class ResumeScorer {
     const feedback =
       matchPercentage > 0.5
         ? ["Good match with the target keywords."]
-        : ["Missing many critical keywords from the job description/industry standard."];
+        : [
+            "Missing many critical keywords from the job description/industry standard.",
+          ];
 
     return { score, present, missing, feedback };
   }
 
   private extractKeywordsFromJD(jd: string): string[] {
     const stopWords = new Set([
-      "and", "the", "is", "in", "at", "of", "or", "to", "for", "with", "a", "an", "as", "by", "on", "be", "we", "are", "you", "will", "have", "that", "this", "from", "it", "can", "not", "but", "if", "job", "description", "responsibilities", "requirements", "qualifications", "experience", "skills", "work", "team", "role", "candidate", "ability", "knowledge", "understanding", "proficient", "strong", "excellent", "good", "preferred", "plus", "years", "degree", "bachelor", "master", "university", "college", "school", "high", "diploma", "certificate", "certification", "license", "must", "should", "able", "willing", "opportunity", "company", "business", "client", "customer", "service", "support", "development", "design", "implementation", "management", "project", "product", "system", "application", "software", "solution", "technology", "technical", "environment", "platform", "tool", "language", "framework", "library", "database", "server", "cloud", "web", "mobile", "app", "user", "interface", "frontend", "backend", "fullstack", "stack", "code", "programming", "scripting", "testing", "debugging", "deployment", "maintenance", "documentation", "agile", "scrum", "waterfall", "methodology", "process", "lifecycle", "best", "practice", "standard", "quality", "performance", "scalability", "security", "reliability", "availability", "efficiency", "optimization", "improvement", "innovation", "creativity", "problem", "solving", "analytical", "critical", "thinking", "communication", "interpersonal", "collaboration", "teamwork", "leadership", "mentorship", "coaching", "training", "learning", "growth", "career", "salary", "benefits", "compensation", "location", "remote", "hybrid", "onsite", "office", "hours", "schedule", "time", "date", "start", "end", "duration", "contract", "permanent", "temporary", "internship", "freelance", "part-time", "full-time"
+      "and",
+      "the",
+      "is",
+      "in",
+      "at",
+      "of",
+      "or",
+      "to",
+      "for",
+      "with",
+      "a",
+      "an",
+      "as",
+      "by",
+      "on",
+      "be",
+      "we",
+      "are",
+      "you",
+      "will",
+      "have",
+      "that",
+      "this",
+      "from",
+      "it",
+      "can",
+      "not",
+      "but",
+      "if",
+      "job",
+      "description",
+      "responsibilities",
+      "requirements",
+      "qualifications",
+      "experience",
+      "skills",
+      "work",
+      "team",
+      "role",
+      "candidate",
+      "ability",
+      "knowledge",
+      "understanding",
+      "proficient",
+      "strong",
+      "excellent",
+      "good",
+      "preferred",
+      "plus",
+      "years",
+      "degree",
+      "bachelor",
+      "master",
+      "university",
+      "college",
+      "school",
+      "high",
+      "diploma",
+      "certificate",
+      "certification",
+      "license",
+      "must",
+      "should",
+      "able",
+      "willing",
+      "opportunity",
+      "company",
+      "business",
+      "client",
+      "customer",
+      "service",
+      "support",
+      "development",
+      "design",
+      "implementation",
+      "management",
+      "project",
+      "product",
+      "system",
+      "application",
+      "software",
+      "solution",
+      "technology",
+      "technical",
+      "environment",
+      "platform",
+      "tool",
+      "language",
+      "framework",
+      "library",
+      "database",
+      "server",
+      "cloud",
+      "web",
+      "mobile",
+      "app",
+      "user",
+      "interface",
+      "frontend",
+      "backend",
+      "fullstack",
+      "stack",
+      "code",
+      "programming",
+      "scripting",
+      "testing",
+      "debugging",
+      "deployment",
+      "maintenance",
+      "documentation",
+      "agile",
+      "scrum",
+      "waterfall",
+      "methodology",
+      "process",
+      "lifecycle",
+      "best",
+      "practice",
+      "standard",
+      "quality",
+      "performance",
+      "scalability",
+      "security",
+      "reliability",
+      "availability",
+      "efficiency",
+      "optimization",
+      "improvement",
+      "innovation",
+      "creativity",
+      "problem",
+      "solving",
+      "analytical",
+      "critical",
+      "thinking",
+      "communication",
+      "interpersonal",
+      "collaboration",
+      "teamwork",
+      "leadership",
+      "mentorship",
+      "coaching",
+      "training",
+      "learning",
+      "growth",
+      "career",
+      "salary",
+      "benefits",
+      "compensation",
+      "location",
+      "remote",
+      "hybrid",
+      "onsite",
+      "office",
+      "hours",
+      "schedule",
+      "time",
+      "date",
+      "start",
+      "end",
+      "duration",
+      "contract",
+      "permanent",
+      "temporary",
+      "internship",
+      "freelance",
+      "part-time",
+      "full-time",
     ]);
 
-    const words = jd.toLowerCase().replace(/[^\w\s]/g, "").split(/\s+/);
+    const words = jd
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .split(/\s+/);
     const keywords = new Set<string>();
 
-    words.forEach(word => {
-        if (word.length > 3 && !stopWords.has(word)) {
-            keywords.add(word);
-        }
+    words.forEach((word) => {
+      if (word.length > 3 && !stopWords.has(word)) {
+        keywords.add(word);
+      }
     });
 
-    // Return top 20 most frequent or just the set as array. 
+    // Return top 20 most frequent or just the set as array.
     // For simplicity, returning unique valid words, capped at 20 to avoid noise.
     return Array.from(keywords).slice(0, 20);
   }
 
-  private generateSummary(
-    totalScore: number,
-    contact: any,
-    sections: any
-  ): string {
+  private generateSummary(totalScore: number): string {
     if (totalScore >= 80) {
       return "Excellent resume! It is well-structured, contains all necessary contact details, and uses strong keywords and metrics.";
     } else if (totalScore >= 60) {

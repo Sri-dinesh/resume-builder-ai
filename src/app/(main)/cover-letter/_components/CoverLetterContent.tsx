@@ -18,7 +18,6 @@ import {
   AlertCircle,
   RefreshCw,
   Info,
-  Import,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -59,7 +58,6 @@ import {
 } from "@/lib/cover-letter-validation";
 import ResumeSelector from "../ResumeSelector";
 import { getUserResumes } from "../actions";
-import { Education } from "@prisma/client";
 
 // Form validation schema
 const formSchema = z.object({
@@ -138,7 +136,6 @@ export default function CoverLetterContent() {
     handleSubmit,
     setValue,
     watch,
-    reset,
     formState: { errors },
   } = form;
 
@@ -377,7 +374,7 @@ export default function CoverLetterContent() {
                       Job Details
                     </CardTitle>
                     <CardDescription>
-                      Enter the position you're applying for
+                      Enter the position you&apos;re applying for
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -827,8 +824,9 @@ export default function CoverLetterContent() {
                         Your cover letter will appear here
                       </h3>
                       <p className="max-w-sm text-gray-500">
-                        Fill in the form on the left and click "Generate" to
-                        create your personalized cover letter.
+                        Fill in the form on the left and click
+                        &quot;Generate&quot; to create your personalized cover
+                        letter.
                       </p>
                     </div>
                   )}

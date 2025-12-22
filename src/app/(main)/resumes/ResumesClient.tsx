@@ -3,13 +3,14 @@
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
 import { useRef } from "react";
+import { ResumeValues } from "@/lib/validation";
 
 export default function ResumesClient({
   resumes,
   totalCount,
   subscriptionLevel,
 }: {
-  resumes: any[];
+  resumes: ResumeValues[];
   totalCount: number;
   subscriptionLevel: string;
 }) {
@@ -25,11 +26,7 @@ export default function ResumesClient({
       </div>
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {resumes.map((resume) => (
-          <ResumeItem
-            key={resume.id}
-            resume={resume}
-            contentRef={contentRef}
-          />
+          <ResumeItem key={resume.id} resume={resume} contentRef={contentRef} />
         ))}
       </div>
     </main>

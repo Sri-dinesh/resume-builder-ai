@@ -6,7 +6,7 @@ import BorderStyleButton from "./BorderStyleButton";
 import ColorPicker from "./ColorPicker";
 import { FontSelector } from "@/components/FontSelector";
 import DownloadButton from "@/components/DownloadButton";
-import { useRef, useState, createContext } from "react";
+import { useRef } from "react";
 
 interface ResumePreviewSectionProps {
   resumeData: ResumeValues;

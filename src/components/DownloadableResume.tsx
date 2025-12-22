@@ -1,7 +1,8 @@
 import React from "react";
+import { ResumeValues } from "@/lib/validation";
 
 interface DownloadableResumeProps {
-  resumeData: any;
+  resumeData: ResumeValues;
   contentRef?: React.Ref<HTMLDivElement>;
 }
 
@@ -57,7 +58,7 @@ export default function DownloadableResume({
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">EXPERIENCE</h2>
           <hr className="border-2 border-black" />
-          {resumeData.workExperiences.map((exp: any, index: number) => (
+          {resumeData.workExperiences.map((exp, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
                 <h3 className="text-base font-semibold">{exp.position}</h3>
@@ -77,15 +78,15 @@ export default function DownloadableResume({
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">PROJECTS</h2>
           <hr className="border-2 border-black" />
-          {resumeData.projects.map((proj: any, index: number) => (
+          {resumeData.projects.map((proj, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
-                <h3 className="text-base font-semibold">{proj.ProjectName}</h3>
+                <h3 className="text-base font-semibold">{proj.name}</h3>
                 <span className="text-sm">
                   {proj.startDate} - {proj.endDate || "Present"}
                 </span>
               </div>
-              <p className="text-sm font-medium">{proj.toolsUsed}</p>
+              <p className="text-sm font-medium">{proj.description}</p>
               <p className="whitespace-pre-line text-sm">{proj.description}</p>
             </div>
           ))}
@@ -97,7 +98,7 @@ export default function DownloadableResume({
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">EDUCATION</h2>
           <hr className="border-2 border-black" />
-          {resumeData.educations.map((edu: any, index: number) => (
+          {resumeData.educations.map((edu, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
                 <h3 className="text-base font-semibold">{edu.degree}</h3>
@@ -125,7 +126,7 @@ export default function DownloadableResume({
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">CERTIFICATIONS</h2>
           <hr className="border-2 border-black" />
-          {resumeData.certifications.map((cert: any, index: number) => (
+          {resumeData.certifications.map((cert, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
                 <h3 className="text-base font-semibold">

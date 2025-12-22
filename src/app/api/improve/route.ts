@@ -67,10 +67,13 @@ export async function POST(request: Request) {
     const parsedResponse = JSON.parse(enhancedText);
 
     return NextResponse.json({ enhancedText: parsedResponse });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error enhancing resume:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to enhance resume" },
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to enhance resume",
+      },
       { status: 500 },
     );
   }

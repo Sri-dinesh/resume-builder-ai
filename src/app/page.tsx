@@ -5,7 +5,6 @@ import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import Features from "@/components/features";
 import Pricing from "@/components/pricing";
-import Testimonials from "@/components/testimonials";
 import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/toaster";
 import ContactForm from "@/components/contact-form";

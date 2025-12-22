@@ -66,7 +66,7 @@ export default function ResumeSelector({ onSelect }: ResumeSelectorProps) {
       try {
         const data = await getUserResumes();
         setResumes(data);
-      } catch (err) {
+      } catch {
         setError(
           "Failed to load your resumes. You can still enter details manually.",
         );

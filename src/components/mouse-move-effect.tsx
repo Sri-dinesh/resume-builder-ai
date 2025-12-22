@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { throttle } from "lodash";
 
 export default function MouseMoveEffect() {
@@ -14,17 +14,18 @@ export default function MouseMoveEffect() {
   const [isMoving, setIsMoving] = useState(false);
 
   // Throttle the mouse move handler to improve performance
-  const handleMouseMove = useCallback(
-    throttle((event: MouseEvent) => {
-      setMousePosition({ x: event.clientX, y: event.clientY });
-      setIsMoving(true);
+  const handleMouseMove = useMemo(
+    () =>
+      throttle((event: MouseEvent) => {
+        setMousePosition({ x: event.clientX, y: event.clientY });
+        setIsMoving(true);
 
-      // Reset the moving state after a delay
-      clearTimeout(window.moveTimeout);
-      window.moveTimeout = setTimeout(() => {
-        setIsMoving(false);
-      }, 300) as unknown as number;
-    }, 50),
+        // Reset the moving state after a delay
+        clearTimeout(window.moveTimeout);
+        window.moveTimeout = setTimeout(() => {
+          setIsMoving(false);
+        }, 300) as unknown as number;
+      }, 50),
     [],
   );
 

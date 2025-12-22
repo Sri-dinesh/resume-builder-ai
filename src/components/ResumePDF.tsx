@@ -6,9 +6,9 @@ import {
   View,
   StyleSheet,
   Image,
-  Font,
 } from "@react-pdf/renderer";
 import { format } from "date-fns";
+import { ResumeValues } from "@/lib/validation";
 
 // Helper to strip HTML tags and handle basic formatting
 const stripHtml = (html: string) => {
@@ -34,7 +34,7 @@ const formatDate = (dateString: string | undefined, formatStr: string) => {
   if (!dateString) return "";
   try {
     return format(new Date(dateString), formatStr);
-  } catch (e) {
+  } catch {
     return dateString;
   }
 };
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
 });
 
 interface ResumePDFProps {
-  resumeData: any;
+  resumeData: ResumeValues;
 }
 
 const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
@@ -151,6 +151,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                   : URL.createObjectURL(resumeData.photo)
               }
               style={styles.photo}
+              alt="Profile photo"
             />
           )}
           <View style={styles.headerText}>
@@ -190,54 +191,57 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
         )}
 
         {/* Work Experience */}
-        {resumeData.workExperiences?.length > 0 && (
-          <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colorHex }]}>
-              EXPERIENCE
-            </Text>
-            <View style={[styles.separator, { borderBottomColor: colorHex }]} />
-            {resumeData.workExperiences.map((exp: any, index: number) => (
-              <View key={index} style={styles.item}>
-                <View style={styles.itemHeader}>
-                  <Text style={styles.itemTitle}>{exp.position}</Text>
-                  <Text style={styles.itemDate}>
-                    {formatDate(exp.startDate, "MM/yyyy")} -{" "}
-                    {exp.endDate
-                      ? formatDate(exp.endDate, "MM/yyyy")
-                      : "Present"}
+        {resumeData.workExperiences &&
+          resumeData.workExperiences.length > 0 && (
+            <View style={styles.section}>
+              <Text style={[styles.sectionTitle, { color: colorHex }]}>
+                EXPERIENCE
+              </Text>
+              <View
+                style={[styles.separator, { borderBottomColor: colorHex }]}
+              />
+              {resumeData.workExperiences.map((exp, index) => (
+                <View key={index} style={styles.item}>
+                  <View style={styles.itemHeader}>
+                    <Text style={styles.itemTitle}>{exp.position}</Text>
+                    <Text style={styles.itemDate}>
+                      {formatDate(exp.startDate, "MM/yyyy")} -{" "}
+                      {exp.endDate
+                        ? formatDate(exp.endDate, "MM/yyyy")
+                        : "Present"}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 2,
+                    }}
+                  >
+                    <Text style={styles.itemSubtitle}>{exp.company}</Text>
+                    <Text style={{ fontSize: 8, fontStyle: "italic" }}>
+                      {exp.locationType}
+                    </Text>
+                  </View>
+                  <Text style={styles.description}>
+                    {stripHtml(exp.description)}
                   </Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 2,
-                  }}
-                >
-                  <Text style={styles.itemSubtitle}>{exp.company}</Text>
-                  <Text style={{ fontSize: 8, fontStyle: "italic" }}>
-                    {exp.locationType}
-                  </Text>
-                </View>
-                <Text style={styles.description}>
-                  {stripHtml(exp.description)}
-                </Text>
-              </View>
-            ))}
-          </View>
-        )}
+              ))}
+            </View>
+          )}
 
         {/* Projects */}
-        {resumeData.projects?.length > 0 && (
+        {resumeData.projects && resumeData.projects.length > 0 && (
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colorHex }]}>
               PROJECTS
             </Text>
             <View style={[styles.separator, { borderBottomColor: colorHex }]} />
-            {resumeData.projects.map((proj: any, index: number) => (
+            {resumeData.projects.map((proj, index) => (
               <View key={index} style={styles.item}>
                 <View style={styles.itemHeader}>
-                  <Text style={styles.itemTitle}>{proj.ProjectName}</Text>
+                  <Text style={styles.itemTitle}>{proj.name}</Text>
                   <Text style={styles.itemDate}>
                     {formatDate(proj.startDate, "MM/yyyy")} -{" "}
                     {proj.endDate
@@ -245,14 +249,6 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                       : "Present"}
                   </Text>
                 </View>
-                <Text
-                  style={[
-                    styles.itemSubtitle,
-                    { fontStyle: "italic", fontWeight: "normal" },
-                  ]}
-                >
-                  {proj.toolsUsed}
-                </Text>
                 <Text style={styles.description}>
                   {stripHtml(proj.description)}
                 </Text>
@@ -262,13 +258,13 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
         )}
 
         {/* Education */}
-        {resumeData.educations?.length > 0 && (
+        {resumeData.educations && resumeData.educations.length > 0 && (
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colorHex }]}>
               EDUCATION
             </Text>
             <View style={[styles.separator, { borderBottomColor: colorHex }]} />
-            {resumeData.educations.map((edu: any, index: number) => (
+            {resumeData.educations.map((edu, index) => (
               <View key={index} style={styles.item}>
                 <View style={styles.itemHeader}>
                   <Text style={styles.itemTitle}>{edu.degree}</Text>
@@ -291,7 +287,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
         )}
 
         {/* Skills */}
-        {resumeData.skills?.length > 0 && (
+        {Array.isArray(resumeData.skills) && resumeData.skills.length > 0 && (
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colorHex }]}>
               SKILLS
@@ -308,13 +304,13 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
         )}
 
         {/* Certifications */}
-        {resumeData.certifications?.length > 0 && (
+        {resumeData.certifications && resumeData.certifications.length > 0 && (
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colorHex }]}>
               CERTIFICATIONS
             </Text>
             <View style={[styles.separator, { borderBottomColor: colorHex }]} />
-            {resumeData.certifications.map((cert: any, index: number) => (
+            {resumeData.certifications.map((cert, index) => (
               <View key={index} style={styles.item}>
                 <View style={styles.itemHeader}>
                   <Text style={styles.itemTitle}>{cert.certificationName}</Text>
