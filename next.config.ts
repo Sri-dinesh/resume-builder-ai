@@ -97,6 +97,10 @@ const nextConfig: NextConfig = {
 
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
+    // Polyfills for pdfjs-dist to prevent build errors
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+
     // Optimize chunks in production
     if (!dev && !isServer) {
       config.optimization = {
