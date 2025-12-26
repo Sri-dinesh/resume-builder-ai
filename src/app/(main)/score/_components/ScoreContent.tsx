@@ -22,17 +22,6 @@ const ScoreDashboard = dynamic(
   },
 );
 
-// Lazy load PDF library
-let pdfLib: typeof import("pdfjs-dist") | null = null;
-
-const loadPdfLib = async () => {
-  if (!pdfLib) {
-    pdfLib = await import("pdfjs-dist");
-    pdfLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfLib.version}/pdf.worker.min.js`;
-  }
-  return pdfLib;
-};
-
 interface AnalysisResult {
   score: number;
   summary: string;
@@ -57,6 +46,28 @@ export default function ScoreContent() {
   const [loadingStep, setLoadingStep] = useState<string>("");
   const [analysisMode, setAnalysisMode] = useState<"general" | "jd">("general");
   const [jobDescription, setJobDescription] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [pdfjs, setPdfjs] = useState<any>(null);
+
+  React.useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      try {
+        const mod = await import("pdfjs-dist/legacy/build/pdf");
+        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${mod.version}/pdf.worker.min.js`;
+        if (mounted) {
+          setPdfjs(mod);
+        }
+      } catch (e) {
+        console.error("Failed to load pdfjs", e);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleFileUpload = (files: File[]) => {
     setError("");
@@ -90,16 +101,19 @@ export default function ScoreContent() {
     setLoadingStep("Parsing PDF...");
 
     try {
-      // Lazy load PDF library
-      const pdfjsLib = await loadPdfLib();
+      if (!pdfjs) {
+        throw new Error("PDF library is still loading. Please try again.");
+      }
 
       const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+      const pdf = await pdfjs.getDocument(arrayBuffer).promise;
 
       const pageTexts = await Promise.all(
         Array.from({ length: pdf.numPages }, (_, index) =>
-          pdf.getPage(index + 1).then((page) =>
-            page.getTextContent().then((content) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          pdf.getPage(index + 1).then((page: any) =>
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            page.getTextContent().then((content: any) =>
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               content.items.map((item: any) => item.str).join(" "),
             ),
