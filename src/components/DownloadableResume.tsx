@@ -54,7 +54,7 @@ export default function DownloadableResume({
       )}
 
       {/* Work Experience */}
-      {resumeData.workExperiences?.length > 0 && (
+      {!!resumeData.workExperiences?.length && (
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">EXPERIENCE</h2>
           <hr className="border-2 border-black" />
@@ -74,14 +74,14 @@ export default function DownloadableResume({
       )}
 
       {/* Projects */}
-      {resumeData.projects?.length > 0 && (
+      {!!resumeData.projects?.length && (
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">PROJECTS</h2>
           <hr className="border-2 border-black" />
           {resumeData.projects.map((proj, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
-                <h3 className="text-base font-semibold">{proj.name}</h3>
+                <h3 className="text-base font-semibold">{proj.ProjectName}</h3>
                 <span className="text-sm">
                   {proj.startDate} - {proj.endDate || "Present"}
                 </span>
@@ -94,7 +94,7 @@ export default function DownloadableResume({
       )}
 
       {/* Education */}
-      {resumeData.educations?.length > 0 && (
+      {!!resumeData.educations?.length && (
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">EDUCATION</h2>
           <hr className="border-2 border-black" />
@@ -113,7 +113,7 @@ export default function DownloadableResume({
       )}
 
       {/* Skills */}
-      {resumeData.skills?.length > 0 && (
+      {!!resumeData.skills?.length && (
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">SKILLS</h2>
           <hr className="border-2 border-black" />
@@ -122,7 +122,7 @@ export default function DownloadableResume({
       )}
 
       {/* Certifications */}
-      {resumeData.certifications?.length > 0 && (
+      {!!resumeData.certifications?.length && (
         <section className="mb-6 space-y-2">
           <h2 className="text-lg font-semibold">CERTIFICATIONS</h2>
           <hr className="border-2 border-black" />

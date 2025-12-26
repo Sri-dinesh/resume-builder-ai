@@ -21,18 +21,6 @@ const DownloadableResume = dynamic(
   },
 );
 
-// Lazy load heavy libraries only when needed
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let pdfLib: any = null;
-
-const loadPdfLib = async () => {
-  if (!pdfLib) {
-    pdfLib = await import("pdfjs-dist");
-    pdfLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfLib.version}/pdf.worker.min.js`;
-  }
-  return pdfLib;
-};
-
 interface CachedData {
   parsedText: string;
   enhancedText: ResumeValues;
@@ -42,6 +30,29 @@ interface CachedData {
 export default function EnhanceContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [pdfjs, setPdfjs] = useState<any>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      try {
+        const mod = await import("pdfjs-dist/legacy/build/pdf");
+        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${mod.version}/pdf.worker.min.js`;
+        if (mounted) {
+          setPdfjs(mod);
+        }
+      } catch (e) {
+        console.error("Failed to load pdfjs", e);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const [parsedText, setParsedText] = useState(() => {
     if (typeof window === "undefined") {
       return "";
@@ -125,11 +136,14 @@ export default function EnhanceContent() {
   };
 
   const handleFileChange = async (file: File) => {
+    if (!pdfjs) {
+      setError("PDF library is still loading. Please try again.");
+      return;
+    }
     try {
       setLoading(true);
-      const pdfjsLib = await loadPdfLib();
       const arrayBuffer = await file.arrayBuffer();
-      const loadingTask = pdfjsLib.getDocument(arrayBuffer);
+      const loadingTask = pdfjs.getDocument(arrayBuffer);
       const pdf = await loadingTask.promise;
 
       let fullText = "";

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function ContactForm() {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     email: "",
@@ -19,10 +18,6 @@ export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -89,11 +84,7 @@ export default function ContactForm() {
             <CardTitle>Contact Us</CardTitle>
           </CardHeader>
           <CardContent>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-              suppressHydrationWarning
-            >
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="first-name">Name</Label>
@@ -101,10 +92,9 @@ export default function ContactForm() {
                     id="first-name"
                     name="firstName"
                     placeholder="Enter your name"
-                    value={isHydrated ? formData.firstName : ""}
+                    value={formData.firstName}
                     onChange={handleChange}
                     required
-                    suppressHydrationWarning
                   />
                 </div>
                 <div className="space-y-2">
@@ -114,7 +104,7 @@ export default function ContactForm() {
                     name="email"
                     placeholder="Enter your email"
                     type="email"
-                    value={isHydrated ? formData.email : ""}
+                    value={formData.email}
                     onChange={handleChange}
                     required
                     suppressHydrationWarning
@@ -127,9 +117,8 @@ export default function ContactForm() {
                   id="subject"
                   name="subject"
                   placeholder="Enter your subject"
-                  value={isHydrated ? formData.subject : ""}
+                  value={formData.subject}
                   onChange={handleChange}
-                  suppressHydrationWarning
                 />
               </div>
               <div className="space-y-2">
@@ -138,11 +127,10 @@ export default function ContactForm() {
                   id="message"
                   name="message"
                   placeholder="Tell us about your issues..."
-                  value={isHydrated ? formData.message : ""}
+                  value={formData.message}
                   onChange={handleChange}
                   className="min-h-[80px]"
                   required
-                  suppressHydrationWarning
                 />
               </div>
               {error && <p className="text-red-500">{error}</p>}

@@ -151,7 +151,6 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                   : URL.createObjectURL(resumeData.photo)
               }
               style={styles.photo}
-              alt="Profile photo"
             />
           )}
           <View style={styles.headerText}>
@@ -224,7 +223,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                     </Text>
                   </View>
                   <Text style={styles.description}>
-                    {stripHtml(exp.description)}
+                    {stripHtml(exp.description || "")}
                   </Text>
                 </View>
               ))}
@@ -241,7 +240,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
             {resumeData.projects.map((proj, index) => (
               <View key={index} style={styles.item}>
                 <View style={styles.itemHeader}>
-                  <Text style={styles.itemTitle}>{proj.name}</Text>
+                  <Text style={styles.itemTitle}>{proj.ProjectName}</Text>
                   <Text style={styles.itemDate}>
                     {formatDate(proj.startDate, "MM/yyyy")} -{" "}
                     {proj.endDate
@@ -249,9 +248,11 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                       : "Present"}
                   </Text>
                 </View>
-                <Text style={styles.description}>
-                  {stripHtml(proj.description)}
-                </Text>
+                {proj.description && (
+                  <Text style={styles.description}>
+                    {stripHtml(proj.description)}
+                  </Text>
+                )}
               </View>
             ))}
           </View>
@@ -276,11 +277,6 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                   </Text>
                 </View>
                 <Text style={styles.itemSubtitle}>{edu.school}</Text>
-                {edu.description && (
-                  <Text style={styles.description}>
-                    {stripHtml(edu.description)}
-                  </Text>
-                )}
               </View>
             ))}
           </View>

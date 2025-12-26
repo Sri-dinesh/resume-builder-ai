@@ -3,14 +3,14 @@
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
 import { useRef } from "react";
-import { ResumeValues } from "@/lib/validation";
+import { ResumeServerData } from "@/lib/types";
 
 export default function ResumesClient({
   resumes,
   totalCount,
   subscriptionLevel,
 }: {
-  resumes: ResumeValues[];
+  resumes: ResumeServerData[];
   totalCount: number;
   subscriptionLevel: string;
 }) {
