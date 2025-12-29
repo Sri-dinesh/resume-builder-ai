@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, Roboto } from "next/font/google";
+import { SystemHeartbeat } from "@/components/SystemHeartbeat";
 import "./globals.css";
 
 const inter = Inter({
@@ -99,6 +100,7 @@ export default function RootLayout({
           >
             {children}
             <Toaster />
+            <SystemHeartbeat />
           </ThemeProvider>
         </body>
       </html>
