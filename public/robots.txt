@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sparkcv.vercel.app/sitemap.xml
+Sitemap: https://sparkcv.onrender.com/sitemap.xml
