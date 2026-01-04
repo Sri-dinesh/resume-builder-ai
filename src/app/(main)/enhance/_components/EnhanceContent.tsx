@@ -38,8 +38,15 @@ export default function EnhanceContent() {
 
     (async () => {
       try {
-        const mod = await import("pdfjs-dist/legacy/build/pdf");
-        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${mod.version}/pdf.worker.min.js`;
+        // CHANGED: Use the standard import, not "legacy/build/pdf"
+        const mod = await import("pdfjs-dist");
+
+        // Use the version from the module, or fallback to your installed version
+        const version = mod.version || "5.4.530";
+
+        // Set the worker source to the .mjs file (Standard for v5+)
+        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
+
         if (mounted) {
           setPdfjs(mod);
         }
@@ -69,6 +76,7 @@ export default function EnhanceContent() {
       return "";
     }
   });
+
   const [enhancedText, setEnhancedText] = useState<ResumeValues | null>(() => {
     if (typeof window === "undefined") {
       return null;
@@ -85,6 +93,7 @@ export default function EnhanceContent() {
       return null;
     }
   });
+
   const [isEnhancing, setIsEnhancing] = useState(false);
 
   // Update localStorage when parsedText and enhancedText change
@@ -143,6 +152,8 @@ export default function EnhanceContent() {
     try {
       setLoading(true);
       const arrayBuffer = await file.arrayBuffer();
+
+      // 4. Load the document. In v5, we use 'getDocument' directly.
       const loadingTask = pdfjs.getDocument(arrayBuffer);
       const pdf = await loadingTask.promise;
 

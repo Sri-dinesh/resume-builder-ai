@@ -10,7 +10,7 @@ import {
   Bot,
   FileCheck,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { fadeIn, stagger } from "@/lib/animations";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -115,17 +115,21 @@ function Features() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-100px" }}
-          variants={stagger}
+          variants={stagger as Variants} 
           className="mx-auto mb-16 max-w-3xl text-center"
         >
           <motion.h2
             id="features-heading"
-            variants={fadeIn}
+            variants={fadeIn as Variants} 
             className="mb-4 text-3xl font-bold md:text-4xl"
           >
             Powerful Features for Your Perfect Resume
           </motion.h2>
-          <motion.p variants={fadeIn} className="text-lg text-muted-foreground">
+          <motion.p
+            variants={fadeIn as Variants}
+            className="text-lg text-muted-foreground"
+          >
+            {" "}
             Our AI-powered platform provides all the tools you need to create
             professional, ATS-friendly resumes that get you noticed.
           </motion.p>

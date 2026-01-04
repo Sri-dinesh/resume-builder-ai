@@ -54,8 +54,15 @@ export default function ScoreContent() {
 
     (async () => {
       try {
-        const mod = await import("pdfjs-dist/legacy/build/pdf");
-        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${mod.version}/pdf.worker.min.js`;
+        // 1. CHANGED: Import the main library (removes "legacy/build/pdf")
+        const mod = await import("pdfjs-dist");
+
+        // 2. CHANGED: Handle version fallback
+        const version = mod.version || "5.4.530";
+
+        // 3. CHANGED: Use .mjs worker for modern pdfjs-dist
+        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
+
         if (mounted) {
           setPdfjs(mod);
         }

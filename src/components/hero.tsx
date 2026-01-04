@@ -7,7 +7,7 @@ import {
   CheckCircle,
   LayoutDashboard,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { fadeIn, stagger } from "@/lib/animations";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -94,7 +94,7 @@ export default function Hero() {
         animate="animate"
         className="flex max-w-3xl flex-col items-center space-y-6 text-center"
       >
-        <motion.div variants={fadeIn}>
+        <motion.div variants={fadeIn as Variants}>
           <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20">
             <Sparkles
               className="mr-2 h-4 w-4 animate-[pulse_2s_ease-in-out_infinite]"
@@ -106,7 +106,7 @@ export default function Hero() {
 
         <motion.h1
           id="hero-heading"
-          variants={fadeIn}
+          variants={fadeIn as Variants}
           style={{ maxWidth: "85ch", lineHeight: "1.1" }}
           className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
         >
@@ -118,7 +118,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          variants={fadeIn}
+          variants={fadeIn as Variants}
           className="text-base text-muted-foreground sm:text-lg"
         >
           Stand out from the crowd with our AI-powered resume builder. Get hired
@@ -126,7 +126,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          variants={fadeIn}
+          variants={fadeIn as Variants}
           className="flex flex-wrap items-center justify-center gap-4 pt-2"
         >
           <Button
@@ -185,7 +185,7 @@ export default function Hero() {
           )}
         </motion.div>
 
-        <motion.div variants={fadeIn} className="pt-4">
+        <motion.div variants={fadeIn as Variants} className="pt-4">
           <ul className="flex flex-wrap justify-center gap-4 text-sm sm:gap-6">
             {benefits.map((benefit, index) => (
               <motion.li

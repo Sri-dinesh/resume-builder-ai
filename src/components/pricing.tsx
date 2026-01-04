@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { fadeIn, stagger } from "@/lib/animations";
 import { useRouter } from "next/navigation";
 const tiers = [
@@ -70,18 +70,18 @@ function Pricing() {
         initial="initial"
         whileInView="animate"
         viewport={{ once: true, margin: "-100px" }}
-        variants={stagger}
+        variants={stagger as Variants}
         className="mx-auto max-w-[58rem] text-center"
       >
         <motion.h2
           id="pricing-heading"
-          variants={fadeIn}
+          variants={fadeIn as Variants}
           className="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl"
         >
           Simple, Transparent Pricing
         </motion.h2>
-        <motion.p
-          variants={fadeIn}
+        <motion.p 
+          variants={fadeIn as Variants}
           className="mt-4 text-muted-foreground sm:text-lg"
         >
           Choose the perfect plan according to your needs.
@@ -91,13 +91,13 @@ function Pricing() {
         initial="initial"
         whileInView="animate"
         viewport={{ once: true, margin: "-50px" }}
-        variants={stagger}
+        variants={stagger as Variants}
         className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
       >
         {tiers.map((tier, index) => (
           <motion.div
             key={tier.id}
-            variants={fadeIn}
+            variants={fadeIn as Variants}
             custom={index}
             whileHover={{
               scale: tier.featured ? 1.03 : 1.05,

@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbo",
     "dev:legacy": "next dev",
-    "build": "next build -- --webpack",
-    "build:analyze": "cross-env ANALYZE=true next build -- --webpack",
+    "build": "next build --webpack",
+    "build:analyze": "cross-env ANALYZE=true next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
@@ -84,7 +84,7 @@
     "nodemailer": "^7.0.12",
     "ogl": "^1.0.11",
     "openai": "^4.77.0",
-    "pdf-parse": "^1.1.1",
+    "pdf-parse": "^1.1.4",
     "pdfjs-dist": "^5.4.530",
     "prisma": "^6.2.1",
     "react": "^19.2.3",
