@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbo",
     "dev:legacy": "next dev",
-    "build": "next build",
-    "build:analyze": "cross-env ANALYZE=true next build",
+    "build": "next build -- --webpack",
+    "build:analyze": "cross-env ANALYZE=true next build -- --webpack",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
