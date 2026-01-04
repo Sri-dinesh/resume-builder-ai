@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://sparkcv.vercel.app",
+    canonical: "https://sparkcv.onrender.com/",
   },
 };
 

@@ -8,6 +8,7 @@ const isPublicRoute = createRouteMatcher([
   "/sitemap.xml",
   "/robots.txt",
   "/api/health",
+  "/tos"
 ]);
 
 export default clerkMiddleware(async (auth, request) => {

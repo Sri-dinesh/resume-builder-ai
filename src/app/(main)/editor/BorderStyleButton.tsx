@@ -1,8 +1,30 @@
 import { Button } from "@/components/ui/button";
 import usePremiumModal from "@/hooks/usePremiumModal";
 import { canUseCustomizations } from "@/lib/permissions";
-import { Circle, Square, Squircle } from "lucide-react";
+import { Circle, Square, LucideProps } from "lucide-react"; // Removed 'Squircle' from import
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
+import { forwardRef } from "react";
+
+// 1. Define the missing Squircle icon manually
+const SquircleIcon = forwardRef<SVGSVGElement, LucideProps>(
+  ({ className, ...props }, ref) => (
+    <svg
+      ref={ref}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      {...props}
+    >
+      {/* A path representing a squircle (superellipse) */}
+      <path d="M12 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v6" />
+    </svg>
+  ),
+);
+SquircleIcon.displayName = "SquircleIcon";
 
 export const BorderStyles = {
   SQUARE: "square",
@@ -22,7 +44,6 @@ export default function BorderStyleButton({
   onChange,
 }: BorderStyleButtonProps) {
   const subscriptionLevel = useSubscriptionLevel();
-
   const premiumModal = usePremiumModal();
 
   function handleClick() {
@@ -36,12 +57,13 @@ export default function BorderStyleButton({
     onChange(borderStyles[nextIndex]);
   }
 
+  // 2. Update the Icon variable to use the manual SquircleIcon
   const Icon =
     borderStyle === "square"
       ? Square
       : borderStyle === "circle"
         ? Circle
-        : Squircle;
+        : SquircleIcon;
 
   return (
     <Button
