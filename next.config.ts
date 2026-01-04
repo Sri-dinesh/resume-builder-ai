@@ -1,11 +1,74 @@
 import type { NextConfig } from "next";
 import withBundleAnalyzerBase from "@next/bundle-analyzer";
 
+// Fix: Cast to 'any' to prevent TS errors regarding complex config shapes (Webpack + Turbopack)
 const withBundleAnalyzer = withBundleAnalyzerBase({
   enabled: process.env.ANALYZE === "true",
-}) as (config: NextConfig) => NextConfig;
+}) as any;
 
 const nextConfig: NextConfig = {
+  // Webpack Configuration
+  // Explicitly defining webpack here forces Next.js to use Webpack
+  // instead of Turbopack, resolving the "Call retries were exceeded" error.
+  webpack: (config, { dev, isServer }) => {
+    // Polyfills for pdfjs-dist to prevent build errors
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+
+    // Optimize chunks in production
+    if (!dev && !isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: "all",
+          minSize: 20000,
+          maxSize: 244000,
+          cacheGroups: {
+            // Separate vendor chunks
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendors",
+              chunks: "all",
+              priority: 10,
+            },
+            // Separate heavy libraries
+            pdfLib: {
+              test: /[\\/]node_modules[\\/](@react-pdf|pdfjs-dist|pdf-parse)[\\/]/,
+              name: "pdf-lib",
+              chunks: "all",
+              priority: 20,
+            },
+            richText: {
+              test: /[\\/]node_modules[\\/](@tiptap)[\\/]/,
+              name: "rich-text",
+              chunks: "all",
+              priority: 20,
+            },
+            dndKit: {
+              test: /[\\/]node_modules[\\/](@dnd-kit)[\\/]/,
+              name: "dnd-kit",
+              chunks: "all",
+              priority: 20,
+            },
+            charts: {
+              test: /[\\/]node_modules[\\/](recharts|d3-.*)[\\/]/,
+              name: "charts",
+              chunks: "all",
+              priority: 20,
+            },
+            framerMotion: {
+              test: /[\\/]node_modules[\\/](framer-motion|motion)[\\/]/,
+              name: "framer-motion",
+              chunks: "all",
+              priority: 20,
+            },
+          },
+        },
+      };
+    }
+    return config;
+  },
+
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -93,66 +156,6 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
-  },
-
-  // Webpack optimizations
-  webpack: (config, { dev, isServer }) => {
-    // Polyfills for pdfjs-dist to prevent build errors
-    config.resolve.alias.canvas = false;
-    config.resolve.alias.encoding = false;
-
-    // Optimize chunks in production
-    if (!dev && !isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: "all",
-          minSize: 20000,
-          maxSize: 244000,
-          cacheGroups: {
-            // Separate vendor chunks
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: "vendors",
-              chunks: "all",
-              priority: 10,
-            },
-            // Separate heavy libraries
-            pdfLib: {
-              test: /[\\/]node_modules[\\/](@react-pdf|pdfjs-dist|pdf-parse)[\\/]/,
-              name: "pdf-lib",
-              chunks: "all",
-              priority: 20,
-            },
-            richText: {
-              test: /[\\/]node_modules[\\/](@tiptap)[\\/]/,
-              name: "rich-text",
-              chunks: "all",
-              priority: 20,
-            },
-            dndKit: {
-              test: /[\\/]node_modules[\\/](@dnd-kit)[\\/]/,
-              name: "dnd-kit",
-              chunks: "all",
-              priority: 20,
-            },
-            charts: {
-              test: /[\\/]node_modules[\\/](recharts|d3-.*)[\\/]/,
-              name: "charts",
-              chunks: "all",
-              priority: 20,
-            },
-            framerMotion: {
-              test: /[\\/]node_modules[\\/](framer-motion|motion)[\\/]/,
-              name: "framer-motion",
-              chunks: "all",
-              priority: 20,
-            },
-          },
-        },
-      };
-    }
-    return config;
   },
 };
 
