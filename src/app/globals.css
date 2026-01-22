@@ -1,35 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Fonts are now loaded via next/font in layout.tsx for better performance */
 
 body {
-  font-family: Arial, Helvetica, sans-serif; /* Default fallback */
+  font-family: poppins, sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    --background: 60 14.3% 94.9%;
+    --foreground: 0 0% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
+    --card-foreground: 0 0% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 262.1 83.3% 57.8%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
+    --popover-foreground: 0 0% 11%;
+    --primary: 29 57% 46%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 5% 90%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 14% 95%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 60 5% 90%;
+    --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 262.1 83.3% 57.8%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 29 57% 46%;
+    --radius: 0.75rem;
+    --chart-1: 29 57% 46%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
@@ -37,26 +36,26 @@ body {
   }
 
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 88%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 88%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 88%;
+    --primary: 29 57% 46%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 32%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
-    --chart-1: 220 70% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 46 65% 52%;
+    --chart-1: 46 65% 52%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
@@ -96,6 +95,29 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.landing-page {
+  background-color: rgb(var(--color-bg));
+  color: rgb(var(--color-text-main));
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.glass-card {
+  background: rgba(var(--color-surface), 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--color-border), 0.08);
 }
 
 @media (prefers-reduced-motion: reduce) {
