@@ -38,7 +38,7 @@ export const LandingFooter: React.FC = () => {
     <footer className="w-full py-6 lg:py-8">
       <div className="relative mx-auto w-[98%] max-w-[1800px] overflow-hidden rounded-[2.5rem] border border-border/40 bg-card/30 backdrop-blur-xl dark:bg-card/20">
         <div className="pointer-events-none absolute -bottom-10 left-0 w-full select-none overflow-hidden leading-none">
-          <span className="block text-center font-[Oswald] font-serif text-[14vw] font-bold tracking-tighter text-foreground/[0.03] dark:text-foreground/[0.05]">
+          <span className="block text-center font-[Oswald] text-[14vw] font-bold tracking-tighter text-foreground/[0.03] dark:text-foreground/[0.05]">
             SparkCV
           </span>
         </div>
