@@ -52,10 +52,10 @@ const PricingCard = ({
           : "none",
       }}
       className={cn(
-        "group relative flex flex-col rounded-[2rem] border p-8 transition-all duration-500 md:p-10",
+        "group relative flex flex-col rounded-[2.5rem] border p-8 transition-all duration-700 md:p-10",
         isPopular
-          ? "z-20 border-primary/50 bg-card shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] md:scale-105"
-          : "z-10 border-border/50 bg-card/40 backdrop-blur-xl hover:border-border/80 dark:bg-card/20",
+          ? "z-20 border-primary/40 bg-card shadow-[0_30px_70px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)] md:scale-105"
+          : "z-10 border-border/40 bg-card/30 hover:border-border/60 dark:bg-card/10",
         className,
       )}
     >
@@ -162,8 +162,6 @@ export const LandingPricing = () => {
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4">
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[60%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[120px] dark:bg-primary/10" />
-
         <div className="grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-3 lg:gap-8">
           {/* Free Plan */}
           <PricingCard
