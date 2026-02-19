@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { BASE_URL } from "@/lib/config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/dashboard/settings/"],
       },
     ],
-    sitemap: "https://sparkcv.onrender.com/sitemap.xml",
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }
