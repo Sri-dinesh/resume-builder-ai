@@ -108,6 +108,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@netlify/plugin-nextjs": "^5.15.8",
     "@next/bundle-analyzer": "^15.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "@types/lodash": "^4.17.16",

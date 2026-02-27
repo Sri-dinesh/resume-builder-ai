@@ -8,12 +8,12 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | SparkCV Dashboard",
-    default: "Dashboard | SparkCV",
+    template: "%s | SparkCV - AI Resume Builder",
+    default: "SparkCV | Build a Winning Resume in Minutes",
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
