@@ -70,6 +70,7 @@ function validatePingRequest(request: NextRequest): {
     // Check if from allowed domains
     const allowedDomains = [
       "localhost",
+      "sparkcv.netlify.app",
       "sparkcv.onrender.com",
       "sparkcv.vercel.app",
     ];

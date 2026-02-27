@@ -4,6 +4,19 @@ import { auth } from "@clerk/nextjs/server";
 import Navbar from "./Navbar";
 import SubscriptionLevelProvider from "./SubscriptionLevelProvider";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | SparkCV Dashboard",
+    default: "Dashboard | SparkCV",
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default async function Layout({
   children,
 }: {
