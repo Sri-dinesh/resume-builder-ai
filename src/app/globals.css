@@ -2,70 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: poppins, sans-serif;
-}
-
 @layer base {
   :root {
-    --background: 60 14.3% 94.9%;
-    --foreground: 0 0% 11%;
+    --background: 40 12% 97%;
+    --foreground: 24 10% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 11%;
+    --card-foreground: 24 10% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 11%;
-    --primary: 29 57% 46%;
-    --primary-foreground: 60 9.1% 97.8%;
-    --secondary: 60 5% 90%;
-    --secondary-foreground: 24 9.8% 10%;
-    --muted: 60 14% 95%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 60 5% 90%;
-    --accent-foreground: 24 9.8% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 29 57% 46%;
+    --popover-foreground: 24 10% 10%;
+    --primary: 15 55% 55%;
+    --primary-foreground: 40 12% 97%;
+    --secondary: 40 10% 94%;
+    --secondary-foreground: 24 10% 10%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 25 5% 45%;
+    --accent: 40 10% 90%;
+    --accent-foreground: 24 10% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 10% 90%;
+    --input: 30 10% 90%;
+    --ring: 15 55% 55%;
     --radius: 0.75rem;
-    --chart-1: 29 57% 46%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 15 55% 55%;
+    --chart-2: 35 45% 50%;
+    --chart-3: 200 15% 30%;
+    --chart-4: 45 60% 65%;
+    --chart-5: 15 80% 70%;
+
+    --color-bg: 249 249 248;
+    --color-surface: 255 255 255;
+    --color-primary: 217 119 87;
+    --color-text-main: 29 29 27;
+    --color-text-muted: 115 115 115;
+    --color-border: 230 230 225;
   }
 
   .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 88%;
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 88%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 88%;
-    --primary: 29 57% 46%;
-    --primary-foreground: 0 0% 10%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 32%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --background: 0 0% 13%;
+    --foreground: 40 10% 90%;
+    --card: 0 0% 15%;
+    --card-foreground: 40 10% 90%;
+    --popover: 0 0% 13%;
+    --popover-foreground: 40 10% 90%;
+    --primary: 15 55% 55%;
+    --primary-foreground: 40 10% 90%;
+    --secondary: 0 0% 9%;
+    --secondary-foreground: 40 10% 90%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 40 5% 65%;
+    --accent: 0 0% 18%;
+    --accent-foreground: 40 10% 90%;
+    --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
-    --ring: 46 65% 52%;
-    --chart-1: 46 65% 52%;
-    --chart-2: 160 60% 45%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 15 55% 55%;
+    --chart-1: 15 55% 55%;
+    --chart-2: 35 45% 50%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    --color-bg: 33 33 33;
+    --color-surface: 23 23 23;
+    --color-primary: 217 119 87;
+    --color-text-main: 232 232 227;
+    --color-text-muted: 160 160 155;
+    --color-border: 50 50 50;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
@@ -80,21 +90,12 @@ body {
 }
 
 #resumePreviewContent {
-  font-family: Inter;
+  font-family: var(--font-inter), sans-serif;
 }
 
 @page {
   size: A4;
   margin: 0.6cm;
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
 .landing-page {
