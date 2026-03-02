@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Inter, Roboto } from "next/font/google";
+import { Inter, Roboto, Manrope, Playfair_Display } from "next/font/google";
 import { SystemHeartbeat } from "@/components/SystemHeartbeat";
 import "./globals.css";
 
@@ -10,6 +10,20 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  preload: true,
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
+  preload: true,
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-playfair",
   preload: true,
 });
 
@@ -51,7 +65,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://sparkcv.onrender.com/",
+    canonical: "https://sparkcv.netlify.app/",
   },
 };
 
@@ -80,7 +94,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "Spark CV - AI Resume Builder",
-              url: "https://sparkcv.vercel.app/",
+              url: "https://sparkcv.netlify.app/",
               description: metadata.description,
               publisher: {
                 "@type": "Organization",
@@ -90,7 +104,7 @@ export default function RootLayout({
           </script>
         </head>
         <body
-          className={`${inter.className} min-h-screen overflow-x-hidden antialiased`}
+          className={`${inter.variable} ${manrope.variable} ${playfair.variable} min-h-screen overflow-x-hidden font-sans antialiased`}
         >
           <ThemeProvider
             attribute="class"

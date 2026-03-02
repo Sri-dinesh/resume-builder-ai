@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
-import { Compass, LayoutGrid, Gem, Mail, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Compass, Gem, LayoutGrid, Mail, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type NavItem = {
   id: string;
@@ -50,7 +50,6 @@ export const LandingNavbar = () => {
 
   useEffect(() => setMounted(true), []);
 
-  // Scroll-spy: update active index based on scroll position
   useEffect(() => {
     if (!mounted) return;
 
@@ -75,7 +74,6 @@ export const LandingNavbar = () => {
     return () => observers.forEach((obs) => obs.disconnect());
   }, [mounted]);
 
-  // Limelight positioning - follows hover, falls back to active
   useLayoutEffect(() => {
     const limelight = limelightRef.current;
     const targetIndex =
@@ -139,10 +137,9 @@ export const LandingNavbar = () => {
                 {item.icon}
               </div>
 
-              {/* Label - hidden on mobile, visible on sm+ */}
               <div
                 className={cn(
-                  "absolute bottom-2 left-0 right-0 hidden text-center transition-all duration-300 ease-out sm:bottom-2.5 sm:block md:bottom-3.5",
+                  "absolute bottom-2 left-0 right-0 text-center transition-all duration-150 ease-out sm:bottom-2.5 md:bottom-3.5",
                   showLabel
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-2 opacity-0",
@@ -156,10 +153,8 @@ export const LandingNavbar = () => {
           );
         })}
 
-        {/* Divider */}
         <div className="mx-1 h-6 w-px bg-border/20 sm:mx-2 sm:h-8" />
 
-        {/* Theme Toggle Button */}
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           onMouseEnter={() => setHoveredIndex(-1)}
@@ -187,10 +182,9 @@ export const LandingNavbar = () => {
             )}
           </div>
 
-          {/* Label - hidden on mobile */}
           <div
             className={cn(
-              "absolute bottom-2 left-0 right-0 hidden text-center transition-all duration-300 ease-out sm:bottom-2.5 sm:block md:bottom-3.5",
+              "absolute bottom-2 left-0 right-0 text-center transition-all duration-150 ease-out sm:bottom-2.5 md:bottom-3.5",
               hoveredIndex === -1
                 ? "translate-y-0 opacity-100"
                 : "pointer-events-none translate-y-2 opacity-0",
@@ -202,7 +196,6 @@ export const LandingNavbar = () => {
           </div>
         </button>
 
-        {/* Limelight indicator */}
         <div
           ref={limelightRef}
           className={cn(

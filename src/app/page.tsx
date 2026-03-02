@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import {
-  Background,
   LandingHero,
   Narrative,
   BentoGrid,
@@ -43,28 +42,27 @@ export default function Home() {
   return (
     <>
       <div className="relative flex min-h-screen flex-col transition-colors duration-500 selection:bg-primary/30 selection:text-foreground">
-        <Background />
         <LandingNavbar />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-grow flex-col px-6 md:px-12">
           <main className="flex flex-col gap-32 pb-20">
-            <section id="home" className="scroll-mt-43">
+            <section id="home" className="scroll-mt-[120px]">
               <LandingHero />
             </section>
 
-            <section id="narrative" className="scroll-mt-43">
+            <section id="narrative" className="scroll-mt-[100px]">
               <Narrative />
             </section>
 
-            <section id="features" className="scroll-mt-43">
+            <section id="features" className="scroll-mt-[90px]">
               <BentoGrid />
             </section>
 
-            <section id="pricing" className="scroll-mt-42">
+            <section id="pricing" className="scroll-mt-[10px]">
               <LandingPricing />
             </section>
 
-            <section id="contact" className="scroll-mt-44">
+            <section id="contact" className="scroll-mt-[150px]">
               <LandingContact />
             </section>
 
