@@ -12,7 +12,6 @@ const CustomizationWidget = () => {
     () => {
       const tl = gsap.timeline({ paused: true });
 
-      // Clean setup to prevent React strict mode re-render bugs
       gsap.set(".doc-block-1, .doc-block-2", { y: 0 });
       gsap.set(".toolbar-btn", { scale: 1, transformOrigin: "center" });
       gsap.set(".cursor", { x: 120, y: 150, opacity: 0 });
@@ -23,7 +22,6 @@ const CustomizationWidget = () => {
       gsap.set(".accent-text", { color: "transparent" });
 
       tl.to(".cursor", { opacity: 1, duration: 0.2, ease: "power2.out" })
-        // Move to Layout Button
         .to(".cursor", { x: 218, y: 38, duration: 0.5, ease: "power3.inOut" })
         .to(".btn-layout", {
           scale: 0.85,
@@ -42,7 +40,6 @@ const CustomizationWidget = () => {
           { y: -36, duration: 0.6, ease: "back.out(1.2)" },
           "<",
         )
-        // Move to Color Button
         .to(
           ".cursor",
           { x: 218, y: 58, duration: 0.4, ease: "power2.inOut" },
@@ -55,18 +52,13 @@ const CustomizationWidget = () => {
           repeat: 1,
           ease: "power2.inOut",
         })
-        .to(
-          ".color-indicator",
-          { fill: "rgb(217,119,87)", duration: 0.3 },
-          ">",
-        )
+        .to(".color-indicator", { fill: "rgb(217,119,87)", duration: 0.3 }, ">")
         .to(
           ".accent-bg",
           { backgroundColor: "rgb(217,119,87)", duration: 0.3 },
           "<",
         )
         .to(".accent-text", { color: "#ffffff", duration: 0.3 }, "<")
-        // Move to Font Button
         .to(
           ".cursor",
           { x: 218, y: 78, duration: 0.4, ease: "power2.inOut" },
@@ -81,7 +73,6 @@ const CustomizationWidget = () => {
         })
         .to(".font-sans-wrapper", { opacity: 0, duration: 0.3 }, ">")
         .to(".font-serif-wrapper", { opacity: 1, duration: 0.3 }, "<")
-        // Cursor leaves viewport
         .to(".cursor", {
           x: 240,
           y: 150,
@@ -137,14 +128,12 @@ const CustomizationWidget = () => {
           viewBox="0 0 280 150"
           fill="none"
         >
-          {/* Main Resume Document Canvas */}
           <g transform="translate(40, 6)">
             <foreignObject x="0" y="0" width="144" height="136">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
+                {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
                 className="relative flex h-full w-full flex-col overflow-hidden rounded-[6px] border border-[#ebe9e1] bg-white p-3 font-sans"
               >
-                {/* Header Profile Section */}
                 <div className="mb-2.5 flex items-center gap-[8px]">
                   <div className="accent-bg flex h-7 w-7 items-center justify-center rounded-full bg-[#f0eee6] transition-colors">
                     <span className="accent-text text-[9px] font-bold tracking-tighter text-transparent">
@@ -159,9 +148,7 @@ const CustomizationWidget = () => {
 
                 <div className="mb-2.5 h-px w-full bg-[#f5f4f0]"></div>
 
-                {/* Content Layout Wrapper */}
                 <div className="relative w-full flex-1">
-                  {/* SANS SERIF LAYER */}
                   <div className="font-sans-wrapper absolute inset-0">
                     <div className="doc-block-1 absolute left-0 top-0 w-full">
                       <h4 className="mb-[3px] text-[7.5px] font-bold leading-none text-[#141413]">
@@ -185,7 +172,6 @@ const CustomizationWidget = () => {
                     </div>
                   </div>
 
-                  {/* SERIF LAYER */}
                   <div className="font-serif-wrapper absolute inset-0 opacity-0">
                     <div className="font-serif">
                       <div className="doc-block-1 absolute left-0 top-0 w-full">
@@ -215,7 +201,6 @@ const CustomizationWidget = () => {
             </foreignObject>
           </g>
 
-          {/* Editor Toolbar */}
           <g transform="translate(196, 20)">
             <rect
               x="0"
@@ -302,7 +287,6 @@ const CustomizationWidget = () => {
             </g>
           </g>
 
-          {/* Mouse Cursor SVG */}
           <g className="cursor">
             <path
               d="M0,0 L0,14 L3,11 L6,16 L8,15 L5,10 L10,10 Z"

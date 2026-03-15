@@ -195,7 +195,7 @@ const AIContentWidget = () => {
             />
 
             <path
-              d="M 12 12 L 14 16 L 18 18 L 14 20 L 12 24 L 10 20 L 6 18 L 10 16 Z"
+              d="M 13 10 L 15 14 L 19 16 L 15 18 L 13 22 L 11 18 L 7 16 L 11 14 Z"
               fill="rgb(217,119,87)"
               opacity="0.8"
             />
