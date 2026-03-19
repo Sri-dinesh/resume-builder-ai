@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// In-memory store for rate limiting (resets on cold start, which is fine for our use case)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
-// Configuration
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10; // Max 10 requests per minute per IP
+const RATE_LIMIT_WINDOW = 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 10;
 const PING_SECRET = process.env.PING_SECRET;
 
 /**
@@ -15,7 +13,6 @@ function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
   const record = rateLimitStore.get(ip);
 
-  // Clean up old entries periodically
   if (rateLimitStore.size > 1000) {
     for (const [key, value] of rateLimitStore.entries()) {
       if (value.resetTime < now) {
@@ -48,29 +45,24 @@ function validatePingRequest(request: NextRequest): {
   const origin = request.headers.get("origin");
   const referer = request.headers.get("referer");
 
-  // Allow requests without secret for external monitoring services (UptimeRobot, etc.)
-  // They can't set custom headers, so we allow them through
   if (!authHeader) {
-    // Check if it's from a known monitoring service or direct request
     const userAgent = request.headers.get("user-agent") || "";
     const isMonitoringService =
       userAgent.includes("UptimeRobot") ||
       userAgent.includes("Pingdom") ||
       userAgent.includes("curl") ||
       userAgent.includes("StatusCake") ||
-      !origin; // Direct requests (no origin = likely monitoring)
+      !origin;
 
     if (isMonitoringService) {
       return { valid: true };
     }
   }
 
-  // For requests with origin (browser requests), validate the secret
   if (origin || referer) {
-    // Check if from allowed domains
     const allowedDomains = [
       "localhost",
-      "sparkcv.onrender.com",
+      "sparkcv.netlify.app",
       "sparkcv.vercel.app",
     ];
 
@@ -83,7 +75,6 @@ function validatePingRequest(request: NextRequest): {
       return { valid: false, reason: "Invalid origin" };
     }
 
-    // Validate secret for client-side pings
     if (authHeader && authHeader !== PING_SECRET) {
       return { valid: false, reason: "Invalid secret" };
     }
@@ -112,11 +103,9 @@ const formatTimestamp12Hour = (): string => {
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
 
-  // Get client IP
   const forwarded = request.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() || "unknown";
 
-  // Rate limiting
   const { allowed, remaining } = checkRateLimit(ip);
 
   if (!allowed) {
@@ -136,7 +125,6 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Validate request
   const validation = validatePingRequest(request);
   if (!validation.valid) {
     return NextResponse.json(
@@ -145,10 +133,8 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Calculate response time
   const responseTime = Date.now() - startTime;
 
-  // Log the ping (useful for monitoring)
   console.log(
     `[Health Check] IP: ${ip.substring(0, 10)}*** | Time: ${formatTimestamp12Hour()} | ResponseTime: ${responseTime}ms`,
   );
