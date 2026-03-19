@@ -147,7 +147,7 @@ const AIContentWidget = () => {
     >
       <div className="z-10 flex flex-col">
         <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
-          03 / AI Writing
+          02 / AI Writing
         </span>
         <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
           Instant Content.

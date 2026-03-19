@@ -85,7 +85,7 @@ const CoverLetterWidget = () => {
     >
       <div className="z-10 flex flex-col">
         <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
-          02 / Cover Letter
+          06 / Cover Letter
         </span>
         <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
           Context-Aware Letters.

@@ -13,19 +13,26 @@ const SpeedWidget = () => {
     () => {
       const tl = gsap.timeline({ paused: true });
 
-      // Base resets
       gsap.set(".progress-ring", {
         strokeDashoffset: 150.8,
         rotation: -90,
         transformOrigin: "center",
       });
-      gsap.set(".timer-hub", { x: 140, y: 80 }); // Center of 280x160
-      gsap.set(".doc-plate", { x: 75, opacity: 0, scale: 0.9, transformOrigin: "center center" });
+      gsap.set(".timer-hub", { x: 140, y: 80 });
+      gsap.set(".doc-plate", {
+        x: 75,
+        opacity: 0,
+        scale: 0.9,
+        transformOrigin: "center center",
+      });
       gsap.set(".frag", { opacity: 0, x: 20, scale: 0.8 });
-      gsap.set(".success-check", { scale: 0, opacity: 0, transformOrigin: "center" });
+      gsap.set(".success-check", {
+        scale: 0,
+        opacity: 0,
+        transformOrigin: "center",
+      });
       gsap.set(".timer-content", { opacity: 1 });
 
-      // 1. Reveal Transition (Diverge from center)
       tl.to(".timer-hub", {
         x: 210,
         duration: 0.6,
@@ -43,7 +50,6 @@ const SpeedWidget = () => {
           "<",
         )
 
-        // 2. Warp Speed Countdown
         .to(
           timerRef.current,
           {
@@ -70,7 +76,6 @@ const SpeedWidget = () => {
           "<",
         )
 
-        // 3. Real Content Assembly
         .to(
           ".frag-1",
           { opacity: 1, x: 0, scale: 1, duration: 0.3, ease: "back.out(1.5)" },
@@ -87,7 +92,6 @@ const SpeedWidget = () => {
           "<0.1",
         )
 
-        // 4. Success State
         .to(".timer-content", { opacity: 0, scale: 0.5, duration: 0.2 }, ">")
         .to(
           ".success-check",
@@ -127,13 +131,14 @@ const SpeedWidget = () => {
     >
       <div className="z-10 flex flex-col">
         <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
-          01 / Speed
+          03 / Speed
         </span>
         <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
           Built in 5 Minutes.
         </h3>
         <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-[#66655f]">
-          Professional resumes in record time. Engineering speed into every step.
+          Professional resumes in record time. Engineering speed into every
+          step.
         </p>
       </div>
 
@@ -151,7 +156,6 @@ const SpeedWidget = () => {
           viewBox="0 0 280 160"
           fill="none"
         >
-          {/* Document Section (Starts behind timer) */}
           <g className="doc-plate">
             <g transform="translate(0, 10)">
               <rect
@@ -164,7 +168,6 @@ const SpeedWidget = () => {
               />
 
               <g transform="translate(12, 12)">
-                {/* Header Fragment */}
                 <g className="frag frag-1" transform="translate(0, 0)">
                   <rect
                     className="frag-bg"
@@ -197,7 +200,6 @@ const SpeedWidget = () => {
                   </text>
                 </g>
 
-                {/* Experience Fragment */}
                 <g className="frag frag-2" transform="translate(0, 36)">
                   <rect
                     className="frag-bg"
@@ -238,7 +240,6 @@ const SpeedWidget = () => {
                   </text>
                 </g>
 
-                {/* Skills Fragment */}
                 <g className="frag frag-3" transform="translate(0, 82)">
                   <rect
                     className="frag-bg"
@@ -274,7 +275,6 @@ const SpeedWidget = () => {
             </g>
           </g>
 
-          {/* Timer Hub Section (Starts at center) */}
           <g className="timer-hub">
             <circle
               r="32"

@@ -5,13 +5,11 @@ import { motion } from "framer-motion";
 import React from "react";
 
 import AIContentWidget from "./bento/AIContentWidget";
-import ATSScanWidget from "./bento/ATSScanWidget";
 import RealTimeWidget from "./bento/RealTimeWidget";
 import CustomizationWidget from "./bento/CustomizationWidget";
 import CoverLetterWidget from "./bento/CoverLetterWidget";
 import ATSScoreWidget from "./bento/ATSScoreWidget";
-
-// --- Main Layout ---
+import SpeedWidget from "./bento/SpeedWidget";
 
 const BentoCard = ({
   children,
@@ -66,7 +64,7 @@ export const BentoGrid: React.FC = () => {
           <CoverLetterWidget />
         </BentoCard>
         <BentoCard>
-          <ATSScanWidget />
+          <SpeedWidget />
         </BentoCard>
         <BentoCard>
           <CustomizationWidget />
@@ -78,4 +76,3 @@ export const BentoGrid: React.FC = () => {
     </section>
   );
 };
-
