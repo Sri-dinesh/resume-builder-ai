@@ -62,7 +62,7 @@ export default function Home() {
               <LandingPricing />
             </section>
 
-            <section id="contact" className="scroll-mt-[150px]">
+            <section id="contact" className="scroll-mt-31">
               <LandingContact />
             </section>
 
