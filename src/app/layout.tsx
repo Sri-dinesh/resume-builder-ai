@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Inter, Roboto } from "next/font/google";
+import { Inter, Roboto, Manrope, Playfair_Display } from "next/font/google";
 import { SystemHeartbeat } from "@/components/SystemHeartbeat";
 import "./globals.css";
 
@@ -10,6 +10,20 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  preload: true,
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
+  preload: true,
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-playfair",
   preload: true,
 });
 
@@ -90,7 +104,7 @@ export default function RootLayout({
           </script>
         </head>
         <body
-          className={`${inter.className} min-h-screen overflow-x-hidden antialiased`}
+          className={`${inter.variable} ${manrope.variable} ${playfair.variable} min-h-screen overflow-x-hidden font-sans antialiased`}
         >
           <ThemeProvider
             attribute="class"

@@ -107,9 +107,6 @@ export default function Navbar() {
             title="Cover Letter Generator"
           />
 
-          {/* Theme Toggle */}
-          {/* <ThemeToggle /> */}
-
           {/* User Button */}
           <UserButton
             appearance={{
