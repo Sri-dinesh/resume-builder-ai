@@ -4,6 +4,19 @@ import { auth } from "@clerk/nextjs/server";
 import Navbar from "./Navbar";
 import SubscriptionLevelProvider from "./SubscriptionLevelProvider";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | SparkCV - AI Resume Builder",
+    default: "SparkCV | Build a Winning Resume in Minutes",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
 export default async function Layout({
   children,
 }: {

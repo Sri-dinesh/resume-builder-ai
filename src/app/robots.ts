@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/dashboard/settings/"],
       },
     ],
-    sitemap: "https://sparkcv.onrender.com/sitemap.xml",
+    sitemap: "https://sparkcv.netlify.app/sitemap.xml",
   };
 }

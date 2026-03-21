@@ -46,8 +46,8 @@ export const fonts = {
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - Spark CV",
-    absolute: "Spark CV",
+    template: "%s | SparkCV - AI Resume Builder",
+    default: "SparkCV | Build a Winning Resume in Minutes",
   },
   description:
     "Why blend in when you were born to stand out? SparkCV’s AI builds resumes that highlight your strengths and make recruiters take notice. Take the first step to your dream role! 🚀",
@@ -80,7 +80,7 @@ export default function RootLayout({
         <head>
           <meta
             name="google-site-verification"
-            content="gJ0XGfhQTrs82XW7krWRSRQ9GHr4llk3ILa2EqGqLpo"
+            content="BuBHZLsXRDH5UP4nPHuPmqp-EChgNuqWHE1Z7oLw1zg"
           />
           <meta
             name="viewport"

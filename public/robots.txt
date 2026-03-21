@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sparkcv.onrender.com/sitemap.xml
+Sitemap: https://sparkcv.netlify.app/sitemap.xml

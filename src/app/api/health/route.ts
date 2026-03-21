@@ -62,6 +62,7 @@ function validatePingRequest(request: NextRequest): {
   if (origin || referer) {
     const allowedDomains = ["localhost", "sparkcv.vercel.app"];
 
+
     const requestOrigin = origin || referer || "";
     const isAllowedDomain = allowedDomains.some((domain) =>
       requestOrigin.includes(domain),
