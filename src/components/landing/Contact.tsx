@@ -7,7 +7,6 @@ import {
   Mail,
   Check,
   AlertCircle,
-  Loader2,
   MessageSquare,
   Clock,
   Zap,
@@ -15,7 +14,6 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -27,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { MagneticButton } from "./ui/MagneticButton";
 
 const contactFormSchema = z.object({
   firstName: z
@@ -412,28 +411,17 @@ export const LandingContact = () => {
                     )}
                   </AnimatePresence>
 
-                  <Button
+                  <MagneticButton
                     type="submit"
-                    disabled={isSubmitting || isSuccess}
-                    className="h-12 w-full rounded-lg bg-primary text-base font-medium text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md disabled:pointer-events-none disabled:opacity-60"
+                    isLoading={isSubmitting}
+                    disabled={isSuccess}
+                    variant="primary"
+                    size="md"
+                    className="w-full"
+                    rightIcon={isSuccess ? <Check className="h-4 w-4" /> : <Send className="h-4 w-4" />}
                   >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        <span>Sending...</span>
-                      </>
-                    ) : isSuccess ? (
-                      <>
-                        <Check className="mr-2 h-5 w-5" />
-                        <span>Sent Successfully</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Send Message</span>
-                        <Send className="ml-2 h-5 w-5" />
-                      </>
-                    )}
-                  </Button>
+                    {isSuccess ? "Sent Successfully" : "Send Message"}
+                  </MagneticButton>
                 </form>
               </Form>
             </div>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Award, CircleDollarSign, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { MagneticButton } from "./ui/MagneticButton";
 
 const PricingCard = ({
   title,
@@ -119,16 +120,14 @@ const PricingCard = ({
         ))}
       </div>
 
-      <Link
-        href="/billing"
-        className={cn(
-          "w-full rounded-xl py-4 text-center text-sm font-bold transition-all duration-300",
-          isPopular
-            ? "bg-primary text-primary-foreground shadow-[0_10px_20px_-5px_rgba(var(--primary),0.3)] hover:opacity-90"
-            : "border border-border/50 bg-foreground/5 text-foreground hover:bg-foreground/10",
-        )}
-      >
-        {buttonText}
+      <Link href="/billing" className="w-full">
+        <MagneticButton
+          variant={isPopular ? "primary" : "outline"}
+          size="md"
+          className="w-full"
+        >
+          {buttonText}
+        </MagneticButton>
       </Link>
     </motion.div>
   );

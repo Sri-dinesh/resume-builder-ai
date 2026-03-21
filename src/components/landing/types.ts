@@ -1,10 +1,14 @@
 import React from "react";
+import { HTMLMotionProps } from "framer-motion";
 
-export interface MagneticButtonProps {
+export interface MagneticButtonProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
   strength?: number;
+  isLoading?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
 export interface BentoCardProps {

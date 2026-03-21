@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@clerk/nextjs";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
+  ArrowRight,
   Award,
   Briefcase,
   CheckCircle2,
@@ -115,13 +115,14 @@ export const LandingHero: React.FC = () => {
           land interviews. Build yours in 5 minutes.
         </p>
         <div className="relative z-20 mb-12 flex flex-wrap items-center justify-center gap-4">
-          <Button
+          <MagneticButton
             size="lg"
-            className="h-12 rounded-xl bg-primary px-8 text-sm font-semibold tracking-tight text-primary-foreground opacity-50"
+            variant="primary"
+            className="opacity-50"
             disabled
           >
             Start Building
-          </Button>
+          </MagneticButton>
         </div>
       </section>
     );
@@ -176,48 +177,34 @@ export const LandingHero: React.FC = () => {
         transition={{ duration: 0.8, delay: 0.5 }}
         className="relative z-20 mb-12 flex flex-wrap items-center justify-center gap-4"
       >
-        <div className="relative">
-          <div className="absolute -inset-1 animate-pulse rounded-xl bg-primary/30 blur-md transition-all duration-1000 group-hover:bg-primary/50" />
+        <div className="relative w-full sm:w-auto">
           <MagneticButton
             onClick={handleBuildResume}
-            className="group relative h-12 rounded-xl bg-primary px-8 text-sm font-semibold tracking-tight text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-all duration-500 hover:shadow-[0_0_40px_-10px_hsl(var(--primary))] disabled:opacity-50"
+            variant="primary"
+            size="lg"
+            className="w-full sm:w-auto"
+            isLoading={isLoading}
+            rightIcon={
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            }
           >
-            {isLoading ? (
-              <>
-                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                Loading...
-              </>
-            ) : (
-              "Start Building"
-            )}
+            Start Building
           </MagneticButton>
         </div>
 
         {isSignedIn && (
-          <Button
-            size="lg"
+          <MagneticButton
             variant="outline"
+            size="lg"
             onClick={handleDashboard}
-            disabled={isLoading || dashboardLoading}
-            className="group border-primary/30 hover:border-primary hover:bg-primary/10"
+            isLoading={dashboardLoading}
+            disabled={isLoading}
+            leftIcon={
+              <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
+            }
           >
-            <span className="flex items-center">
-              {dashboardLoading ? (
-                <>
-                  <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                  Loading...
-                </>
-              ) : (
-                <>
-                  <LayoutDashboard
-                    className="mr-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  Dashboard
-                </>
-              )}
-            </span>
-          </Button>
+            Dashboard
+          </MagneticButton>
         )}
       </motion.div>
 
@@ -228,7 +215,6 @@ export const LandingHero: React.FC = () => {
         transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
         className="relative z-10 mx-auto w-full max-w-6xl px-4"
       >
-        {/* Glowing Spotlight Background */}
         <div className="absolute left-1/2 top-1/3 -z-10 h-[400px] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[100px] dark:bg-primary/15" />
 
         <div className="group relative overflow-hidden rounded-xl border border-white/60 bg-white/40 shadow-[0_2px_8px_rgba(0,0,0,0.04),0_16px_32px_rgba(0,0,0,0.04)] ring-1 ring-black/5 backdrop-blur-2xl transition-all hover:border-white/80 dark:border-white/10 dark:bg-black/40 dark:shadow-none dark:hover:shadow-none md:rounded-2xl">

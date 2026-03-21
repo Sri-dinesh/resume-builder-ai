@@ -39,17 +39,16 @@ const BentoCard = ({
 
 export const BentoGrid: React.FC = () => {
   return (
-    <section className="w-full py-12">
-      <div className="mb-12 text-center md:text-left">
-        <h2 className="mb-4 font-display text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-          Everything you need.{" "}
-          <span className="bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
-            Nothing you don&apos;t
+    <section className="w-full pb-24">
+      <div className="mx-auto mb-16 text-center">
+        <h2 className="font-['Syne'] text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+          Engineered for your{" "}
+          <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            next move.
           </span>
-          .
         </h2>
-        <p className="max-w-2xl text-lg text-muted-foreground">
-          Resume builder, cover letter generator, and scorer. All in one place.
+        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg lg:text-xl">
+          Precision tools to craft, optimize, and land your next role instantly.
         </p>
       </div>
 

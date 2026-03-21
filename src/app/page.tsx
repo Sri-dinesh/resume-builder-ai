@@ -54,7 +54,7 @@ export default function Home() {
               <Narrative />
             </section>
 
-            <section id="features" className="scroll-mt-[90px]">
+            <section id="features" className="scroll-mt-20">
               <BentoGrid />
             </section>
 

@@ -66,6 +66,14 @@ export default {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
+      keyframes: {
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 2s infinite",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

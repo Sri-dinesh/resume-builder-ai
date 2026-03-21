@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern";
+import { MagneticButton } from "./ui/MagneticButton";
 
 export const LandingCTA = () => {
   return (
@@ -44,14 +45,15 @@ export const LandingCTA = () => {
             Build a Resume. Land Interviews. Get Hired. It's That Simple.
           </p>
 
-          <Link
-            href="/resumes"
-            className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-foreground px-8 py-4 text-lg font-bold text-background shadow-2xl transition-all hover:scale-105 active:scale-95 md:px-10 md:py-5 md:text-xl"
-          >
-            <span className="relative z-10">Build Now</span>
-            <ArrowRight className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1.5 md:h-6 md:w-6" />
-
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+          <Link href="/resumes">
+            <MagneticButton
+              variant="primary"
+              size="lg"
+              className="px-12 md:px-14 font-semibold"
+              rightIcon={<ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />}
+            >
+              Build Now
+            </MagneticButton>
           </Link>
         </motion.div>
       </div>
