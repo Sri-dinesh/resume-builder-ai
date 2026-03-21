@@ -119,13 +119,13 @@ const RealTimeWidget = () => {
       onMouseLeave={() => masterTL.current?.reverse()}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
+        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
           01 / Real-Time
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
+        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
           Instant Mirroring.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-[#66655f]">
+        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
           Edit details and watch your resume update instantly.
         </p>
       </div>
@@ -183,7 +183,7 @@ const RealTimeWidget = () => {
               <foreignObject x="6" y="16" width="90" height="12">
                 <div
                   {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                  className="flex items-center font-sans text-[7.5px] font-bold text-[#141413]"
+                  className="flex items-center font-sans text-[7.5px] font-bold text-foreground"
                 >
                   {renderText("Product Designer", "input-char")}
                 </div>
@@ -203,7 +203,7 @@ const RealTimeWidget = () => {
                 <foreignObject x="6" y="16" width="90" height="12">
                   <div
                     {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                    className="flex items-center font-sans text-[7.5px] font-medium text-[#66655f]"
+                    className="flex items-center font-sans text-[7.5px] font-medium text-muted-foreground"
                   >
                     {renderText("San Francisco", "loc-char")}
                   </div>
@@ -224,7 +224,7 @@ const RealTimeWidget = () => {
                 <foreignObject x="6" y="16" width="90" height="24">
                   <div
                     {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                    className="font-sans text-[6.5px] leading-[1.3] text-[#66655f]"
+                    className="font-sans text-[6.5px] leading-[1.3] text-muted-foreground"
                   >
                     {renderText(
                       "Crafting elegant user experiences.",
@@ -297,7 +297,7 @@ const RealTimeWidget = () => {
               <foreignObject x="36" y="14" width="85" height="12">
                 <div
                   {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                  className="font-sans text-[8px] font-bold text-[#d97757]"
+                  className="font-sans text-[8px] font-bold text-primary"
                 >
                   {renderText("Product Designer", "resume-char")}
                 </div>
@@ -306,7 +306,7 @@ const RealTimeWidget = () => {
               <foreignObject x="36" y="24" width="85" height="10">
                 <div
                   {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                  className="font-sans text-[6px] text-[#66655f]"
+                  className="font-sans text-[6px] text-muted-foreground"
                 >
                   {renderText("San Francisco", "loc-resume-char")}
                 </div>
@@ -327,10 +327,10 @@ const RealTimeWidget = () => {
                     className="flex flex-col gap-[8px] font-sans"
                   >
                     <div className="flex flex-col gap-[3px]">
-                      <span className="text-[5.5px] font-bold text-[#141413]">
+                      <span className="text-[5.5px] font-bold text-foreground">
                         SUMMARY
                       </span>
-                      <div className="text-[6px] leading-[1.3] text-[#66655f]">
+                      <div className="text-[6px] leading-[1.3] text-muted-foreground">
                         {renderText(
                           "Crafting elegant user experiences.",
                           "bio-resume-char",
@@ -338,10 +338,10 @@ const RealTimeWidget = () => {
                       </div>
                     </div>
                     <div className="doc-section-reveal flex flex-col gap-[3px]">
-                      <span className="text-[5.5px] font-bold text-[#141413]">
+                      <span className="text-[5.5px] font-bold text-foreground">
                         EXPERIENCE
                       </span>
-                      <div className="flex flex-col gap-[2px] text-[5px] text-[#66655f]">
+                      <div className="flex flex-col gap-[2px] text-[5px] text-muted-foreground">
                         <span>Led redesign of core user dashboard</span>
                         <span>Optimized mobile engagement by 20%</span>
                       </div>

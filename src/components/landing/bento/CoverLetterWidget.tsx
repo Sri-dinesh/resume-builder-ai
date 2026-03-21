@@ -84,13 +84,13 @@ const CoverLetterWidget = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
+        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
           06 / Cover Letter
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
+        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
           Context-Aware Letters.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-[#66655f]">
+        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
           Instantly generate highly personalized cover letters perfectly matched
           to the job description.
         </p>
@@ -186,88 +186,88 @@ const CoverLetterWidget = () => {
                         className="flex flex-col gap-[8px] font-sans"
                       >
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             Dear
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             Hiring
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             Manager,
                           </span>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             I'm
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             excited
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             to
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             apply
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             for
                           </span>
-                          <span className="cl-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[8px] font-bold text-[#d97757]">
+                          <span className="cl-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[8px] font-bold text-primary">
                             Senior Frontend
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             role.
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             My
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             skills
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             in
                           </span>
-                          <span className="cl-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[8px] font-bold text-[#d97757]">
+                          <span className="cl-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[8px] font-bold text-primary">
                             React ecosystem
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             align
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             perfectly.
                           </span>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             I
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             recently
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             led
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             a
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             team
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             to
                           </span>
-                          <span className="cl-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[8px] font-bold text-[#d97757]">
+                          <span className="cl-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[8px] font-bold text-primary">
                             scale architecture
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             for
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             1M+
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-[#66655f]">
+                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             MAU.
                           </span>
                         </div>

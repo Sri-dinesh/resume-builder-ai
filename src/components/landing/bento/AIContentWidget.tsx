@@ -146,13 +146,13 @@ const AIContentWidget = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
+        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
           02 / AI Writing
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
+        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
           Instant Content.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-[#66655f]">
+        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
           Input key skills. Instantly generate highly optimized, impactful
           bullet points.
         </p>
@@ -332,139 +332,139 @@ const AIContentWidget = () => {
                 className="flex flex-col gap-[10px] font-sans"
               >
                 <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     Senior
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     frontend
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     engineer
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     skilled
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     in
                   </span>
-                  <span className="gen-word summary-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[6px] font-semibold text-[#d97757]">
+                  <span className="gen-word summary-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[6px] font-semibold text-primary">
                     React.js
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     and
                   </span>
-                  <span className="gen-word summary-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[6px] font-semibold text-[#d97757]">
+                  <span className="gen-word summary-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[6px] font-semibold text-primary">
                     Node.js,
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     driving
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     scalable
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     solutions
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     with
                   </span>
-                  <span className="gen-word summary-word inline-block text-[6.5px] text-[#66655f]">
+                  <span className="gen-word summary-word inline-block text-[6.5px] text-muted-foreground">
                     strong
                   </span>
-                  <span className="gen-word summary-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[6px] font-semibold text-[#d97757]">
+                  <span className="gen-word summary-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[6px] font-semibold text-primary">
                     Leadership.
                   </span>
                 </div>
 
                 <div className="mt-[1px] flex items-start gap-[5px]">
-                  <span className="gen-dot gen-dot-1 mt-[0.5px] inline-block text-[7px] text-[#d97757]">
+                  <span className="gen-dot gen-dot-1 mt-[0.5px] inline-block text-[7px] text-primary">
                     ●
                   </span>
                   <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       Spearheaded
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       the
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       migration
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       to
                     </span>
-                    <span className="gen-word bullet-1-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[6px] font-semibold text-[#d97757]">
+                    <span className="gen-word bullet-1-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[6px] font-semibold text-primary">
                       React.js
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       and
                     </span>
-                    <span className="gen-word bullet-1-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[6px] font-semibold text-[#d97757]">
+                    <span className="gen-word bullet-1-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[6px] font-semibold text-primary">
                       Node.js
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       architecture,
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       improving
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       performance
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] text-muted-foreground">
                       by
                     </span>
-                    <span className="gen-word bullet-1-word inline-block text-[6.5px] font-medium text-[#141413]">
+                    <span className="gen-word bullet-1-word inline-block text-[6.5px] font-medium text-foreground">
                       40%.
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-[5px]">
-                  <span className="gen-dot gen-dot-2 mt-[0.5px] inline-block text-[7px] text-[#d97757]">
+                  <span className="gen-dot gen-dot-2 mt-[0.5px] inline-block text-[7px] text-primary">
                     ●
                   </span>
                   <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       Demonstrated
                     </span>
-                    <span className="gen-word bullet-2-word inline-block rounded-[2px] border border-[#d97757]/20 bg-[#d97757]/10 px-[3px] py-[1px] text-[6px] font-semibold text-[#d97757]">
+                    <span className="gen-word bullet-2-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[6px] font-semibold text-primary">
                       Leadership
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       by
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       mentoring
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       a
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       team
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       of
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] font-medium text-[#141413]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] font-medium text-foreground">
                       5 developers
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       to
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       deliver
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       projects
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       ahead
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       of
                     </span>
-                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-[#66655f]">
+                    <span className="gen-word bullet-2-word inline-block text-[6.5px] text-muted-foreground">
                       schedule.
                     </span>
                   </div>

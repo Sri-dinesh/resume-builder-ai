@@ -237,13 +237,13 @@ const ATSScoreWidget = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-[#b0aea5]">
+        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
           05 / ATS Analysis
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-[#141413]">
+        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
           Beat the Bots.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-[#66655f]">
+        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
           Real-time, in-depth scoring against industry-standard ATS algorithms.
         </p>
       </div>
