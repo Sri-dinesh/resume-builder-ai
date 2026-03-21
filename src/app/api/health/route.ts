@@ -60,11 +60,7 @@ function validatePingRequest(request: NextRequest): {
   }
 
   if (origin || referer) {
-    const allowedDomains = [
-      "localhost",
-      "sparkcv.netlify.app",
-      "sparkcv.vercel.app",
-    ];
+    const allowedDomains = ["localhost", "sparkcv.vercel.app"];
 
     const requestOrigin = origin || referer || "";
     const isAllowedDomain = allowedDomains.some((domain) =>
