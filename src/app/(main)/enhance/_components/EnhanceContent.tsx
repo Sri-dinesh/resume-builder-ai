@@ -207,23 +207,23 @@ export default function EnhanceContent() {
   };
 
   return (
-    <div className="container mx-auto max-w-7xl px-6 py-12">
-      <div className="space-y-10">
-        <div className="text-center">
-          <h1 className="mb-4 text-5xl font-bold tracking-tight">
+    <div className="min-h-screen w-full bg-muted/20 py-8 md:py-12">
+      <div className="mx-auto max-w-5xl space-y-8 px-4 sm:px-6 lg:px-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Enhance Your Resume
           </h1>
-          <p className="text-xl text-muted-foreground">
-            Upload your PDF resume and let AI improve & generate a new one just
-            for you
-          </p>
-          <p className="text-base text-muted-foreground">
-            Note: This feature is still in beta so it may not be perfect.
+          <p className="mt-2 text-base text-muted-foreground">
+            Upload your PDF resume and let our system improve and generate a new
+            one for you.
+            <span className="ml-2 inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">
+              Beta
+            </span>
           </p>
         </div>
 
-        <Card className="p-10">
-          <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
+          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
             <FileUpload
               onChange={(files: File[]) => {
                 if (files.length > 0) {
@@ -232,67 +232,86 @@ export default function EnhanceContent() {
               }}
             />
           </div>
-        </Card>
+        </div>
 
         {(loading || isEnhancing) && (
-          <Card className="p-6">
-            <div className="flex items-center justify-center space-x-3">
+          <div className="mx-auto max-w-xl">
+            <div className="flex items-center justify-center space-x-3 rounded-xl border border-border bg-card p-6 shadow-sm">
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
-              <p className="text-lg">
+              <p className="text-lg font-medium text-foreground/80">
                 {loading
                   ? "Parsing your resume..."
                   : "Enhancing your resume..."}
               </p>
             </div>
-          </Card>
+          </div>
         )}
 
         {error && (
-          <Card className="border-destructive p-6">
-            <p className="text-center text-lg text-destructive">{error}</p>
-          </Card>
+          <div className="mx-auto max-w-xl">
+            <div className="rounded-lg bg-destructive/10 p-4 text-center text-sm font-medium text-destructive">
+              {error}
+            </div>
+          </div>
         )}
 
         {enhancedText && (
-          <>
-            <div className="grid gap-10 md:grid-cols-2">
-              <Card className="h-[700px] overflow-auto p-8 shadow-lg">
-                <h2 className="mb-6 text-2xl font-semibold">
-                  Original Content
-                </h2>
-                <div className="rounded-lg bg-muted/50 p-8">
-                  <pre className="whitespace-pre-wrap text-base leading-relaxed">
+          <div className="space-y-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="flex h-[600px] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+                <div className="border-b border-border bg-muted/30 px-6 py-4">
+                  <h2 className="text-sm font-semibold tracking-tight">
+                    Original Content
+                  </h2>
+                </div>
+                <div className="flex-1 overflow-auto p-6">
+                  <pre className="whitespace-pre-wrap text-sm font-medium leading-relaxed text-muted-foreground">
                     {parsedText}
                   </pre>
                 </div>
-              </Card>
+              </div>
 
-              <Card className="h-[700px] overflow-auto p-8 shadow-lg">
-                <h2 className="mb-6 text-2xl font-semibold">
-                  Enhanced Version
-                </h2>
-                <div className="rounded-lg bg-muted/50 p-8">
-                  <pre className="whitespace-pre-wrap text-base leading-relaxed">
+              <div className="flex h-[600px] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+                <div className="border-b border-border bg-muted/30 px-6 py-4">
+                  <h2 className="text-sm font-semibold tracking-tight text-primary">
+                    Enhanced Version
+                  </h2>
+                </div>
+                <div className="flex-1 overflow-auto p-6">
+                  <pre className="whitespace-pre-wrap text-sm font-medium leading-relaxed text-muted-foreground">
                     {JSON.stringify(enhancedText, null, 2)}
                   </pre>
                 </div>
-              </Card>
+              </div>
             </div>
 
             {/* Generated Resume Preview */}
-            <div className="mt-10 space-y-6">
-              <h2 className="text-2xl font-semibold">Generated Resume</h2>
-              <div className="p-4" style={{ padding: "5mm" }}>
+            <div className="space-y-6 rounded-xl border border-border bg-card p-6 shadow-sm sm:p-8">
+              <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                  Generated Resume
+                </h2>
+                <Button
+                  onClick={handleDownloadPDF}
+                  disabled={loading}
+                  className="px-6"
+                >
+                  {loading ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
+                  Download PDF
+                </Button>
+              </div>
+
+              <div className="flex justify-center pt-2">
                 <div
-                  className="mx-auto flex justify-center"
                   style={{
                     width: "210mm",
                     height: "297mm",
                     maxWidth: "100%",
                     overflow: "hidden",
                     position: "relative",
-                    border: "1px solid #ddd",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    background: "white",
                   }}
                 >
                   <div id="downloadableResume" className="h-full w-full">
@@ -301,18 +320,7 @@ export default function EnhanceContent() {
                 </div>
               </div>
             </div>
-
-            <div className="mt-6 flex justify-end space-x-4">
-              <Button
-                size="lg"
-                className="px-8 py-6 text-lg"
-                onClick={handleDownloadPDF}
-                disabled={loading}
-              >
-                {loading ? "Generating PDF..." : "Download PDF"}
-              </Button>
-            </div>
-          </>
+          </div>
         )}
       </div>
     </div>
