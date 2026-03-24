@@ -1,95 +1,72 @@
 "use client";
 
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { CheckCircle2, Loader2, Target, WandSparkles } from "lucide-react";
 import { FileUpload } from "@/components/ui/file-upload";
-import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  SCORE_ACCEPTED_FILE_TYPES,
+  type ScoreAnalysisMode,
+  type ScoreAnalysisResult,
+} from "@/lib/score";
+import { ScoreDashboard } from "@/components/score/ScoreDashboard";
 
-// Dynamically import ScoreDashboard - it's only needed after analysis
-const ScoreDashboard = dynamic(
-  () =>
-    import("@/components/score/ScoreDashboard").then(
-      (mod) => mod.ScoreDashboard,
-    ),
+const SCAN_FEATURES = [
   {
-    loading: () => (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-        <span className="ml-2 text-gray-600">Loading dashboard...</span>
-      </div>
-    ),
-    ssr: false,
+    title: "ATS parseability",
+    detail:
+      "Checks contact clarity, date consistency, section labels, and formatting signals that affect parsing.",
   },
-);
-
-interface AnalysisResult {
-  score: number;
-  summary: string;
-  sections: {
-    impact: { score: number; feedback: string[] };
-    brevity: { score: number; feedback: string[] };
-    style: { score: number; feedback: string[] };
-    structure: { score: number; feedback: string[] };
-    skills: { score: number; feedback: string[] };
-  };
-  keywords: {
-    present: string[];
-    missing: string[];
-  };
-}
+  {
+    title: "Keyword alignment",
+    detail:
+      "Measures how closely the resume mirrors the language and requirements in the target job description.",
+  },
+  {
+    title: "Achievement quality",
+    detail:
+      "Looks for quantified impact, action verbs, and recruiter-friendly bullet structure.",
+  },
+  {
+    title: "Clarity and brevity",
+    detail:
+      "Flags resumes that are too thin, too dense, too repetitive, or overly generic.",
+  },
+];
 
 export default function ScoreContent() {
   const [file, setFile] = useState<File | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [loadingStep, setLoadingStep] = useState<string>("");
-  const [analysisMode, setAnalysisMode] = useState<"general" | "jd">("general");
-  const [jobDescription, setJobDescription] = useState<string>("");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [pdfjs, setPdfjs] = useState<any>(null);
-
-  React.useEffect(() => {
-    let mounted = true;
-
-    (async () => {
-      try {
-        // 1. CHANGED: Import the main library (removes "legacy/build/pdf")
-        const mod = await import("pdfjs-dist");
-
-        // 2. CHANGED: Handle version fallback
-        const version = mod.version || "5.4.530";
-
-        // 3. CHANGED: Use .mjs worker for modern pdfjs-dist
-        mod.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
-
-        if (mounted) {
-          setPdfjs(mod);
-        }
-      } catch (e) {
-        console.error("Failed to load pdfjs", e);
-      }
-    })();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const [result, setResult] = useState<ScoreAnalysisResult | null>(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [analysisMode, setAnalysisMode] =
+    useState<ScoreAnalysisMode>("general");
+  const [jobDescription, setJobDescription] = useState("");
 
   const handleFileUpload = (files: File[]) => {
     setError("");
     setResult(null);
+
     if (files.length > 0) {
       const selectedFile = files[0];
       if (selectedFile.type !== "application/pdf") {
         setError("Please upload a valid PDF file.");
+        setFile(null);
         return;
       }
+
       setFile(selectedFile);
+      return;
     }
+
+    setFile(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setResult(null);
@@ -105,38 +82,13 @@ export default function ScoreContent() {
     }
 
     setLoading(true);
-    setLoadingStep("Parsing PDF...");
 
     try {
-      if (!pdfjs) {
-        throw new Error("PDF library is still loading. Please try again.");
-      }
-
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjs.getDocument(arrayBuffer).promise;
-
-      const pageTexts = await Promise.all(
-        Array.from({ length: pdf.numPages }, (_, index) =>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          pdf.getPage(index + 1).then((page: any) =>
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            page.getTextContent().then((content: any) =>
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              content.items.map((item: any) => item.str).join(" "),
-            ),
-          ),
-        ),
-      );
-      const extractedText = pageTexts.join("\n").trim();
-
-      setLoadingStep("Analyzing...");
-
-      // Send parsed content for analysis.
       const formData = new FormData();
-      formData.append("content", extractedText);
-      formData.append("filename", file.name);
+      formData.append("file", file);
+
       if (analysisMode === "jd") {
-        formData.append("jobDescription", jobDescription);
+        formData.append("jobDescription", jobDescription.trim());
       }
 
       const res = await fetch("/api/score", {
@@ -145,11 +97,11 @@ export default function ScoreContent() {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
+        const errorData = (await res.json()) as { error?: string };
         throw new Error(errorData.error || "Failed to analyze resume.");
       }
 
-      const analysis: AnalysisResult = await res.json();
+      const analysis = (await res.json()) as ScoreAnalysisResult;
       setResult(analysis);
     } catch (err: unknown) {
       console.error("Error processing resume:", err);
@@ -160,96 +112,191 @@ export default function ScoreContent() {
       );
     } finally {
       setLoading(false);
-      setLoadingStep("");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-900">
-      <div className="mx-auto max-w-5xl space-y-12">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-            AI Resume Scorer
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
-            Get a detailed analysis of your resume. Choose between a general
-            evaluation or a targeted check against a specific job description.
-          </p>
-        </div>
-
-        {/* Upload Section */}
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-8 flex justify-center gap-4">
-            <button
-              onClick={() => setAnalysisMode("general")}
-              className={`rounded-full px-6 py-2 font-medium transition-all ${
-                analysisMode === "general"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
-              }`}
-            >
-              General Analysis
-            </button>
-            <button
-              onClick={() => setAnalysisMode("jd")}
-              className={`rounded-full px-6 py-2 font-medium transition-all ${
-                analysisMode === "jd"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
-              }`}
-            >
-              Match Job Description
-            </button>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#eef6ff,transparent_30%),linear-gradient(to_bottom,#f8fafc,#f8fafc)] py-6 md:py-8">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
+        <div className="space-y-3">
+          <Badge
+            variant="outline"
+            className="border-sky-500/30 bg-sky-500/5 text-sky-700 dark:text-sky-300"
+          >
+            ATS Resume Score
+          </Badge>
+          <div className="max-w-3xl space-y-2">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Diagnose your resume like an ATS.
+            </h1>
+            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Upload your PDF for a general ATS scan or job-specific match, and
+              get actionable fixes to improve your visibility to recruiters.
+            </p>
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="overflow-hidden rounded-2xl border-2 border-dashed border-gray-300 bg-white p-8 shadow-sm transition-all hover:border-blue-500 dark:border-gray-700 dark:bg-gray-800">
-              <FileUpload onChange={handleFileUpload} maxFiles={1} />
-            </div>
-
-            {analysisMode === "jd" && (
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Paste Job Description
-                </label>
-                <textarea
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste the full job description here..."
-                  className="h-40 w-full rounded-lg border border-gray-300 p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
-                />
-              </div>
-            )}
-
-            {error && (
-              <div className="rounded-lg bg-red-50 p-4 text-center text-red-600 dark:bg-red-900/20 dark:text-red-400">
-                {error}
-              </div>
-            )}
-
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                disabled={loading || !file}
-                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-blue-600 px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:cursor-not-allowed disabled:opacity-70 dark:focus:ring-blue-800"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    {loadingStep}
-                  </>
-                ) : (
-                  "Analyze Resume"
-                )}
-                <div className="absolute inset-0 -z-10 h-full w-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 transition-opacity group-hover:opacity-100" />
-              </button>
-            </div>
-          </form>
         </div>
 
-        {/* Results Section */}
-        {result && <ScoreDashboard analysis={result} />}
+        <div className="grid gap-6 xl:grid-cols-[360px,1fr]">
+          <Card className="h-fit border-border/70 bg-card/95 shadow-sm xl:sticky xl:top-20">
+            <CardHeader className="p-5 pb-0">
+              <div className="flex items-center gap-3">
+                <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                  <WandSparkles className="h-4 w-4" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Analysis Settings</CardTitle>
+                  <p className="text-xs text-muted-foreground">
+                    Choose your scan type and upload.
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-5">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-border bg-muted/30 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setAnalysisMode("general")}
+                    className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                      analysisMode === "general"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    General Scan
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAnalysisMode("jd")}
+                    className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                      analysisMode === "jd"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Job Match
+                  </button>
+                </div>
+
+                <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+                  <FileUpload
+                    accept={SCORE_ACCEPTED_FILE_TYPES}
+                    onChange={handleFileUpload}
+                    maxFiles={1}
+                  />
+                </div>
+
+                {analysisMode === "jd" && (
+                  <div className="space-y-2.5 rounded-xl border border-border bg-background/70 p-3.5">
+                    <div className="flex items-center gap-2 text-xs font-medium text-foreground">
+                      <Target className="h-3.5 w-3.5 text-primary" />
+                      Job Description
+                    </div>
+                    <Textarea
+                      id="job-description"
+                      value={jobDescription}
+                      onChange={(e) => setJobDescription(e.target.value)}
+                      placeholder="Paste job requirements here..."
+                      className="h-36 resize-none rounded-lg bg-background text-sm"
+                    />
+                  </div>
+                )}
+
+                {error && (
+                  <div className="rounded-xl border border-destructive/20 bg-destructive/10 p-3 text-xs font-medium text-destructive">
+                    {error}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  disabled={loading || !file}
+                  size="default"
+                  className="w-full"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Analyzing...
+                    </>
+                  ) : (
+                    "Analyze Resume"
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          <div className="space-y-6">
+            {!result ? (
+              <>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {SCAN_FEATURES.map((feature) => (
+                    <Card
+                      key={feature.title}
+                      className="border-border/70 bg-card/95 shadow-sm"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 rounded-lg bg-emerald-500/10 p-1.5 text-emerald-600 dark:text-emerald-400">
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                          </div>
+                          <div>
+                            <h2 className="text-base font-semibold text-foreground">
+                              {feature.title}
+                            </h2>
+                            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                              {feature.detail}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <Card className="border-border/70 bg-card/95 shadow-sm">
+                  <CardHeader className="p-5 pb-0">
+                    <CardTitle className="text-base">
+                      How to get the best score
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-3 p-5 md:grid-cols-3">
+                    <div className="rounded-xl border border-border bg-background/70 p-4">
+                      <p className="text-xs font-semibold text-foreground">
+                        Standard Headings
+                      </p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+                        Use labels like Work Experience and Skills for correct
+                        parsing.
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-border bg-background/70 p-4">
+                      <p className="text-xs font-semibold text-foreground">
+                        Quantify Outcomes
+                      </p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+                        Include numbers, percentages, and metrics to show real
+                        impact.
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-border bg-background/70 p-4">
+                      <p className="text-xs font-semibold text-foreground">
+                        Tailor Content
+                      </p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+                        Use a job description to identify and close keyword
+                        gaps.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <ScoreDashboard analysis={result} />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

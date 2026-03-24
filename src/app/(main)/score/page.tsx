@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ScorePageWrapper from "./_components/ScorePageWrapper";
+import ScoreContent from "./_components/ScoreContent";
 
 export const metadata: Metadata = {
   title: "AI Resume Scorer",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function ScorePage() {
-  return <ScorePageWrapper />;
+  return <ScoreContent />;
 }

@@ -2,21 +2,27 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ScorePageSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-900">
-      <div className="mx-auto max-w-5xl space-y-12">
-        {/* Header */}
-        <div className="text-center">
-          <Skeleton className="mx-auto mb-4 h-12 w-72" />
-          <Skeleton className="mx-auto h-6 w-[500px]" />
+    <div className="min-h-screen bg-muted/5 py-8 md:py-10">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
+        <div className="space-y-3">
+          <Skeleton className="h-5 w-32" />
+          <div className="max-w-2xl space-y-2">
+            <Skeleton className="h-8 w-3/4" />
+            <Skeleton className="h-4 w-full" />
+          </div>
         </div>
 
-        {/* Upload Section */}
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-8 flex justify-center gap-4">
-            <Skeleton className="h-10 w-36 rounded-full" />
-            <Skeleton className="h-10 w-44 rounded-full" />
+        <div className="grid gap-6 xl:grid-cols-[360px,1fr]">
+          <Skeleton className="h-[400px] w-full rounded-xl" />
+          <div className="space-y-6">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Skeleton className="h-32 w-full rounded-xl" />
+              <Skeleton className="h-32 w-full rounded-xl" />
+              <Skeleton className="h-32 w-full rounded-xl" />
+              <Skeleton className="h-32 w-full rounded-xl" />
+            </div>
+            <Skeleton className="h-48 w-full rounded-xl" />
           </div>
-          <Skeleton className="h-48 w-full rounded-2xl" />
         </div>
       </div>
     </div>
