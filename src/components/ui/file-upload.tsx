@@ -72,9 +72,6 @@ export const FileUpload = ({
     multiple: maxFiles !== 1,
     noClick: true,
     onDrop: handleFileChange,
-    onDropRejected: (error) => {
-      console.log(error);
-    },
   });
 
   return (
@@ -133,6 +130,7 @@ export const FileUpload = ({
                         {(file.size / (1024 * 1024)).toFixed(2)} MB
                       </motion.p>
                       <button
+                        type="button"
                         onClick={(e) => removeFile(idx, e)}
                         className="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-neutral-800"
                       >

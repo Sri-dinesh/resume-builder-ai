@@ -108,7 +108,6 @@ export default function ScoreContent() {
       const analysis = (await res.json()) as ScoreAnalysisResult;
       setResult(analysis);
     } catch (err: unknown) {
-      console.error("Error processing resume:", err);
       setError(
         err instanceof Error
           ? err.message
