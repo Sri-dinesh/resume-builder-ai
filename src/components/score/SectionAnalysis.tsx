@@ -1,99 +1,46 @@
-import React from "react";
-import { CheckCircle2, XCircle, AlertCircle } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-interface SectionData {
-  score: number;
-  feedback: string[];
-}
+import type { ScoreCategoryData, ScoreCategoryKey } from "@/lib/score";
+import { Progress } from "@/components/ui/progress";
 
 interface SectionAnalysisProps {
-  sections: {
-    impact: SectionData;
-    brevity: SectionData;
-    style: SectionData;
-    structure: SectionData;
-    skills: SectionData;
-  };
+  sections: Record<ScoreCategoryKey, ScoreCategoryData>;
 }
 
 export function SectionAnalysis({ sections }: SectionAnalysisProps) {
-  const getIcon = (score: number) => {
-    if (score >= 80) return <CheckCircle2 className="h-5 w-5 text-green-500" />;
-    if (score >= 60) return <AlertCircle className="h-5 w-5 text-yellow-500" />;
-    return <XCircle className="h-5 w-5 text-red-500" />;
-  };
-
-  const getLabel = (key: string) => {
-    switch (key) {
-      case "impact":
-        return "Impact & Results";
-      case "brevity":
-        return "Brevity & Conciseness";
-      case "style":
-        return "Style & Tone";
-      case "structure":
-        return "Structure & Formatting";
-      case "skills":
-        return "Skills & Keywords";
-      default:
-        return key;
-    }
-  };
-
   return (
-    <div className="w-full space-y-4">
-      <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-        Detailed Analysis
-      </h3>
-      <Accordion type="single" collapsible className="w-full">
-        {Object.entries(sections).map(([key, data]) => (
-          <AccordionItem key={key} value={key}>
-            <AccordionTrigger className="hover:no-underline">
-              <div className="flex w-full items-center justify-between pr-4">
-                <div className="flex items-center gap-3">
-                  {getIcon(data.score)}
-                  <span className="text-lg font-medium">{getLabel(key)}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-2 w-24 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
-                    <div
-                      className={`h-full ${
-                        data.score >= 80
-                          ? "bg-green-500"
-                          : data.score >= 60
-                            ? "bg-yellow-500"
-                            : "bg-red-500"
-                      }`}
-                      style={{ width: `${data.score}%` }}
-                    />
-                  </div>
-                  <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">
-                    {data.score}/100
-                  </span>
-                </div>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="space-y-2 pl-8 pt-2">
-                {data.feedback.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="list-disc text-sm text-gray-600 dark:text-gray-300"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+    <div className="grid gap-4 lg:grid-cols-2">
+      {Object.entries(sections).map(([key, data]) => (
+        <div
+          key={key}
+          className="rounded-xl border border-border/50 bg-background/50 p-4 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">
+                {data.title}
+              </h3>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {data.summary}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-lg font-bold text-foreground">{data.score}</p>
+              <p className="text-[9px] uppercase tracking-wider text-muted-foreground">
+                / 100
+              </p>
+            </div>
+          </div>
+
+          <Progress value={data.score} className="mt-3 h-1.5 bg-muted/60" />
+
+          <ul className="mt-3 space-y-1.5">
+            {data.feedback.map((item) => (
+              <li key={item} className="text-[11px] leading-relaxed text-muted-foreground list-disc ml-3">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }

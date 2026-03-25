@@ -1,63 +1,78 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 interface ScoreGaugeProps {
   score: number;
+  verdict: string;
 }
 
-export function ScoreGauge({ score }: ScoreGaugeProps) {
-  const circumference = 2 * Math.PI * 45; // Radius 45
+export function ScoreGauge({ score, verdict }: ScoreGaugeProps) {
+  const circumference = 2 * Math.PI * 45;
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
-  const getColor = (s: number) => {
-    if (s >= 80) return "text-green-500";
-    if (s >= 60) return "text-yellow-500";
-    return "text-red-500";
+  const getTone = (value: number) => {
+    if (value >= 85) {
+      return {
+        stroke: "text-emerald-500",
+        label: "text-emerald-600 dark:text-emerald-400",
+      };
+    }
+    if (value >= 70) {
+      return {
+        stroke: "text-amber-500",
+        label: "text-amber-600 dark:text-amber-400",
+      };
+    }
+    return {
+      stroke: "text-rose-500",
+      label: "text-rose-600 dark:text-rose-400",
+    };
   };
 
+  const tone = getTone(score);
+
   return (
-    <div className="relative flex flex-col items-center justify-center">
-      <div className="relative h-48 w-48">
-        {/* Background Circle */}
-        <svg className="h-full w-full -rotate-90 transform" viewBox="0 0 100 100">
+    <div className="flex flex-col items-center justify-center">
+      <div className="relative h-40 w-40">
+        <svg
+          className="h-full w-full -rotate-90 transform overflow-visible"
+          viewBox="0 0 120 120"
+        >
           <circle
-            className="text-gray-200 dark:text-gray-700"
+            className="text-muted/20"
             strokeWidth="8"
             stroke="currentColor"
             fill="transparent"
             r="45"
-            cx="50"
-            cy="50"
+            cx="60"
+            cy="60"
           />
-          {/* Progress Circle */}
           <motion.circle
-            className={getColor(score)}
+            className={tone.stroke}
             strokeWidth="8"
             strokeDasharray={circumference}
-            strokeDashoffset={circumference} // Start empty
+            strokeDashoffset={circumference}
             animate={{ strokeDashoffset }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             strokeLinecap="round"
             stroke="currentColor"
             fill="transparent"
             r="45"
-            cx="50"
-            cy="50"
+            cx="60"
+            cy="60"
+            style={{ filter: "drop-shadow(0px 0px 6px currentColor)" }}
           />
         </svg>
-        {/* Score Text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={`text-5xl font-bold ${getColor(score)}`}>
-            {score}
-          </span>
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            / 100
+          <span className="text-4xl font-bold text-foreground">{score}</span>
+          <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+            out of 100
           </span>
         </div>
       </div>
-      <p className="mt-4 text-lg font-semibold text-gray-700 dark:text-gray-200">
-        Overall Score
+      <p className="mt-3 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+        ATS Score
       </p>
+      <p className={`mt-1 text-sm font-semibold ${tone.label}`}>{verdict}</p>
     </div>
   );
 }
