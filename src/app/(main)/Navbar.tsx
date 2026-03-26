@@ -8,10 +8,10 @@ import { dark } from "@clerk/themes";
 import {
   CreditCard,
   FileText,
-  Lightbulb,
+  Activity,
   Loader2,
   Mail,
-  WandSparkles,
+  Zap,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -112,13 +112,13 @@ export default function Navbar() {
           />
           <NavLink
             href="/score"
-            icon={<Lightbulb className="h-4 w-4" />}
+            icon={<Activity className="h-4 w-4" />}
             label="ATS Score"
             title="ATS Score"
           />
           <NavLink
             href="/enhance"
-            icon={<WandSparkles className="h-4 w-4" />}
+            icon={<Zap className="h-4 w-4" />}
             label="Enhance"
             title="Enhance Resume"
           />
@@ -139,13 +139,13 @@ export default function Navbar() {
           />
           <NavLink
             href="/score"
-            icon={<Lightbulb className="h-[18px] w-[18px]" />}
+            icon={<Activity className="h-[18px] w-[18px]" />}
             label="ATS Score"
             title="ATS Score"
           />
           <NavLink
             href="/enhance"
-            icon={<WandSparkles className="h-[18px] w-[18px]" />}
+            icon={<Zap className="h-[18px] w-[18px]" />}
             label="Enhance"
             title="Enhance Resume"
           />

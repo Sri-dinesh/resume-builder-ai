@@ -17,14 +17,13 @@ export default function DownloadableResume({
       style={{
         width: "210mm", // A4 width
         minHeight: "297mm", // A4 height
-        padding: "20mm", // Consistent padding for better spacing
+        padding: "10mm 15mm", // Reduced padding to remove large inner border feel
         boxSizing: "border-box",
         fontSize: "10pt", // Reduced font size for better fit
         lineHeight: "1.5",
         fontFamily: "Arial, sans-serif", // Ensures consistent font rendering
       }}
     >
-      {/* Personal Info */}
       <div className="mb-6 space-y-1 text-center">
         <h1 className="text-3xl font-bold">
           {resumeData.firstName} {resumeData.lastName}
@@ -44,20 +43,18 @@ export default function DownloadableResume({
         )}
       </div>
 
-      {/* Summary */}
       {resumeData.summary && (
         <section className="mb-6 space-y-2">
-          <h2 className="text-lg font-semibold">SUMMARY</h2>
-          <hr className="border-2 border-black" />
+          <h2 className="text-lg font-semibold uppercase">SUMMARY</h2>
+
           <p className="whitespace-pre-line text-sm">{resumeData.summary}</p>
         </section>
       )}
 
-      {/* Work Experience */}
       {!!resumeData.workExperiences?.length && (
         <section className="mb-6 space-y-2">
-          <h2 className="text-lg font-semibold">EXPERIENCE</h2>
-          <hr className="border-2 border-black" />
+          <h2 className="text-lg font-semibold uppercase">EXPERIENCE</h2>
+
           {resumeData.workExperiences.map((exp, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
@@ -73,11 +70,10 @@ export default function DownloadableResume({
         </section>
       )}
 
-      {/* Projects */}
       {!!resumeData.projects?.length && (
         <section className="mb-6 space-y-2">
-          <h2 className="text-lg font-semibold">PROJECTS</h2>
-          <hr className="border-2 border-black" />
+          <h2 className="text-lg font-semibold uppercase">PROJECTS</h2>
+
           {resumeData.projects.map((proj, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
@@ -93,11 +89,10 @@ export default function DownloadableResume({
         </section>
       )}
 
-      {/* Education */}
       {!!resumeData.educations?.length && (
         <section className="mb-6 space-y-2">
-          <h2 className="text-lg font-semibold">EDUCATION</h2>
-          <hr className="border-2 border-black" />
+          <h2 className="text-lg font-semibold uppercase">EDUCATION</h2>
+
           {resumeData.educations.map((edu, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">
@@ -112,20 +107,18 @@ export default function DownloadableResume({
         </section>
       )}
 
-      {/* Skills */}
       {!!resumeData.skills?.length && (
         <section className="mb-6 space-y-2">
-          <h2 className="text-lg font-semibold">SKILLS</h2>
-          <hr className="border-2 border-black" />
+          <h2 className="text-lg font-semibold uppercase">SKILLS</h2>
+
           <p className="text-sm">{resumeData.skills.join(", ")}</p>
         </section>
       )}
 
-      {/* Certifications */}
       {!!resumeData.certifications?.length && (
         <section className="mb-6 space-y-2">
-          <h2 className="text-lg font-semibold">CERTIFICATIONS</h2>
-          <hr className="border-2 border-black" />
+          <h2 className="text-lg font-semibold uppercase">CERTIFICATIONS</h2>
+
           {resumeData.certifications.map((cert, index) => (
             <div key={index} className="mb-4 space-y-1">
               <div className="flex justify-between">

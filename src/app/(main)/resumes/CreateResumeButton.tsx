@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import usePremiumModal from "@/hooks/usePremiumModal";
-import { PlusSquare } from "lucide-react";
-import Link from "next/link";
+import { Loader2, PlusSquare } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface CreateResumeButtonProps {
   canCreate: boolean;
@@ -13,14 +14,27 @@ export default function CreateResumeButton({
   canCreate,
 }: CreateResumeButtonProps) {
   const premiumModal = usePremiumModal();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push("/editor");
+  };
 
   if (canCreate) {
     return (
-      <Button asChild className="mx-auto flex w-fit gap-2">
-        <Link href="/editor">
+      <Button
+        onClick={handleClick}
+        disabled={isLoading}
+        className="mx-auto flex w-fit gap-2"
+      >
+        {isLoading ? (
+          <Loader2 className="size-5 animate-spin" />
+        ) : (
           <PlusSquare className="size-5" />
-          New resume
-        </Link>
+        )}
+        New resume
       </Button>
     );
   }

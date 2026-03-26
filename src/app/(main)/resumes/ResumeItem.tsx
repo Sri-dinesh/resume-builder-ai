@@ -23,6 +23,7 @@ import { mapToResumeValues } from "@/lib/utils";
 import { formatDate } from "date-fns";
 import { Download, MoreVertical, Printer, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { useReactToPrint } from "react-to-print";
 import { deleteResume } from "./actions";
@@ -35,6 +36,7 @@ interface ResumeItemProps {
 
 export default function ResumeItem({ resume }: ResumeItemProps) {
   const contentRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const reactToPrintFn = useReactToPrint({
     contentRef,
@@ -44,36 +46,44 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
   const wasUpdated = resume.updatedAt !== resume.createdAt;
 
   return (
-    <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
-      <div className="space-y-3">
-        <Link
-          href={`/editor?resumeId=${resume.id}`}
-          className="inline-block w-full text-center"
-        >
-          <p className="line-clamp-1 font-semibold">
-            {resume.title || "No title"}
-          </p>
+    <div className="group relative flex flex-col rounded-lg border border-border bg-card p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex flex-col space-y-0.5 flex-grow pr-3">
+          <Link
+            href={`/editor?resumeId=${resume.id}`}
+            className="text-lg font-semibold tracking-tight text-foreground hover:text-primary transition-colors line-clamp-1"
+          >
+            {resume.title || "Untitled Resume"}
+          </Link>
           {resume.description && (
-            <p className="line-clamp-2 text-sm">{resume.description}</p>
+            <p className="line-clamp-2 text-sm text-muted-foreground">
+              {resume.description}
+            </p>
           )}
-          <p className="text-xs text-muted-foreground">
-            {wasUpdated ? "Updated" : "Created"} on{" "}
-            {formatDate(resume.updatedAt, "MMM d, yyyy h:mm a")}
-          </p>
-        </Link>
-        <Link
-          href={`/editor?resumeId=${resume.id}`}
-          className="relative inline-block w-full"
-        >
-          <ResumePreview
-            resumeData={mapToResumeValues(resume)}
-            contentRef={contentRef}
-            className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg"
-          />
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
-        </Link>
+          <div className="flex items-center text-xs text-muted-foreground font-medium">
+            <span suppressHydrationWarning>
+              {wasUpdated ? "Updated" : "Created"} {formatDate(resume.updatedAt, "MMM d, yyyy")}
+            </span>
+          </div>
+        </div>
+        <div className="-mt-1 -mr-2 shrink-0">
+          <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
+        </div>
       </div>
-      <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
+
+      <div
+        onClick={() => router.push(`/editor?resumeId=${resume.id}`)}
+        className="relative mt-auto block w-full cursor-pointer overflow-hidden rounded-md border border-border/50 bg-muted/20"
+        style={{ aspectRatio: "210/297" }}
+        role="button"
+        tabIndex={0}
+      >
+        <ResumePreview
+          resumeData={mapToResumeValues(resume)}
+          contentRef={contentRef}
+          className="h-full w-full"
+        />
+      </div>
     </div>
   );
 }
@@ -93,7 +103,7 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-0.5 top-0.5"
+            className="h-8 w-8 rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <MoreVertical className="size-4" />
           </Button>
