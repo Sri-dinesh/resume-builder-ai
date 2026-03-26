@@ -1,21 +1,15 @@
 import type { NextConfig } from "next";
 import withBundleAnalyzerBase from "@next/bundle-analyzer";
 
-// Fix: Cast to 'any' to prevent TS errors regarding complex config shapes (Webpack + Turbopack)
 const withBundleAnalyzer = withBundleAnalyzerBase({
   enabled: process.env.ANALYZE === "true",
 }) as any;
 
 const nextConfig: NextConfig = {
-  // Webpack Configuration
-  // Explicitly defining webpack here forces Next.js to use Webpack
-  // instead of Turbopack, resolving the "Call retries were exceeded" error.
   webpack: (config, { dev, isServer }) => {
-    // Polyfills for pdfjs-dist to prevent build errors
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
 
-    // Optimize chunks in production
     if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,
@@ -24,14 +18,12 @@ const nextConfig: NextConfig = {
           minSize: 20000,
           maxSize: 244000,
           cacheGroups: {
-            // Separate vendor chunks
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: "vendors",
               chunks: "all",
               priority: 10,
             },
-            // Separate heavy libraries
             pdfLib: {
               test: /[\\/]node_modules[\\/](@react-pdf|pdfjs-dist|pdf-parse)[\\/]/,
               name: "pdf-lib",
@@ -69,16 +61,10 @@ const nextConfig: NextConfig = {
     return config;
   },
 
-  // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-
-  // Optimize imports and reduce bundle size
   modularizeImports: {
-    "lucide-react": {
-      transform: "lucide-react/dist/esm/icons/{{kebabCase member}}",
-    },
     "@tabler/icons-react": {
       transform: "@tabler/icons-react/dist/esm/icons/{{member}}",
     },
@@ -116,7 +102,6 @@ const nextConfig: NextConfig = {
       "@dnd-kit/core",
       "@dnd-kit/sortable",
     ],
-    // Enable optimized CSS loading
     optimizeCss: true,
   },
 
@@ -127,14 +112,11 @@ const nextConfig: NextConfig = {
         hostname: "fjx9bnquc2tue55g.public.blob.vercel-storage.com",
       },
     ],
-    // Optimize image caching
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
 
-  // Production optimizations
   productionBrowserSourceMaps: false,
 
-  // Add cache headers for better performance
   async headers() {
     return [
       {
