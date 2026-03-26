@@ -4,14 +4,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { env } from "@/env";
 import {
   coverLetterGenerationSchema,
-  CoverLetterGenerationInput,
-  CoverLetterOutput,
+  coverLetterOutputSchema,
+  type CoverLetterGenerationInput,
 } from "@/lib/cover-letter-validation";
 import { getUserSubscriptionLevel } from "@/lib/subscription";
 
-// Initialize AI model
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
-
 const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash-lite",
 });
@@ -24,25 +22,51 @@ const generationConfig = {
   responseMimeType: "application/json",
 };
 
-// In-memory rate limiting (in production, use Redis)
 const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX_FREE = 3;
 const RATE_LIMIT_MAX_PRO = 10;
 const RATE_LIMIT_MAX_PRO_PLUS = 50;
 
-function checkRateLimit(
-  userId: string,
-  subscriptionLevel: string,
-): { allowed: boolean; remaining: number } {
+function jsonResponse(body: unknown, status = 200, extraHeaders?: HeadersInit) {
+  return NextResponse.json(body, {
+    status,
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate",
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
+      ...extraHeaders,
+    },
+  });
+}
+
+function getMaxRequests(subscriptionLevel: string) {
+  if (subscriptionLevel === "pro_plus") {
+    return RATE_LIMIT_MAX_PRO_PLUS;
+  }
+  if (subscriptionLevel === "pro") {
+    return RATE_LIMIT_MAX_PRO;
+  }
+  return RATE_LIMIT_MAX_FREE;
+}
+
+function checkRateLimit(userId: string, subscriptionLevel: string) {
   const now = Date.now();
+  const maxRequests = getMaxRequests(subscriptionLevel);
+
+  for (const [key, value] of rateLimitMap.entries()) {
+    if (now - value.windowStart > RATE_LIMIT_WINDOW) {
+      rateLimitMap.delete(key);
+    }
+  }
+
   const userLimit = rateLimitMap.get(userId);
+  if (!userLimit) {
+    rateLimitMap.set(userId, { count: 1, windowStart: now });
+    return { allowed: true, remaining: maxRequests - 1 };
+  }
 
-  let maxRequests = RATE_LIMIT_MAX_FREE;
-  if (subscriptionLevel === "pro") maxRequests = RATE_LIMIT_MAX_PRO;
-  if (subscriptionLevel === "pro_plus") maxRequests = RATE_LIMIT_MAX_PRO_PLUS;
-
-  if (!userLimit || now - userLimit.windowStart > RATE_LIMIT_WINDOW) {
+  if (now - userLimit.windowStart > RATE_LIMIT_WINDOW) {
     rateLimitMap.set(userId, { count: 1, windowStart: now });
     return { allowed: true, remaining: maxRequests - 1 };
   }
@@ -51,21 +75,34 @@ function checkRateLimit(
     return { allowed: false, remaining: 0 };
   }
 
-  userLimit.count++;
+  userLimit.count += 1;
   return { allowed: true, remaining: maxRequests - userLimit.count };
 }
 
-// Security: Sanitize output to prevent any accidental data leakage
-function sanitizeOutput(output: string): string {
-  // Remove any potential script tags or dangerous content
+function sanitizeOutput(output: string) {
   return output
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     .replace(/javascript:/gi, "")
     .replace(/on\w+=/gi, "");
 }
 
-// Build the AI prompt
-function buildPrompt(input: CoverLetterGenerationInput): string {
+function extractJson(text: string) {
+  const trimmed = text.trim();
+
+  if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+    return trimmed;
+  }
+
+  const start = trimmed.indexOf("{");
+  const end = trimmed.lastIndexOf("}");
+  if (start >= 0 && end > start) {
+    return trimmed.slice(start, end + 1);
+  }
+
+  throw new Error("Model response was not valid JSON.");
+}
+
+function buildPrompt(input: CoverLetterGenerationInput) {
   const {
     jobTitle,
     companyName,
@@ -80,16 +117,39 @@ function buildPrompt(input: CoverLetterGenerationInput): string {
     customInstructions,
   } = input;
 
-  // Word count targets
   const wordCountTargets = {
     concise: 200,
     standard: 350,
     detailed: 500,
   };
 
-  const targetWordCount = wordCountTargets[length];
+  const industryGuidelines: Record<string, string> = {
+    technology:
+      "Emphasize technical depth, problem-solving, execution, and product impact.",
+    finance:
+      "Highlight analytical rigor, attention to detail, and quantified outcomes.",
+    healthcare:
+      "Focus on patient care, compliance, empathy, and relevant certifications.",
+    marketing:
+      "Show campaign thinking, messaging, brand understanding, and measurable performance.",
+    education:
+      "Emphasize teaching impact, learning outcomes, and commitment to student success.",
+    consulting:
+      "Highlight structured problem-solving, client impact, and strategic thinking.",
+    creative:
+      "Show originality and craft while keeping the letter disciplined and specific.",
+    general:
+      "Balance professionalism, specificity, and role alignment without sounding generic.",
+  };
 
-  // Build resume context
+  const toneGuidelines: Record<string, string> = {
+    professional: "Maintain a polished, direct, business-appropriate tone.",
+    enthusiastic: "Show real energy and interest while staying credible.",
+    conversational: "Use a warm, clear tone without becoming casual.",
+    formal: "Use formal language and tighter structure.",
+    confident: "Project confidence through evidence, not exaggeration.",
+  };
+
   const workExperienceContext =
     resumeData.workExperiences
       ?.map(
@@ -98,8 +158,6 @@ function buildPrompt(input: CoverLetterGenerationInput): string {
       )
       .join("\n") || "No work experience provided";
 
-  const skillsContext = resumeData.skills?.join(", ") || "No skills provided";
-
   const educationContext =
     resumeData.educations
       ?.map(
@@ -107,15 +165,15 @@ function buildPrompt(input: CoverLetterGenerationInput): string {
       )
       .join("\n") || "No education provided";
 
-  const projectsContext =
+  const projectContext =
     resumeData.projects
       ?.map(
-        (proj) =>
-          `- ${proj.ProjectName || "Project"}: ${proj.description || ""} (Tools: ${proj.toolsUsed || ""})`,
+        (project) =>
+          `- ${project.ProjectName || "Project"}: ${project.description || ""} (Tools: ${project.toolsUsed || ""})`,
       )
       .join("\n") || "";
 
-  const certificationsContext =
+  const certificationContext =
     resumeData.certifications
       ?.map(
         (cert) =>
@@ -123,236 +181,170 @@ function buildPrompt(input: CoverLetterGenerationInput): string {
       )
       .join("\n") || "";
 
-  // Industry-specific guidelines
-  const industryGuidelines: Record<string, string> = {
-    technology:
-      "Emphasize technical skills, problem-solving abilities, and innovation. Use industry terminology appropriately.",
-    finance:
-      "Highlight analytical skills, attention to detail, and quantifiable achievements. Maintain a formal tone.",
-    healthcare:
-      "Focus on patient care, empathy, compliance, and certifications. Show dedication to healthcare mission.",
-    marketing:
-      "Showcase creativity, campaign results, and understanding of brand strategy. Be engaging and results-driven.",
-    education:
-      "Emphasize teaching philosophy, student outcomes, and continuous learning. Show passion for education.",
-    consulting:
-      "Highlight problem-solving, client relationships, and business impact. Be strategic and results-oriented.",
-    creative:
-      "Show creativity, portfolio highlights, and unique perspective. Be original while remaining professional.",
-    general:
-      "Balance professionalism with personality. Focus on transferable skills and achievements.",
-  };
+  return `You are an expert career coach and cover letter writer.
 
-  // Tone guidelines
-  const toneGuidelines: Record<string, string> = {
-    professional: "Maintain a polished, business-appropriate tone throughout.",
-    enthusiastic:
-      "Show genuine excitement and passion while remaining professional.",
-    conversational: "Use a warm, approachable tone while staying professional.",
-    formal:
-      "Use formal language and structure, avoiding contractions and casual expressions.",
-    confident:
-      "Project confidence and assertiveness while remaining humble about achievements.",
-  };
+Write a personalized, ATS-aware cover letter for this role.
 
-  const prompt = `You are an expert career coach and professional cover letter writer with 15+ years of experience helping candidates land interviews at top companies.
-
-TASK: Generate a highly personalized, ATS-optimized cover letter.
-
-TARGET POSITION:
+TARGET ROLE
 - Job Title: ${jobTitle}
 - Company: ${companyName}
 - Hiring Manager: ${hiringManagerName || "Hiring Manager"}
 
-JOB DESCRIPTION:
+JOB DESCRIPTION
 ${jobDescription}
 
-${companyInfo ? `COMPANY INFORMATION:\n${companyInfo}` : ""}
+${companyInfo ? `COMPANY CONTEXT\n${companyInfo}\n` : ""}CANDIDATE
+- Name: ${resumeData.firstName || ""} ${resumeData.lastName || ""}
+- Current Title: ${resumeData.jobTitle || ""}
+- Location: ${resumeData.city || ""}, ${resumeData.country || ""}
+- Contact: ${resumeData.email || ""} ${resumeData.phone || ""}
+${resumeData.linkedin ? `- LinkedIn: ${resumeData.linkedin}` : ""}
 
-CANDIDATE PROFILE:
-Name: ${resumeData.firstName || ""} ${resumeData.lastName || ""}
-Current/Target Title: ${resumeData.jobTitle || ""}
-Location: ${resumeData.city || ""}, ${resumeData.country || ""}
-Contact: ${resumeData.email || ""} | ${resumeData.phone || ""}
-${resumeData.linkedin ? `LinkedIn: ${resumeData.linkedin}` : ""}
-
-PROFESSIONAL SUMMARY:
+SUMMARY
 ${resumeData.summary || "Not provided"}
 
-WORK EXPERIENCE:
+WORK EXPERIENCE
 ${workExperienceContext}
 
-SKILLS:
-${skillsContext}
+SKILLS
+${resumeData.skills?.join(", ") || "No skills provided"}
 
-EDUCATION:
+EDUCATION
 ${educationContext}
 
-${projectsContext ? `RELEVANT PROJECTS:\n${projectsContext}` : ""}
+${projectContext ? `PROJECTS\n${projectContext}\n` : ""}${certificationContext ? `CERTIFICATIONS\n${certificationContext}\n` : ""}REQUIREMENTS
+- Tone: ${tone} (${toneGuidelines[tone]})
+- Length: approximately ${wordCountTargets[length]} words
+- Industry lens: ${industry} (${industryGuidelines[industry]})
+${highlightSkills?.length ? `- Highlight these skills: ${highlightSkills.join(", ")}` : ""}${customInstructions ? `\n- Custom instructions: ${customInstructions}` : ""}
 
-${certificationsContext ? `CERTIFICATIONS:\n${certificationsContext}` : ""}
+QUALITY RULES
+- Do not use clichés like "I am writing to apply".
+- Open with a role-specific hook.
+- Match the candidate's experience to the job requirements with concrete examples.
+- Keep it skimmable and natural.
+- End with a confident, professional close.
 
-GENERATION REQUIREMENTS:
-1. TONE: ${tone} - ${toneGuidelines[tone]}
-2. LENGTH: Approximately ${targetWordCount} words
-3. INDUSTRY: ${industry} - ${industryGuidelines[industry]}
-${highlightSkills?.length ? `4. HIGHLIGHT THESE SKILLS: ${highlightSkills.join(", ")}` : ""}
-${customInstructions ? `5. CUSTOM INSTRUCTIONS: ${customInstructions}` : ""}
-
-ATS OPTIMIZATION RULES:
-- Include relevant keywords from the job description naturally
-- Use standard section headers
-- Avoid tables, columns, or special formatting
-- Match job requirements with candidate qualifications
-
-QUALITY STANDARDS:
-- NO clichés like "I am writing to apply" or "I believe I would be a great fit"
-- START with a compelling hook that demonstrates company knowledge
-- QUANTIFY achievements when possible
-- SHOW specific examples of relevant experience
-- END with a confident call to action
-- Be specific, not generic
-
-OUTPUT FORMAT:
-Return a JSON object with this exact structure:
+Return valid JSON only in this exact shape:
 {
-  "coverLetter": "The complete cover letter text with proper formatting using \\n for line breaks",
+  "coverLetter": "Full cover letter with \\n for paragraph breaks",
   "metadata": {
-    "wordCount": <number>,
+    "wordCount": 0,
     "tone": "${tone}",
-    "keySkillsHighlighted": ["skill1", "skill2", ...],
+    "keySkillsHighlighted": ["skill1"],
     "generatedAt": "${new Date().toISOString()}"
   }
-}
-
-Generate the cover letter now:`;
-
-  return prompt;
+}`;
 }
 
 export async function POST(request: Request) {
+  const { userId } = await auth();
+  if (!userId) {
+    return jsonResponse(
+      { error: "Unauthorized. Please sign in to continue." },
+      401,
+    );
+  }
+
+  const subscriptionLevel = await getUserSubscriptionLevel(userId);
+  const rateLimit = checkRateLimit(userId, subscriptionLevel);
+
+  if (!rateLimit.allowed) {
+    return jsonResponse(
+      {
+        error: "Rate limit exceeded. Please wait a moment before trying again.",
+        retryAfter: 60,
+      },
+      429,
+      {
+        "Retry-After": "60",
+        "X-RateLimit-Remaining": "0",
+      },
+    );
+  }
+
   try {
-    // 1. Authentication Check
-    const { userId } = await auth();
-    if (!userId) {
-      return NextResponse.json(
-        { error: "Unauthorized. Please sign in to continue." },
-        { status: 401 },
-      );
-    }
-
-    // 2. Get subscription level for rate limiting
-    const subscriptionLevel = await getUserSubscriptionLevel(userId);
-
-    // 3. Rate Limiting
-    const rateLimit = checkRateLimit(userId, subscriptionLevel);
-    if (!rateLimit.allowed) {
-      return NextResponse.json(
-        {
-          error:
-            "Rate limit exceeded. Please wait a moment before trying again.",
-          retryAfter: 60,
-        },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": "60",
-            "X-RateLimit-Remaining": "0",
-          },
-        },
-      );
-    }
-
-    // 4. Parse and validate request body
     const body = await request.json();
-
-    // 5. Input Validation with Zod (security layer)
     const validationResult = coverLetterGenerationSchema.safeParse(body);
 
     if (!validationResult.success) {
-      const errors = validationResult.error.errors.map((e) => ({
-        field: e.path.join("."),
-        message: e.message,
-      }));
-
-      return NextResponse.json(
+      return jsonResponse(
         {
           error: "Validation failed",
-          details: errors,
+          details: validationResult.error.errors.map((issue) => ({
+            field: issue.path.join("."),
+            message: issue.message,
+          })),
         },
-        { status: 400 },
+        400,
+        {
+          "X-RateLimit-Remaining": rateLimit.remaining.toString(),
+        },
       );
     }
 
     const validatedInput = validationResult.data;
-
-    // 6. Check minimum resume data requirements
     const hasBasicInfo =
       validatedInput.resumeData.firstName ||
       validatedInput.resumeData.lastName ||
       validatedInput.resumeData.jobTitle;
 
     if (!hasBasicInfo) {
-      return NextResponse.json(
+      return jsonResponse(
         {
           error:
             "Please provide at least your name or current job title for personalization.",
         },
-        { status: 400 },
+        400,
+        {
+          "X-RateLimit-Remaining": rateLimit.remaining.toString(),
+        },
       );
     }
-
-    // 7. Generate cover letter using AI
-    const prompt = buildPrompt(validatedInput);
 
     const chatSession = model.startChat({
       generationConfig,
       history: [],
     });
 
-    const result = await chatSession.sendMessage(prompt);
-    const responseText = result.response.text();
+    const result = await chatSession.sendMessage(buildPrompt(validatedInput));
+    const parsedModelOutput = JSON.parse(extractJson(result.response.text()));
+    const outputValidation =
+      coverLetterOutputSchema.safeParse(parsedModelOutput);
 
-    // 8. Parse and validate AI response
-    let parsedResponse: CoverLetterOutput;
-    try {
-      parsedResponse = JSON.parse(responseText);
-    } catch {
-      console.error("Failed to parse AI response:", responseText);
-      return NextResponse.json(
+    if (!outputValidation.success) {
+      return jsonResponse(
         { error: "Failed to generate cover letter. Please try again." },
-        { status: 500 },
+        502,
+        {
+          "X-RateLimit-Remaining": rateLimit.remaining.toString(),
+        },
       );
     }
 
-    // 9. Sanitize output
-    parsedResponse.coverLetter = sanitizeOutput(parsedResponse.coverLetter);
-
-    // 10. Return success response with security headers
-    return NextResponse.json(parsedResponse, {
-      status: 200,
-      headers: {
-        "X-RateLimit-Remaining": rateLimit.remaining.toString(),
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "Cache-Control": "no-store, no-cache, must-revalidate",
+    const sanitizedOutput = {
+      ...outputValidation.data,
+      coverLetter: sanitizeOutput(outputValidation.data.coverLetter),
+      metadata: {
+        ...outputValidation.data.metadata,
+        generatedAt: new Date().toISOString(),
       },
+    };
+
+    return jsonResponse(sanitizedOutput, 200, {
+      "X-RateLimit-Remaining": rateLimit.remaining.toString(),
     });
-  } catch (error: unknown) {
-    // Secure error handling - never expose internal errors
-    console.error("Cover letter generation error:", error);
-
-    // Generic error message to prevent information leakage
-    return NextResponse.json(
+  } catch {
+    return jsonResponse(
+      { error: "An unexpected error occurred. Please try again later." },
+      500,
       {
-        error: "An unexpected error occurred. Please try again later.",
+        "X-RateLimit-Remaining": rateLimit.remaining.toString(),
       },
-      { status: 500 },
     );
   }
 }
 
-// GET method not allowed
 export async function GET() {
-  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
+  return jsonResponse({ error: "Method not allowed" }, 405);
 }

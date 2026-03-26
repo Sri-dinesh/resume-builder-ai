@@ -5,16 +5,13 @@ export default function CoverLetterPageSkeleton() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-8 dark:from-gray-900 dark:to-gray-950">
       <div className="mx-auto max-w-6xl">
-        {/* Header */}
         <div className="mb-8 text-center">
           <Skeleton className="mx-auto mb-4 h-14 w-14 rounded-full" />
           <Skeleton className="mx-auto mb-3 h-12 w-96" />
           <Skeleton className="mx-auto h-6 w-[500px]" />
         </div>
 
-        {/* Main Content */}
         <div className="grid gap-8 lg:grid-cols-2">
-          {/* Input Form Skeleton */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -53,7 +50,6 @@ export default function CoverLetterPageSkeleton() {
             </Card>
           </div>
 
-          {/* Output Section Skeleton */}
           <div>
             <Card className="min-h-[600px]">
               <CardHeader>
