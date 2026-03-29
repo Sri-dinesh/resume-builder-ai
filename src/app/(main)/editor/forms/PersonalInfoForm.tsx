@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
+import { sanitizeEditorInput } from "@/lib/utils";
 import { personalInfoSchema, PersonalInfoValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
@@ -101,7 +102,7 @@ export default function PersonalInfoForm({
                       {...field}
                       onChange={(e) =>
                         field.onChange(
-                          e.target.value.replace(/[^a-zA-Z'-]/g, ""),
+                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
                         )
                       }
                     />
@@ -121,7 +122,7 @@ export default function PersonalInfoForm({
                       {...field}
                       onChange={(e) =>
                         field.onChange(
-                          e.target.value.replace(/[^a-zA-Z'-]/g, ""),
+                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
                         )
                       }
                     />
@@ -138,16 +139,14 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Job title</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value
-                          .replace(/[^a-zA-Z0-9\s\-,.&()'/]/g, "")
-                          .substring(0, 50),
-                      )
-                    }
-                  />
+                    <Input
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(
+                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
+                        )
+                      }
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -164,9 +163,8 @@ export default function PersonalInfoForm({
                     <Input
                       {...field}
                       onChange={(e) =>
-                        // Allow letters, spaces, apostrophes, and hyphens
                         field.onChange(
-                          e.target.value.replace(/[^a-zA-Z\s\-']/g, ""),
+                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
                         )
                       }
                     />
@@ -185,9 +183,8 @@ export default function PersonalInfoForm({
                     <Input
                       {...field}
                       onChange={(e) =>
-                        // Allow letters, spaces, apostrophes, and hyphens
                         field.onChange(
-                          e.target.value.replace(/[^\p{L}\s\-']/gu, ""),
+                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
                         )
                       }
                     />
@@ -204,17 +201,15 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                    type="tel"
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value
-                          .replace(/[^0-9+\-\s()]/g, "")
-                          .substring(0, 20),
-                      )
-                    }
-                  />
+                    <Input
+                      {...field}
+                      type="tel"
+                      onChange={(e) =>
+                        field.onChange(
+                          sanitizeEditorInput(e.target.value, { maxLength: 20 }),
+                        )
+                      }
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>

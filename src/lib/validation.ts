@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const optionalString = z.string().trim().optional().or(z.literal(""));
+export const optionalString = z.string().optional().or(z.literal(""));
 
 export const generalInfoSchema = z.object({
   title: optionalString,
@@ -111,7 +111,7 @@ export const educationSchema = z.object({
 export type EducationValues = z.infer<typeof educationSchema>;
 
 export const skillsSchema = z.object({
-  skills: z.array(z.string().trim()).optional(),
+  skills: z.array(z.string()).optional(),
 });
 
 export type SkillsValues = z.infer<typeof skillsSchema>;

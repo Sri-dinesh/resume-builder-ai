@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/types";
+import { sanitizeEditorInput } from "@/lib/utils";
 import { summarySchema, SummaryValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -57,10 +58,10 @@ export default function SummaryForm({
                     placeholder="A brief, engaging text about yourself"
                     onChange={(e) =>
                       field.onChange(
-                        e.target.value
-                          .replace(/[^a-zA-Z0-9\s.,'":;!?()-]/g, "") // allow letters, numbers, spaces, basic punctuation
-                          .substring(0, 1000) // max length 1000 chars
-                          .trim(), // remove leading/trailing spaces
+                        sanitizeEditorInput(e.target.value, {
+                          maxLength: 1000,
+                          singleLine: false,
+                        }),
                       )
                     }
                   />

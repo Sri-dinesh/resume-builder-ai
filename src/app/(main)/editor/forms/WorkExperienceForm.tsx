@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, sanitizeEditorInput } from "@/lib/utils";
 import { workExperienceSchema, WorkExperienceValues } from "@/lib/validation";
 import {
   closestCenter,
@@ -211,9 +211,7 @@ function WorkExperienceItem({
                 autoFocus
                 onChange={(e) =>
                   field.onChange(
-                    e.target.value
-                      .replace(/[^a-zA-Z\s.'-]/g, "") // allow only letters, spaces, dot, apostrophe, hyphen
-                      .substring(0, 50), // limit length to 50 chars
+                    sanitizeEditorInput(e.target.value, { maxLength: 50 }),
                   )
                 }
               />
@@ -233,10 +231,7 @@ function WorkExperienceItem({
                 {...field}
                 onChange={(e) =>
                   field.onChange(
-                    e.target.value
-                      .replace(/[^a-zA-Z0-9\s&.,'\-()]/g, "") // allow letters, numbers, spaces, & , . ' - ()
-                      .substring(0, 100) // limit length to 100 chars
-                      .trim(),
+                    sanitizeEditorInput(e.target.value, { maxLength: 100 }),
                   )
                 }
               />

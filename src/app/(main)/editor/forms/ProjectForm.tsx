@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, sanitizeEditorInput } from "@/lib/utils";
 import { projectSchema, ProjectValues } from "@/lib/validation";
 import {
   closestCenter,
@@ -204,10 +204,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
                 autoFocus
                 onChange={(e) =>
                   field.onChange(
-                    e.target.value
-                      .replace(/[^a-zA-Z0-9\s&._-]/g, "") // allow letters, numbers, spaces, &, ., _, -
-                      .substring(0, 50) // max length 50 chars
-                      .trim(), // remove leading/trailing spaces
+                    sanitizeEditorInput(e.target.value, { maxLength: 50 }),
                   )
                 }
               />
@@ -227,10 +224,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
                 {...field}
                 onChange={(e) =>
                   field.onChange(
-                    e.target.value
-                      .replace(/[^a-zA-Z0-9\s&.+\-\/]/g, "") // allow letters, numbers, spaces, &, ., +, -, /
-                      .substring(0, 100) // max length 100 chars
-                      .trim(), // remove leading/trailing spaces
+                    sanitizeEditorInput(e.target.value, { maxLength: 100 }),
                   )
                 }
               />

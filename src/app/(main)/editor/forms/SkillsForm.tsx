@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/types";
+import { sanitizeEditorInput } from "@/lib/utils";
 import { skillsSchema, SkillsValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo, useRef } from "react";
@@ -40,30 +41,6 @@ export default function SkillsForm({
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
-
-  // List of predefined programming languages
-  // const predefinedSkills = [
-  //   "JavaScript",
-  //   "Python",
-  //   "Java",
-  //   "C#",
-  //   "C++",
-  //   "TypeScript",
-  //   "Go",
-  //   "Swift",
-  //   "Kotlin",
-  //   "PHP",
-  //   "Ruby",
-  //   "Rust",
-  //   "Dart",
-  //   "SQL",
-  //   "C",
-  //   "Objective-C",
-  //   "R",
-  //   "Haskell",
-  //   "Elixir",
-  //   "Assembly",
-  // ];
 
   const predefinedSkills = useMemo(() => {
     const jobTitle = resumeData.jobTitle?.toLowerCase() || "";
@@ -137,7 +114,11 @@ export default function SkillsForm({
     }
 
     // Fullstack Developer
-    if (jobTitle.includes("fullstack") || jobTitle.includes("full-stack")) {
+    if (
+      jobTitle.includes("fullstack") ||
+      jobTitle.includes("full-stack") ||
+      jobTitle.includes("full stack")
+    ) {
       return [
         "React.js",
         "Vue.js",
@@ -447,24 +428,26 @@ export default function SkillsForm({
     ];
   }, [resumeData.jobTitle]);
 
-  // Function to handle button clicks
   const handleSkillButtonClick = (skill: string) => {
-    const currentSkills = form.getValues("skills") || [];
-    const updatedSkills = [...currentSkills, skill].filter(
+    const currentSkills = form.getValues("skills") as unknown;
+    const normalizedSkills = Array.isArray(currentSkills)
+      ? currentSkills
+      : typeof currentSkills === "string"
+        ? currentSkills.split(",").map((item: string) => item.trim())
+        : [];
+    const updatedSkills = [...normalizedSkills, skill].filter(
       (item) => item.trim() !== "",
     );
     form.setValue("skills", updatedSkills);
-    autoResizeTextarea(); // Resize textarea after adding a skill
+    autoResizeTextarea();
   };
 
-  // Reference to the textarea element
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // Function to auto-resize the textarea
   const autoResizeTextarea = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Reset height to recalculate
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set height to scrollHeight
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
 
@@ -486,11 +469,11 @@ export default function SkillsForm({
         </p>
       </div>
 
-      {/* Predefined Skills Buttons */}
       <div className="flex flex-wrap justify-center gap-2 text-sm">
         {predefinedSkills.map((skill, index) => (
           <button
             key={index}
+            type="button"
             onClick={() => handleSkillButtonClick(skill)}
             className="rounded-md px-3 py-1 transition-colors"
             style={{
@@ -516,23 +499,29 @@ export default function SkillsForm({
                   <Textarea
                     {...field}
                     ref={(el) => {
-                      textareaRef.current = el; // Assign ref
-                      autoResizeTextarea(); // Resize on initial render
+                      textareaRef.current = el;
+                      autoResizeTextarea();
                     }}
                     placeholder="e.g. React.js, Node.js, graphic design, ..."
-                    value={field.value?.join(", ") || ""}
+                    value={
+                      Array.isArray(field.value)
+                        ? field.value.join(", ")
+                        : typeof field.value === "string"
+                          ? field.value
+                          : ""
+                    }
                     onChange={(e) => {
-                      const skills = e.target.value
+                      const sanitizedValue = sanitizeEditorInput(
+                        e.target.value,
+                        { maxLength: 200 },
+                      );
+
+                      const skills = sanitizedValue
                         .split(",")
                         .map((s) => s.trim());
+
                       field.onChange(skills);
-                      autoResizeTextarea(); // Resize on input change
-                      field.onChange(
-                        e.target.value
-                          .replace(/[^a-zA-Z0-9\s.,+#&/-]/g, "") // allow letters, numbers, spaces, ., ,, +, #, &, -, /
-                          .substring(0, 200) // max length 200 chars
-                          .trim(), // remove leading/trailing spaces
-                      );
+                      autoResizeTextarea();
                     }}
                     style={{
                       borderColor: `hsl(var(--border))`,

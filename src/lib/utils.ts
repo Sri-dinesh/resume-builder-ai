@@ -7,6 +7,36 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+interface SanitizeEditorInputOptions {
+  maxLength?: number;
+  singleLine?: boolean;
+}
+
+export function sanitizeEditorInput(
+  value: string,
+  options: SanitizeEditorInputOptions = {},
+) {
+  const { maxLength, singleLine = true } = options;
+
+  let sanitized = value
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .replace(/--+/g, "-")
+    .replace(/\/\*/g, "/")
+    .replace(/\*\//g, "/")
+    .replace(/@@/g, "@")
+    .replace(/\bxp_/gi, "xp");
+
+  if (singleLine) {
+    sanitized = sanitized.replace(/[\r\n]+/g, " ");
+  }
+
+  if (typeof maxLength === "number") {
+    sanitized = sanitized.substring(0, maxLength);
+  }
+
+  return sanitized;
+}
+
 export function fileReplacer(key: unknown, value: unknown) {
   return value instanceof File
     ? {

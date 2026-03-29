@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, sanitizeEditorInput } from "@/lib/utils";
 import { certificationSchema, CertificationValues } from "@/lib/validation";
 import {
   closestCenter,
@@ -186,10 +186,7 @@ function CertificationItem({
                 autoFocus
                 onChange={(e) =>
                   field.onChange(
-                    e.target.value
-                      .replace(/[^a-zA-Z0-9\s&.,'+-]/g, "") // allow letters, numbers, spaces, &, ., ,, ', +, -
-                      .substring(0, 100) // max length 100 chars
-                      .trim(), // remove leading/trailing spaces
+                    sanitizeEditorInput(e.target.value, { maxLength: 100 }),
                   )
                 }
               />
@@ -211,10 +208,7 @@ function CertificationItem({
                 autoFocus
                 onChange={(e) =>
                   field.onChange(
-                    e.target.value
-                      .replace(/[^a-zA-Z0-9\s&.,'-]/g, "") // allow letters, numbers, spaces, &, ., ,, ', -
-                      .substring(0, 100) // max length 100 chars
-                      .trim(), // remove leading/trailing spaces
+                    sanitizeEditorInput(e.target.value, { maxLength: 100 }),
                   )
                 }
               />
