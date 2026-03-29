@@ -29,7 +29,7 @@ export default function ResumePreviewSection({
     <FormProvider {...methods}>
       <div
         className={cn(
-          "group relative hidden w-full md:flex md:w-1/2",
+          "group relative hidden min-h-0 w-full md:flex md:w-1/2",
           className,
         )}
       >
@@ -64,7 +64,7 @@ export default function ResumePreviewSection({
         </div>
 
         {/* Resume Preview */}
-        <div className="flex w-full justify-center overflow-y-auto bg-secondary p-3">
+        <div className="flex min-h-0 w-full justify-center overflow-y-auto bg-secondary p-3">
           <ResumePreview
             resumeData={resumeData}
             contentRef={contentRef}

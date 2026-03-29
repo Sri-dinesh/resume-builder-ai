@@ -19,7 +19,7 @@ export default function Breadcrumbs({
   setCurrentStep,
 }: BreadcrumbsProps) {
   return (
-    <div className="flex justify-center">
+    <div className="flex min-w-0 justify-start">
       <Breadcrumb>
         <BreadcrumbList>
           {steps.map((step) => (

@@ -46,7 +46,9 @@ export default function ResumePreview({
   className,
 }: ResumePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const previewContentRef = useRef<HTMLDivElement>(null);
   const selectedFont = resumeData.fontFamily || "Arial";
+  const [previewHeight, setPreviewHeight] = useState<number>();
 
   const [sectionOrder, setSectionOrder] = useState<SectionType[]>([
     "personal",
@@ -96,22 +98,46 @@ export default function ResumePreview({
 
   // const { width } = useDimensions(containerRef);
   const { width } = useDimensions(containerRef as React.RefObject<HTMLElement>);
+  const scale = width ? width / 794 : 1;
+
+  useEffect(() => {
+    if (!previewContentRef.current || !width) return;
+
+    setPreviewHeight(previewContentRef.current.scrollHeight * scale);
+  }, [resumeData, scale, sectionOrder, width]);
+
+  const setContentRefs = (node: HTMLDivElement | null) => {
+    previewContentRef.current = node;
+
+    if (!contentRef) return;
+
+    if (typeof contentRef === "function") {
+      contentRef(node);
+      return;
+    }
+
+    contentRef.current = node;
+  };
 
   return (
     <div
       className={cn(
-        "aspect-[210/297] h-fit w-full bg-white text-black",
+        "w-full bg-white text-black",
         className,
       )}
+      style={{
+        minHeight: previewHeight,
+      }}
       ref={containerRef}
     >
       <div
         className={cn("space-y-2 p-6", !width && "invisible")}
         style={{
-          zoom: (1 / 794) * width,
+          width: 794,
+          zoom: scale,
           fontFamily: getFontFamily(),
         }}
-        ref={contentRef}
+        ref={setContentRefs}
         id="resumePreviewContent"
       >
         {/* <PersonalInfoHeader resumeData={resumeData} />
