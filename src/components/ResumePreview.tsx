@@ -30,7 +30,7 @@ const inter = Inter({
 
 const notoSerif = Noto_Serif({
   subsets: ["latin"],
-  weight: "400", // adjust as needed
+  weight: "400",
   display: "swap",
 });
 
@@ -100,7 +100,7 @@ export default function ResumePreview({
   return (
     <div
       className={cn(
-        "aspect-[210/297] h-full w-full overflow-hidden bg-white text-black",
+        "aspect-[210/297] h-fit w-full bg-white text-black",
         className,
       )}
       ref={containerRef}
@@ -108,7 +108,7 @@ export default function ResumePreview({
       <div
         className={cn("space-y-2 p-6", !width && "invisible")}
         style={{
-          zoom: (1 / 794) * (width || 794),
+          zoom: (1 / 794) * width,
           fontFamily: getFontFamily(),
         }}
         ref={contentRef}
@@ -336,7 +336,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
             >
               <span>{exp.position}</span>
               {exp.startDate && (
-                <span suppressHydrationWarning>
+                <span>
                   {formatDate(exp.startDate, "MM/yyyy")} -{" "}
                   {exp.endDate ? formatDate(exp.endDate, "MM/yyyy") : "Present"}
                 </span>
@@ -396,7 +396,7 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
             >
               <span className="text-base">{proj.ProjectName}</span>
               {proj.startDate && (
-                <span suppressHydrationWarning>
+                <span>
                   {formatDate(proj.startDate, "MM/yyyy")} -{" "}
                   {proj.endDate
                     ? formatDate(proj.endDate, "MM/yyyy")
@@ -469,7 +469,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
             >
               <span>{edu.degree}</span>
               {edu.startDate && (
-                <span suppressHydrationWarning>
+                <span>
                   {edu.startDate &&
                     `${formatDate(edu.startDate, "MM/yyyy")} ${edu.endDate ? `- ${formatDate(edu.endDate, "MM/yyyy")}` : ""}`}
                 </span>
@@ -567,9 +567,7 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
                 )}
               </span>
               {cert.awardedDate && (
-                <span suppressHydrationWarning>
-                  {formatDate(cert.awardedDate, "MM/yyyy")}
-                </span>
+                <span>{formatDate(cert.awardedDate, "MM/yyyy")}</span>
               )}
             </div>
           </div>
