@@ -13,6 +13,7 @@ interface FooterProps {
   showSmResumePreview: boolean;
   setShowSmResumePreview: (show: boolean) => void;
   isSaving: boolean;
+  hasUnsavedChanges: boolean;
 }
 
 export default function Footer({
@@ -21,6 +22,7 @@ export default function Footer({
   showSmResumePreview,
   setShowSmResumePreview,
   isSaving,
+  hasUnsavedChanges,
 }: FooterProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const dragOffsetRef = useRef({ x: 0, y: 0 });
@@ -112,6 +114,12 @@ export default function Footer({
     return null;
   }
 
+  const saveStatus = isSaving
+    ? "Saving..."
+    : hasUnsavedChanges
+      ? "Unsaved changes"
+      : "Saved";
+
   return (
     <div
       ref={containerRef}
@@ -121,14 +129,23 @@ export default function Footer({
         top: position.y,
       }}
     >
-      <p
-        className={cn(
-          "order-3 w-full text-right text-xs text-muted-foreground opacity-0 transition-opacity md:order-none md:w-auto",
-          isSaving && "opacity-100",
-        )}
-      >
-        Saving...
-      </p>
+      <div className="order-3 w-full md:order-none md:w-auto">
+        <p
+          className={cn(
+            "rounded-full border px-3 py-1 text-right text-xs shadow-sm transition-colors",
+            isSaving &&
+              "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+            !isSaving &&
+              hasUnsavedChanges &&
+              "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300",
+            !isSaving &&
+              !hasUnsavedChanges &&
+              "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+          )}
+        >
+          {saveStatus}
+        </p>
+      </div>
       <div className="flex items-center gap-2 rounded-full border bg-background px-2 py-1 shadow-sm">
         <Button
           variant="ghost"

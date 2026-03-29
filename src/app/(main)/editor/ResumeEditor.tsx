@@ -87,6 +87,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
           showSmResumePreview={showSmResumePreview}
           setShowSmResumePreview={setShowSmResumePreview}
           isSaving={isSaving}
+          hasUnsavedChanges={hasUnsavedChanges}
         />
         <div className="absolute inset-0 flex min-h-0 w-full px-3 pb-3 pt-3 md:px-4 md:pb-4 md:pt-4">
           <div
