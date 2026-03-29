@@ -1,11 +1,25 @@
 import { NextResponse } from "next/server";
-import { AIChatSession } from "@/lib/google-ai-model";
+import { createAIChatSession } from "@/lib/google-ai-model";
+import { auth } from "@clerk/nextjs/server";
 export async function POST(request: Request) {
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { text } = await request.json();
 
-    if (!text) {
+    if (typeof text !== "string" || !text.trim()) {
       return NextResponse.json({ error: "No text provided" }, { status: 400 });
+    }
+
+    if (text.length > 20000) {
+      return NextResponse.json(
+        { error: "Resume content is too long to enhance reliably." },
+        { status: 400 },
+      );
     }
 
     const prompt = `Parse and enhance this resume content. Return a JSON object matching exactly this structure:
@@ -62,7 +76,7 @@ export async function POST(request: Request) {
       }
       Parse and enhance this resume: ${text}. Ensure all dates are in YYYY-MM format and all fields exactly match the structure above.`;
 
-    const result = await AIChatSession.sendMessage(prompt);
+    const result = await createAIChatSession().sendMessage(prompt);
     const enhancedText = result.response.text();
     const parsedResponse = JSON.parse(enhancedText);
 

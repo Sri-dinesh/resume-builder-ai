@@ -6,6 +6,7 @@ import { getUserSubscriptionLevel } from "@/lib/subscription";
 import { resumeSchema, ResumeValues } from "@/lib/validation";
 import { auth } from "@clerk/nextjs/server";
 import { del, put } from "@vercel/blob";
+import crypto from "crypto";
 import path from "path";
 
 export async function saveResume(values: ResumeValues) {
@@ -63,9 +64,15 @@ export async function saveResume(values: ResumeValues) {
       await del(existingResume.photoUrl);
     }
 
-    const blob = await put(`resume_photos/${path.extname(photo.name)}`, photo, {
-      access: "public",
-    });
+    const extension = path.extname(photo.name).toLowerCase() || ".bin";
+    const safeExtension = extension.replace(/[^a-z0-9.]/g, "") || ".bin";
+    const blob = await put(
+      `resume_photos/${userId}/${crypto.randomUUID()}${safeExtension}`,
+      photo,
+      {
+        access: "public",
+      },
+    );
 
     newPhotoUrl = blob.url;
   } else if (photo === null) {

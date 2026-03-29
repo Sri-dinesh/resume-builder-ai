@@ -16,7 +16,9 @@ const generationConfig = {
   responseMimeType: "application/json",
 };
 
-export const AIChatSession = model.startChat({
-  generationConfig,
-  history: [],
-});
+export function createAIChatSession() {
+  return model.startChat({
+    generationConfig,
+    history: [],
+  });
+}

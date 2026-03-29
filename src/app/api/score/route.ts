@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import pdf from "pdf-parse";
+import { auth } from "@clerk/nextjs/server";
 import {
   SCORE_ACCEPTED_FILE_TYPES,
   SCORE_MAX_TEXT_LENGTH,
@@ -41,6 +42,20 @@ function normalizeResumeText(text: string) {
 
 export async function POST(request: Request) {
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401,
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        },
+      );
+    }
+
     const formData = await request.formData();
     const file = formData.get("file");
     const jobDescription = formData.get("jobDescription");
