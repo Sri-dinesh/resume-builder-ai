@@ -3,154 +3,209 @@
 import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
 import usePremiumModal from "@/hooks/usePremiumModal";
-import { Check, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent } from "../ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
+import { MagneticButton } from "@/components/landing/ui/MagneticButton";
 import { createCheckoutSession } from "./actions";
 
-const premiumFeatures = [
-  "Basic Design Customization",
+const proFeatures = [
   "Up to 3 resumes",
-  "AI Features",
+  "Basic design customization",
+  "AI content generation",
 ];
-const premiumPlusFeatures = [
-  "Everything in Premium",
-  "Infinite resumes",
-  "Design customizations",
+
+const proPlusFeatures = [
+  "Unlimited resumes",
+  "Enhance old resumes",
+  "Advanced customization",
 ];
 
 export default function PremiumModal() {
   const { open, setOpen } = usePremiumModal();
-
   const { toast } = useToast();
+  const [loading, setLoading] = useState<string | null>(null);
 
-  const [loading, setLoading] = useState(false);
-
-  async function handlePremiumClick(priceId: string) {
+  async function handlePremiumClick(priceId: string, tier: string) {
     try {
-      setLoading(true);
+      setLoading(tier);
       const redirectUrl = await createCheckoutSession(priceId);
       window.location.href = redirectUrl;
-    } catch (error) {
-      console.error(error);
+    } catch {
       toast({
         variant: "destructive",
         description: "Something went wrong. Please try again.",
       });
     } finally {
-      setLoading(false);
+      setLoading(null);
     }
   }
 
   return (
     <Dialog
       open={open}
-      onOpenChange={(open) => {
-        if (!loading) {
-          setOpen(open);
-        }
+      onOpenChange={(openState) => {
+        if (!loading) setOpen(openState);
       }}
     >
-      <DialogContent className="max-h-[90vh] w-full max-w-4xl gap-0 overflow-y-auto p-0">
-        {/* Header */}
-        <div className="rounded-t-lg bg-purple-600 px-6 py-6 sm:px-8">
-          <h1 className="text-2xl font-bold text-white sm:text-3xl">
-            SparkCV Premium
-          </h1>
-          <p className="mt-1 text-sm text-purple-100">
-            Get a premium subscription to unlock more features
-          </p>
-        </div>
+      <DialogContent className="max-w-[420px] overflow-hidden border-none bg-transparent p-0 shadow-none">
+        <DialogTitle className="sr-only">Upgrade to Pro</DialogTitle>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 16 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 16 }}
+          transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+          className="overflow-hidden rounded-3xl border border-border/40 bg-card/95 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-xl"
+        >
+          <div className="px-8 pt-8 text-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.35 }}
+              className="font-serif text-2xl font-medium tracking-tight text-foreground"
+            >
+              Upgrade to Pro
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.35 }}
+              className="mt-1.5 text-sm text-muted-foreground"
+            >
+              Unlock your full potential
+            </motion.p>
+          </div>
 
-        {/* Pricing Cards */}
-        <div className="p-6 sm:p-8">
-          <div className="grid gap-6 md:grid-cols-2 md:gap-8">
-            {/* Premium Card */}
-            <div className="rounded-lg border border-gray-200 bg-white p-6 transition-all duration-300 hover:shadow-md sm:p-6">
-              <div className="mb-4">
-                <h3 className="text-lg font-bold text-gray-900 sm:text-xl">
-                  Premium Pro
-                </h3>
-                <p className="mt-2 text-2xl font-bold text-purple-600">
-                  $9.99<span className="text-sm text-gray-600">/mo</span>
-                </p>
-              </div>
-
-              <div className="mb-6 space-y-2 sm:space-y-3">
-                {premiumFeatures.map((feature) => (
-                  <div key={feature} className="flex items-center gap-2">
-                    <div className="flex-shrink-0 rounded-full bg-purple-100 p-1">
-                      <Check className="h-3 w-3 text-purple-600" />
-                    </div>
-                    <span className="text-sm text-gray-700">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <Button
-                onClick={() =>
-                  handlePremiumClick(
-                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
-                  )
-                }
-                disabled={loading}
-                className="w-full rounded-lg bg-purple-600 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-purple-700 disabled:opacity-50"
-              >
-                {loading ? "Processing..." : "Get Premium"}
-              </Button>
-            </div>
-
-            {/* Premium Plus Card */}
-            <div className="relative rounded-lg border-2 border-purple-600 bg-purple-50 p-6 shadow-md transition-all duration-300 hover:shadow-lg sm:p-6">
-              <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-purple-600 px-2.5 py-1 text-white shadow-md">
-                <Zap className="h-3 w-3" />
-                <span className="text-xs font-bold">Popular</span>
-              </div>
-
-              <div className="mb-4 pr-20">
-                <h3 className="text-lg font-bold text-purple-700 sm:text-xl">
-                  Premium Plus
-                </h3>
-                <p className="mt-2 text-2xl font-bold text-purple-600">
-                  $19.99<span className="text-sm text-gray-600">/mo</span>
-                </p>
-              </div>
-
-              <div className="mb-6 space-y-2 sm:space-y-3">
-                {premiumPlusFeatures.map((feature) => (
-                  <div key={feature} className="flex items-center gap-2">
-                    <div className="flex-shrink-0 rounded-full bg-purple-200 p-1">
-                      <Check className="h-3 w-3 text-purple-700" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-800">
-                      {feature}
+          <div className="mt-6 space-y-3 px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/50 p-5 transition-all duration-300 hover:border-primary/30 hover:bg-background"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-[15px] font-semibold text-foreground">
+                    Professional
+                  </h3>
+                  <div className="mt-1 flex items-baseline gap-0.5">
+                    <span className="text-[13px] font-medium text-muted-foreground">
+                      $
+                    </span>
+                    <span className="font-serif text-[26px] font-semibold tracking-tight text-foreground">
+                      9
+                    </span>
+                    <span className="text-[13px] font-medium text-muted-foreground">
+                      .99
+                    </span>
+                    <span className="ml-0.5 text-[13px] font-medium text-muted-foreground">
+                      /mo
                     </span>
                   </div>
-                ))}
+                </div>
+                <MagneticButton
+                  variant="outline"
+                  size="sm"
+                  className="h-9 px-4 text-[13px]"
+                  isLoading={loading === "pro"}
+                  onClick={() =>
+                    handlePremiumClick(
+                      env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
+                      "pro",
+                    )
+                  }
+                >
+                  Choose
+                </MagneticButton>
               </div>
 
-              <Button
-                onClick={() =>
-                  handlePremiumClick(
-                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
-                  )
-                }
-                disabled={loading}
-                className="w-full rounded-lg bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-purple-700 disabled:opacity-50"
-              >
-                {loading ? "Processing..." : "Get Premium Plus"}
-              </Button>
-            </div>
+              <div className="mt-4 space-y-2">
+                {proFeatures.map((feature) => (
+                  <div
+                    key={feature}
+                    className="flex items-center gap-2.5 text-[13px] text-foreground/80"
+                  >
+                    <Check
+                      className="h-3.5 w-3.5 shrink-0 text-primary"
+                      strokeWidth={2}
+                    />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="relative overflow-hidden rounded-2xl border border-primary/40 bg-primary/[0.03] p-5"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-[15px] font-semibold text-foreground">
+                    Professional Plus
+                  </h3>
+                  <div className="mt-1 flex items-baseline gap-0.5">
+                    <span className="text-[13px] font-medium text-muted-foreground">
+                      $
+                    </span>
+                    <span className="font-serif text-[26px] font-semibold tracking-tight text-foreground">
+                      19
+                    </span>
+                    <span className="text-[13px] font-medium text-muted-foreground">
+                      .99
+                    </span>
+                    <span className="ml-0.5 text-[13px] font-medium text-muted-foreground">
+                      /mo
+                    </span>
+                  </div>
+                </div>
+                <MagneticButton
+                  variant="primary"
+                  size="sm"
+                  className="h-9 px-4 text-[13px]"
+                  isLoading={loading === "pro-plus"}
+                  onClick={() =>
+                    handlePremiumClick(
+                      env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
+                      "pro-plus",
+                    )
+                  }
+                >
+                  Choose
+                </MagneticButton>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                {proPlusFeatures.map((feature) => (
+                  <div
+                    key={feature}
+                    className="flex items-center gap-2.5 text-[13px] font-medium text-foreground"
+                  >
+                    <Check
+                      className="h-3.5 w-3.5 shrink-0 text-primary"
+                      strokeWidth={2}
+                    />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
-          {/* Footer Note */}
-          <div className="mt-4 text-center">
-            <p className="text-xs text-gray-500">
-              All plans include 30-day money back guarantee. Cancel anytime.
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35, duration: 0.3 }}
+            className="mt-6 border-t border-border/30 px-8 py-4 text-center"
+          >
+            <p className="text-[11px] font-medium text-muted-foreground/70">
+              Cancel anytime. 30-day money-back guarantee.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </DialogContent>
     </Dialog>
   );

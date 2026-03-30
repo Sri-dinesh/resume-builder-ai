@@ -165,7 +165,7 @@ export default function Navbar() {
           <div className="flex items-center rounded-full ring-2 ring-primary/10 transition-shadow hover:ring-primary/30">
             <UserButton
               appearance={{
-                baseTheme: theme === "dark" ? dark : undefined,
+                baseTheme: mounted && theme === "dark" ? dark : undefined,
                 elements: {
                   avatarBox: {
                     width: 32,
