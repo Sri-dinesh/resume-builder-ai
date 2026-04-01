@@ -201,7 +201,7 @@ export const LandingNavbar = () => {
           className={cn(
             "absolute top-0 z-10 h-[2px] w-8 rounded-b-lg bg-primary shadow-[0_2px_12px_0px_hsl(var(--primary)_/_0.5)] sm:h-[2.5px] sm:w-10 md:h-[3px] md:w-12",
             isReady
-              ? "ease-[cubic-bezier(0.32,0.72,0,1)] transition-[left] duration-300"
+              ? "ease-[cubic-bezier(0.32\,0.72\,0\,1)] transition-[left] duration-300"
               : "opacity-0",
           )}
           style={{ left: "0px" }}

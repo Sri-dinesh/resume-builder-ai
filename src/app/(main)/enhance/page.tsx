@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import EnhancePageWrapper from "./_components/EnhancePageWrapper";
 
 export const metadata: Metadata = {
-  title: "Enhance Your Resume",
+  title: "AI Resume Enhancer",
   description:
-    "Upload your PDF resume and let AI improve & generate a new one for you",
+    "Upload your PDF resume and let AI transform it into a professional masterpiece",
 };
 
 export default function EnhancePage() {
