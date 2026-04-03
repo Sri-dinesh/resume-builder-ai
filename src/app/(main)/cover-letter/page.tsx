@@ -75,6 +75,9 @@ const coverLetterFormSchema = z.object({
 });
 
 type CoverLetterFormValues = z.infer<typeof coverLetterFormSchema>;
+type CoverLetterTone = (typeof coverLetterTones)[number];
+type CoverLetterLength = (typeof coverLetterLengths)[number];
+type CoverLetterIndustry = (typeof industryTemplates)[number];
 
 interface CoverLetterResult {
   coverLetter: string;
@@ -668,7 +671,9 @@ export default function CoverLetterPage() {
                           <Label className="text-xs font-medium">Tone</Label>
                           <Select
                             defaultValue={coverLetterFormDefaults.tone}
-                            onValueChange={(v) => setValue("tone", v as any)}
+                            onValueChange={(value: CoverLetterTone) =>
+                              setValue("tone", value)
+                            }
                           >
                             <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm capitalize">
                               <SelectValue />
@@ -690,7 +695,9 @@ export default function CoverLetterPage() {
                           <Label className="text-xs font-medium">Length</Label>
                           <Select
                             defaultValue={coverLetterFormDefaults.length}
-                            onValueChange={(v) => setValue("length", v as any)}
+                            onValueChange={(value: CoverLetterLength) =>
+                              setValue("length", value)
+                            }
                           >
                             <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm capitalize">
                               <SelectValue />
@@ -714,8 +721,8 @@ export default function CoverLetterPage() {
                           </Label>
                           <Select
                             defaultValue={coverLetterFormDefaults.industry}
-                            onValueChange={(v) =>
-                              setValue("industry", v as any)
+                            onValueChange={(value: CoverLetterIndustry) =>
+                              setValue("industry", value)
                             }
                           >
                             <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm capitalize">

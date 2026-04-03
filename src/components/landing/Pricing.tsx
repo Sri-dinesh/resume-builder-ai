@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Award, CircleDollarSign, Plus } from "lucide-react";
+import { Award, CircleDollarSign } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { MagneticButton } from "./ui/MagneticButton";

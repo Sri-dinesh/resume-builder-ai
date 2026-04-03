@@ -67,9 +67,8 @@ const useHydratedScroll = (
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 50]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.98]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  return { y, scale, opacity, isHydrated };
+  return { y, scale, isHydrated };
 };
 
 export const LandingHero: React.FC = () => {
@@ -79,7 +78,7 @@ export const LandingHero: React.FC = () => {
   const router = useRouter();
   const { isSignedIn } = useAuth();
 
-  const { y, scale, opacity, isHydrated } = useHydratedScroll(containerRef);
+  const { y, scale, isHydrated } = useHydratedScroll(containerRef);
 
   const handleBuildResume = async () => {
     setIsLoading(true);

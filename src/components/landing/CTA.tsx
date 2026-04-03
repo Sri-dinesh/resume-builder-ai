@@ -42,7 +42,7 @@ export const LandingCTA = () => {
           </motion.h2>
 
           <p className="mb-8 max-w-xl text-base font-light leading-relaxed text-muted-foreground md:mb-12 md:text-xl">
-            Build a Resume. Land Interviews. Get Hired. It's That Simple.
+            Build a Resume. Land Interviews. Get Hired. It&apos;s That Simple.
           </p>
 
           <Link href="/resumes">

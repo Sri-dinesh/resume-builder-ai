@@ -41,7 +41,7 @@ const SCAN_FEATURES = [
 export default function ScoreContent() {
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<ScoreAnalysisResult | null>(null);
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [analysisMode, setAnalysisMode] =
     useState<ScoreAnalysisMode>("general");
@@ -277,8 +277,8 @@ export default function ScoreContent() {
                         Standard Headings
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        Use specific labels like "Work Experience" and "Skills"
-                        for accurate ATS parsing.
+                        Use specific labels like &quot;Work Experience&quot; and
+                        &quot;Skills&quot; for accurate ATS parsing.
                       </p>
                     </div>
                     <div className="group rounded-2xl border border-border/50 bg-background/50 p-6 transition-colors hover:border-primary/30">

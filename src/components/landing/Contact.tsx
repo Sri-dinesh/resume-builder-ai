@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
   Check,
+  type LucideIcon,
   Mail,
   MessageSquare,
   Send,
@@ -93,7 +94,7 @@ const ContactMethodCard = ({
   subtitle,
   href,
 }: {
-  icon: any;
+  icon: LucideIcon;
   title: string;
   subtitle: string;
   href?: string;
@@ -191,7 +192,7 @@ export const LandingContact = () => {
             result.message || "Something went wrong. Please try again.",
           );
         }
-      } catch (error) {
+      } catch {
         setSubmitStatus("error");
         setSubmitError(
           "Failed to send the message. Please check your connection and try again.",

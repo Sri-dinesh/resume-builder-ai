@@ -10,19 +10,14 @@ import {
 import { format } from "date-fns";
 import { ResumeValues } from "@/lib/validation";
 
-// Helper to strip HTML tags and handle basic formatting
 const stripHtml = (html: string) => {
   if (!html) return "";
-  // Replace <br>, <p>, </div> with newlines
   let text = html.replace(/<br\s*\/?>/gi, "\n");
   text = text.replace(/<\/p>/gi, "\n");
   text = text.replace(/<\/div>/gi, "\n");
   text = text.replace(/<\/li>/gi, "\n");
-  // Replace <li> with bullet point
   text = text.replace(/<li[^>]*>/gi, "• ");
-  // Strip all other tags
   text = text.replace(/<[^>]+>/g, "");
-  // Decode HTML entities (basic ones)
   text = text.replace(/&nbsp;/g, " ");
   text = text.replace(/&amp;/g, "&");
   text = text.replace(/&lt;/g, "<");
@@ -43,9 +38,9 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     backgroundColor: "#FFFFFF",
-    padding: 30, // Approx 10mm, compact to fit 1 page
+    padding: 30,
     fontFamily: "Helvetica",
-    fontSize: 9, // Reduced font size to fit more content
+    fontSize: 9,
     lineHeight: 1.4,
   },
   header: {
@@ -61,7 +56,7 @@ const styles = StyleSheet.create({
   photo: {
     width: 60,
     height: 60,
-    borderRadius: 30, // Circle
+    borderRadius: 30,
     objectFit: "cover",
   },
   name: {
@@ -76,7 +71,7 @@ const styles = StyleSheet.create({
   },
   contactInfo: {
     fontSize: 8,
-    color: "#6B7280", // text-gray-500
+    color: "#6B7280",
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 3,
@@ -144,6 +139,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
         {/* Personal Info */}
         <View style={styles.header}>
           {resumeData.photo && (
+            // eslint-disable-next-line jsx-a11y/alt-text
             <Image
               src={
                 typeof resumeData.photo === "string"

@@ -199,7 +199,7 @@ const CoverLetterWidget = () => {
 
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
                           <span className="cl-word inline-block text-[8px] text-muted-foreground">
-                            I'm
+                            I&apos;m
                           </span>
                           <span className="cl-word inline-block text-[8px] text-muted-foreground">
                             excited

@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 import withBundleAnalyzerBase from "@next/bundle-analyzer";
 
+type BundleAnalyzerConfig = (config: NextConfig) => NextConfig;
+
 const withBundleAnalyzer = withBundleAnalyzerBase({
   enabled: process.env.ANALYZE === "true",
-}) as any;
+}) as BundleAnalyzerConfig;
 
 const nextConfig: NextConfig = {
   webpack: (config, { dev, isServer }) => {
