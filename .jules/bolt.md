@@ -1,0 +1,3 @@
+## 2024-05-24 - Unnecessary re-renders in ResumePreview
+**Learning:** Passing a large composite object (`resumeData`) to all child sections in a heavy preview component (`ResumePreview`) causes every section to re-render when ANY field changes. In a form-heavy application like a resume builder, this results in significant typing latency as the entire resume re-renders on every keystroke.
+**Action:** When breaking down a large display component into sections, pass ONLY the specific data each section needs (e.g., `workExperiences` instead of the whole `resumeData`) and wrap the sections in `React.memo`. This ensures only the section being edited re-renders.

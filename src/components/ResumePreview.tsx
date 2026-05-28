@@ -40,7 +40,7 @@ interface ResumePreviewProps {
   className?: string;
 }
 
-export default function ResumePreview({
+function ResumePreview({
   resumeData,
   contentRef,
   className,
@@ -192,7 +192,7 @@ interface ResumeSectionProps {
   resumeData: ResumeValues;
 }
 
-function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
+const PersonalInfoHeader = React.memo(({ resumeData }: ResumeSectionProps) => {
   const {
     photo,
     firstName,
@@ -291,9 +291,14 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
       </div>
     </div>
   );
-}
+}, (prevProps, nextProps) => {
+  const p = prevProps.resumeData;
+  const n = nextProps.resumeData;
+  return p.photo === n.photo && p.firstName === n.firstName && p.lastName === n.lastName && p.jobTitle === n.jobTitle && p.city === n.city && p.country === n.country && p.phone === n.phone && p.email === n.email && p.colorHex === n.colorHex && p.borderStyle === n.borderStyle && p.linkedin === n.linkedin && p.websiteName === n.websiteName && p.website === n.website;
+});
+PersonalInfoHeader.displayName = "PersonalInfoHeader";
 
-function SummarySection({ resumeData }: ResumeSectionProps) {
+const SummarySection = React.memo(({ resumeData }: ResumeSectionProps) => {
   const { summary, colorHex } = resumeData;
 
   if (!summary) return null;
@@ -322,9 +327,12 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.resumeData.summary === nextProps.resumeData.summary && prevProps.resumeData.colorHex === nextProps.resumeData.colorHex;
+});
+SummarySection.displayName = "SummarySection";
 
-function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
+const WorkExperienceSection = React.memo(({ resumeData }: ResumeSectionProps) => {
   const { workExperiences, colorHex } = resumeData;
 
   const workExperiencesNotEmpty = workExperiences?.filter(
@@ -382,9 +390,12 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.resumeData.workExperiences === nextProps.resumeData.workExperiences && prevProps.resumeData.colorHex === nextProps.resumeData.colorHex;
+})
+WorkExperienceSection.displayName = "WorkExperienceSection";
 
-function ProjectSection({ resumeData }: ResumeSectionProps) {
+const ProjectSection = React.memo(({ resumeData }: ResumeSectionProps) => {
   const { projects, colorHex } = resumeData;
 
   const projectsNotEmpty = projects?.filter(
@@ -455,9 +466,12 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.resumeData.projects === nextProps.resumeData.projects && prevProps.resumeData.colorHex === nextProps.resumeData.colorHex;
+})
+ProjectSection.displayName = "ProjectSection";
 
-function EducationSection({ resumeData }: ResumeSectionProps) {
+const EducationSection = React.memo(({ resumeData }: ResumeSectionProps) => {
   const { educations, colorHex } = resumeData;
 
   const educationsNotEmpty = educations?.filter(
@@ -507,9 +521,12 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.resumeData.educations === nextProps.resumeData.educations && prevProps.resumeData.colorHex === nextProps.resumeData.colorHex;
+})
+EducationSection.displayName = "EducationSection";
 
-function SkillsSection({ resumeData }: ResumeSectionProps) {
+const SkillsSection = React.memo(({ resumeData }: ResumeSectionProps) => {
   const { skills, colorHex } = resumeData;
 
   if (!skills?.length) return null;
@@ -542,9 +559,12 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.resumeData.skills === nextProps.resumeData.skills && prevProps.resumeData.colorHex === nextProps.resumeData.colorHex;
+})
+SkillsSection.displayName = "SkillsSection";
 
-function CertificationSection({ resumeData }: ResumeSectionProps) {
+const CertificationSection = React.memo(({ resumeData }: ResumeSectionProps) => {
   const { certifications, colorHex } = resumeData;
 
   // Filter out empty certifications
@@ -601,4 +621,9 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.resumeData.certifications === nextProps.resumeData.certifications && prevProps.resumeData.colorHex === nextProps.resumeData.colorHex;
+})
+CertificationSection.displayName = "CertificationSection";
+
+export default ResumePreview;
