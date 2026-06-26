@@ -81,14 +81,14 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+    <header className="border-border/40 bg-background/80 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <Link
             href="/resumes"
             className="group flex items-center gap-3 transition-transform duration-300 hover:scale-[1.02] active:scale-95"
           >
-            <div className="relative h-8 w-8 overflow-hidden rounded-full shadow-sm ring-1 ring-border/50">
+            <div className="ring-border/50 relative h-8 w-8 overflow-hidden rounded-full shadow-sm ring-1">
               <Image
                 src={logo}
                 alt="SparkCV Logo"
@@ -97,13 +97,13 @@ export default function Navbar() {
                 sizes="32px"
               />
             </div>
-            <span className="hidden font-sans text-lg font-bold tracking-tight text-foreground sm:inline-block">
+            <span className="text-foreground hidden font-sans text-lg font-bold tracking-tight sm:inline-block">
               SparkCV
             </span>
           </Link>
         </div>
 
-        <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform sm:flex sm:items-center sm:gap-1">
+        <nav className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform sm:flex sm:items-center sm:gap-1">
           <NavLink
             href="/resumes"
             icon={<FileText className="h-4 w-4" />}
@@ -160,12 +160,11 @@ export default function Navbar() {
         <div className="flex items-center gap-3 md:gap-4">
           <div className="hidden sm:block">{mounted && <ThemeToggle />}</div>
 
-          <div className="hidden h-5 w-px bg-border/50 sm:block" />
+          <div className="bg-border/50 hidden h-5 w-px sm:block" />
 
-          <div className="flex items-center rounded-full ring-2 ring-primary/10 transition-shadow hover:ring-primary/30">
+          <div className="ring-primary/10 hover:ring-primary/30 flex items-center rounded-full ring-2 transition-shadow">
             <UserButton
               appearance={{
-                baseTheme: mounted && theme === "dark" ? dark : undefined,
                 elements: {
                   avatarBox: {
                     width: 32,

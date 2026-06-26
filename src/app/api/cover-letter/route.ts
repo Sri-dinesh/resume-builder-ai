@@ -11,7 +11,7 @@ import { getUserSubscriptionLevel } from "@/lib/subscription";
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash-lite",
+  model: "gemini-3.5-flash",
 });
 
 const generationConfig = {
@@ -271,7 +271,7 @@ export async function POST(request: Request) {
       return jsonResponse(
         {
           error: "Validation failed",
-          details: validationResult.error.errors.map((issue) => ({
+          details: validationResult.error.issues.map((issue) => ({
             field: issue.path.join("."),
             message: issue.message,
           })),

@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Github, Linkedin, Twitter } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
 import React from "react";
 
@@ -21,14 +22,18 @@ export const LandingFooter: React.FC = () => {
   };
 
   const socialLinks = [
-    { icon: Twitter, href: "https://x.com/srixdevv", label: "Twitter" },
     {
-      icon: Github,
+      icon: FaTwitter,
+      href: "https://x.com/srixdevv",
+      label: "Twitter",
+    },
+    {
+      icon: FaGithub,
       href: "https://github.com/Sri-dinesh/resume-builder-ai",
       label: "GitHub",
     },
     {
-      icon: Linkedin,
+      icon: FaLinkedin,
       href: "https://in.linkedin.com/in/sridinesh07",
       label: "LinkedIn",
     },
@@ -36,9 +41,9 @@ export const LandingFooter: React.FC = () => {
 
   return (
     <footer className="w-full py-6 lg:py-8">
-      <div className="relative mx-auto w-[98%] max-w-[1800px] overflow-hidden rounded-[2.5rem] border border-border/40 bg-card/30 backdrop-blur-xl dark:bg-card/20">
-        <div className="pointer-events-none absolute -bottom-10 left-0 w-full select-none overflow-hidden leading-none">
-          <span className="block text-center font-[Oswald] text-[14vw] font-bold tracking-tighter text-foreground/[0.03] dark:text-foreground/[0.05]">
+      <div className="border-border/40 bg-card/30 dark:bg-card/20 relative mx-auto w-[98%] max-w-[1800px] overflow-hidden rounded-[2.5rem] border backdrop-blur-xl">
+        <div className="pointer-events-none absolute -bottom-10 left-0 w-full overflow-hidden leading-none select-none">
+          <span className="text-foreground/[0.03] dark:text-foreground/[0.05] block text-center font-[Oswald] text-[14vw] font-bold tracking-tighter">
             SparkCV
           </span>
         </div>
@@ -47,7 +52,7 @@ export const LandingFooter: React.FC = () => {
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="flex flex-col gap-6 lg:col-span-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
+                <div className="bg-primary/10 ring-primary/20 flex h-10 w-10 items-center justify-center rounded-xl ring-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 2000 2000"
@@ -69,11 +74,11 @@ export const LandingFooter: React.FC = () => {
                     </g>
                   </svg>
                 </div>
-                <span className="font-display text-xl font-bold tracking-tight text-foreground">
+                <span className="font-display text-foreground text-xl font-bold tracking-tight">
                   SparkCV
                 </span>
               </div>
-              <p className="max-w-md text-base leading-relaxed text-muted-foreground">
+              <p className="text-muted-foreground max-w-md text-base leading-relaxed">
                 Your career is unique. Your resume should be too. Stand out
                 without the stress.
               </p>
@@ -85,7 +90,7 @@ export const LandingFooter: React.FC = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex h-10 w-10 items-center justify-center rounded-full border border-border/40 bg-background/50 text-muted-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+                    className="group border-border/40 bg-background/50 text-muted-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary flex h-10 w-10 items-center justify-center rounded-full border transition-all"
                     aria-label={social.label}
                   >
                     <social.icon className="h-4.5 w-4.5 transition-transform group-hover:scale-110" />
@@ -98,7 +103,7 @@ export const LandingFooter: React.FC = () => {
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:col-span-7 lg:pl-12">
               {/* Product */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-sm font-semibold text-foreground">
+                <h4 className="text-foreground text-sm font-semibold">
                   Product
                 </h4>
                 <ul className="flex flex-col gap-3">
@@ -106,10 +111,10 @@ export const LandingFooter: React.FC = () => {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="group text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
                       >
                         <span>{link.label}</span>
-                        <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                        <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
                       </Link>
                     </li>
                   ))}
@@ -118,16 +123,16 @@ export const LandingFooter: React.FC = () => {
 
               {/* Legal */}
               <div className="flex flex-col gap-4">
-                <h4 className="text-sm font-semibold text-foreground">Legal</h4>
+                <h4 className="text-foreground text-sm font-semibold">Legal</h4>
                 <ul className="flex flex-col gap-3">
                   {footerLinks.legal.map((link) => (
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="group text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
                       >
                         <span>{link.label}</span>
-                        <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                        <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
                       </Link>
                     </li>
                   ))}
@@ -136,12 +141,12 @@ export const LandingFooter: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-border/20 pt-8 md:flex-row">
-            <p className="text-xs font-medium text-muted-foreground/80">
+          <div className="border-border/20 mt-20 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
+            <p className="text-muted-foreground/80 text-xs font-medium">
               &copy; {currentYear} SparkCV Inc. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <span className="flex items-center gap-2 text-xs font-medium text-muted-foreground/80">
+              <span className="text-muted-foreground/80 flex items-center gap-2 text-xs font-medium">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500"></span>
                 All Systems Operational
               </span>

@@ -118,29 +118,6 @@ const nextConfig: NextConfig = {
   },
 
   productionBrowserSourceMaps: false,
-
-  async headers() {
-    return [
-      {
-        source: "/:path*.js",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/:path*.css",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-    ];
-  },
 };
 
 export default withBundleAnalyzer(nextConfig);

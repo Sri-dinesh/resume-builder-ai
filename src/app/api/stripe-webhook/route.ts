@@ -63,6 +63,11 @@ async function handleSessionCompleted(session: Stripe.Checkout.Session) {
 
 async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const subscriptionItem = subscription.items.data[0];
+
+  if (!subscriptionItem) {
+    throw new Error(`Subscription ${subscriptionId} has no items`);
+  }
 
   if (
     subscription.status === "active" ||
@@ -77,16 +82,16 @@ async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
         userId: subscription.metadata.userId,
         stripeSubscriptionId: subscription.id,
         stripeCustomerId: subscription.customer as string,
-        stripePriceId: subscription.items.data[0].price.id,
+        stripePriceId: subscriptionItem.price.id,
         stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000,
+          subscriptionItem.current_period_end * 1000,
         ),
         stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
       },
       update: {
-        stripePriceId: subscription.items.data[0].price.id,
+        stripePriceId: subscriptionItem.price.id,
         stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000,
+          subscriptionItem.current_period_end * 1000,
         ),
         stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
       },

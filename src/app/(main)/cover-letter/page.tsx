@@ -68,9 +68,9 @@ const coverLetterFormSchema = z.object({
   currentJobTitle: z.string().trim().max(200).optional().or(z.literal("")),
   summary: z.string().trim().max(2000).optional().or(z.literal("")),
   workExperience: z.string().trim().max(5000).optional().or(z.literal("")),
-  tone: z.enum(coverLetterTones).default("professional"),
-  length: z.enum(coverLetterLengths).default("standard"),
-  industry: z.enum(industryTemplates).default("general"),
+  tone: z.enum(coverLetterTones),
+  length: z.enum(coverLetterLengths),
+  industry: z.enum(industryTemplates),
   customInstructions: z.string().trim().max(1000).optional().or(z.literal("")),
 });
 

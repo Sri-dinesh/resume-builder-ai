@@ -20,7 +20,7 @@ import { env } from "@/env";
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash-lite",
+  model: "gemini-3.5-flash",
   generationConfig: {
     temperature: 0.7,
     topP: 0.95,

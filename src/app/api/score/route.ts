@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import pdf from "pdf-parse";
 import { auth } from "@clerk/nextjs/server";
 import {
   SCORE_ACCEPTED_FILE_TYPES,
@@ -8,6 +7,10 @@ import {
   scoreRequestSchema,
 } from "@/lib/score";
 import { ResumeScorer } from "@/lib/resume-scorer";
+import {
+  getDocument,
+  GlobalWorkerOptions,
+} from "pdfjs-dist/legacy/build/pdf.mjs";
 
 export const runtime = "nodejs";
 
@@ -38,6 +41,55 @@ function normalizeResumeText(text: string) {
     .replace(/\n{3,}/g, "\n\n")
     .replace(/[ \t]{2,}/g, " ")
     .trim();
+}
+
+async function ensurePdfWorkerMessageHandler() {
+  if (!globalThis.pdfjsWorker) {
+    const workerModule = (await import(
+      "pdfjs-dist/legacy/build/" + "pdf.worker.mjs"
+    )) as { WorkerMessageHandler: any };
+
+    globalThis.pdfjsWorker = {
+      WorkerMessageHandler: workerModule.WorkerMessageHandler,
+    };
+  }
+
+  if (!GlobalWorkerOptions.workerSrc) {
+    GlobalWorkerOptions.workerSrc = "./pdf.worker.mjs";
+  }
+}
+
+async function extractResumeText(buffer: Buffer) {
+  await ensurePdfWorkerMessageHandler();
+
+  const loadingTask = getDocument({
+    data: new Uint8Array(buffer),
+    useWorkerFetch: false,
+    isEvalSupported: false,
+  });
+
+  const document = await loadingTask.promise;
+  try {
+    const pages: string[] = [];
+
+    for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber++) {
+      const page = await document.getPage(pageNumber);
+      try {
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items
+          .map((item) => ("str" in item ? item.str : ""))
+          .join(" ");
+
+        pages.push(pageText);
+      } finally {
+        page.cleanup();
+      }
+    }
+
+    return normalizeResumeText(pages.join("\n\n"));
+  } finally {
+    await document.destroy();
+  }
 }
 
 export async function POST(request: Request) {
@@ -87,9 +139,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const parsedResume = await pdf(buffer);
-    const resumeContent = normalizeResumeText(parsedResume.text);
+    let resumeContent = "";
+    try {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      resumeContent = await extractResumeText(buffer);
+    } catch (error) {
+      console.error("Failed to parse uploaded resume PDF", error);
+      return badRequest(
+        "We couldn't read that PDF. Please upload a valid, text-based PDF resume.",
+      );
+    }
 
     if (resumeContent.length < 50) {
       return badRequest("Resume content is too short for analysis.");

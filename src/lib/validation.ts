@@ -11,16 +11,19 @@ export type GeneralInfoValues = z.infer<typeof generalInfoSchema>;
 
 export const personalInfoSchema = z.object({
   photo: z
-    .custom<File | undefined>()
+    .custom<File | string | null | undefined>()
     .refine(
       (file) =>
-        !file || (file instanceof File && file.type.startsWith("image/")),
+        !file ||
+        typeof file === "string" ||
+        (file instanceof File && file.type.startsWith("image/")),
       "Must be an image file",
     )
     .refine(
-      (file) => !file || file.size <= 1024 * 1024 * 4,
+      (file) => !file || typeof file === "string" || file.size <= 1024 * 1024 * 4,
       "File must be less than 4MB",
-    ),
+    )
+    .optional(),
   firstName: optionalString,
   lastName: optionalString,
   jobTitle: optionalString,
@@ -133,7 +136,7 @@ export const resumeSchema = z.object({
   ...certificationSchema.shape,
   colorHex: optionalString,
   borderStyle: optionalString,
-  fontFamily: z.string().default("Arial"),
+  fontFamily: z.string(),
 });
 
 export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {

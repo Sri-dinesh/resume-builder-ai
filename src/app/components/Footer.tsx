@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -55,16 +55,16 @@ export default function Footer() {
           <h4 className="mb-4 text-lg font-semibold">Connect</h4>
           <div className="flex space-x-4">
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Facebook className="h-6 w-6" />
+              <FaFacebook className="h-6 w-6" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Twitter className="h-6 w-6" />
+              <FaTwitter className="h-6 w-6" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Instagram className="h-6 w-6" />
+              <FaInstagram className="h-6 w-6" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Linkedin className="h-6 w-6" />
+              <FaLinkedin className="h-6 w-6" />
             </Link>
           </div>
         </div>
