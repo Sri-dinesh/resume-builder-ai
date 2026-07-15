@@ -4,7 +4,6 @@ import ThemeToggle from "@/components/ThemeToggle";
 import logo from "@/images/CircleLogo.png";
 import { cn } from "@/lib/utils";
 import { UserButton } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import {
   CreditCard,
   FileText,
@@ -13,14 +12,56 @@ import {
   Mail,
   Zap,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+interface NavLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  title: string;
+  isActive: boolean;
+  isLoading: boolean;
+  onClick: () => void;
+}
+
+const NavLink = ({
+  icon: Icon,
+  label,
+  title,
+  isActive,
+  isLoading,
+  onClick,
+}: NavLinkProps) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={isLoading}
+      title={title}
+      className={cn(
+        "group relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 ease-out",
+        "disabled:cursor-not-allowed disabled:opacity-70",
+        isActive
+          ? "bg-primary/10 text-primary"
+          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+      )}
+    >
+      <div
+        className={cn(
+          "transition-transform duration-300 group-hover:scale-110",
+          isActive && "text-primary",
+        )}
+      >
+        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : Icon}
+      </div>
+      <span className="hidden md:inline-block">{label}</span>
+    </button>
+  );
+};
+
 export default function Navbar() {
-  const { theme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   const [loadingLink, setLoadingLink] = useState<string | null>(null);
@@ -38,46 +79,6 @@ export default function Navbar() {
     if (pathname === href) return;
     setLoadingLink(href);
     router.push(href);
-  };
-
-  const NavLink = ({
-    href,
-    icon: Icon,
-    label,
-    title,
-  }: {
-    href: string;
-    icon: React.ReactNode;
-    label: string;
-    title: string;
-  }) => {
-    const isActive = pathname === href;
-    const isLoading = loadingLink === href;
-
-    return (
-      <button
-        onClick={() => handleNavigation(href)}
-        disabled={isLoading}
-        title={title}
-        className={cn(
-          "group relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 ease-out",
-          "disabled:cursor-not-allowed disabled:opacity-70",
-          isActive
-            ? "bg-primary/10 text-primary"
-            : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
-        )}
-      >
-        <div
-          className={cn(
-            "transition-transform duration-300 group-hover:scale-110",
-            isActive && "text-primary",
-          )}
-        >
-          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : Icon}
-        </div>
-        <span className="hidden md:inline-block">{label}</span>
-      </button>
-    );
   };
 
   return (
@@ -109,24 +110,36 @@ export default function Navbar() {
             icon={<FileText className="h-4 w-4" />}
             label="Resumes"
             title="My Resumes"
+            isActive={pathname === "/resumes"}
+            isLoading={loadingLink === "/resumes"}
+            onClick={() => handleNavigation("/resumes")}
           />
           <NavLink
             href="/score"
             icon={<Activity className="h-4 w-4" />}
             label="ATS Score"
             title="ATS Score"
+            isActive={pathname === "/score"}
+            isLoading={loadingLink === "/score"}
+            onClick={() => handleNavigation("/score")}
           />
           <NavLink
             href="/enhance"
             icon={<Zap className="h-4 w-4" />}
             label="Enhance"
             title="Enhance Resume"
+            isActive={pathname === "/enhance"}
+            isLoading={loadingLink === "/enhance"}
+            onClick={() => handleNavigation("/enhance")}
           />
           <NavLink
             href="/cover-letter"
             icon={<Mail className="h-4 w-4" />}
             label="Cover Letter"
             title="Cover Letter Generator"
+            isActive={pathname === "/cover-letter"}
+            isLoading={loadingLink === "/cover-letter"}
+            onClick={() => handleNavigation("/cover-letter")}
           />
         </nav>
 
@@ -136,24 +149,36 @@ export default function Navbar() {
             icon={<FileText className="h-[18px] w-[18px]" />}
             label="Resumes"
             title="My Resumes"
+            isActive={pathname === "/resumes"}
+            isLoading={loadingLink === "/resumes"}
+            onClick={() => handleNavigation("/resumes")}
           />
           <NavLink
             href="/score"
             icon={<Activity className="h-[18px] w-[18px]" />}
             label="ATS Score"
             title="ATS Score"
+            isActive={pathname === "/score"}
+            isLoading={loadingLink === "/score"}
+            onClick={() => handleNavigation("/score")}
           />
           <NavLink
             href="/enhance"
             icon={<Zap className="h-[18px] w-[18px]" />}
             label="Enhance"
             title="Enhance Resume"
+            isActive={pathname === "/enhance"}
+            isLoading={loadingLink === "/enhance"}
+            onClick={() => handleNavigation("/enhance")}
           />
           <NavLink
             href="/cover-letter"
             icon={<Mail className="h-[18px] w-[18px]" />}
             label="Cover Letter"
             title="Cover Letter Generator"
+            isActive={pathname === "/cover-letter"}
+            isLoading={loadingLink === "/cover-letter"}
+            onClick={() => handleNavigation("/cover-letter")}
           />
         </nav>
 
