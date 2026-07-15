@@ -1,11 +1,11 @@
 declare module "pdfjs-dist/legacy/build/pdf.worker.mjs" {
-  export const WorkerMessageHandler: any;
+  export const WorkerMessageHandler: unknown;
 }
 
 declare global {
   var pdfjsWorker:
     | {
-        WorkerMessageHandler: any;
+        WorkerMessageHandler: unknown;
       }
     | undefined;
 }

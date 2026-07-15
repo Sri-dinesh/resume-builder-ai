@@ -1,15 +1,9 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import nextConfig from "eslint-config-next";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
+import prettierConfig from "eslint-config-prettier";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const config = [
+const eslintConfig = [
   {
     ignores: [
       ".next/**",
@@ -18,10 +12,15 @@ const config = [
       "test-results/**",
       "playwright-report/**",
       "tsconfig.tsbuildinfo",
+      "eslint-test.config.mjs",
+      "eslint-error.log",
     ],
   },
-  ...compat.config({
-    extends: ["next/core-web-vitals", "next/typescript", "prettier"],
+  ...nextConfig,
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  prettierConfig,
+  {
     rules: {
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -29,8 +28,11 @@ const config = [
           ignoreRestSiblings: true,
         },
       ],
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/immutability": "off",
     },
-  }),
+  },
 ];
 
-export default config;
+export default eslintConfig;
