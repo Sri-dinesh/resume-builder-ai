@@ -8,6 +8,7 @@ const withBundleAnalyzer = withBundleAnalyzerBase({
 }) as BundleAnalyzerConfig;
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["pdf-parse", "pdfjs-dist"],
   webpack: (config, { dev, isServer }) => {
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
@@ -27,7 +28,7 @@ const nextConfig: NextConfig = {
               priority: 10,
             },
             pdfLib: {
-              test: /[\\/]node_modules[\\/](@react-pdf|pdfjs-dist|pdf-parse)[\\/]/,
+              test: /[\\/]node_modules[\\/](@react-pdf|pdfjs-dist)[\\/]/,
               name: "pdf-lib",
               chunks: "all",
               priority: 20,

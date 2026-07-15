@@ -7,7 +7,7 @@ import {
   scoreRequestSchema,
 } from "@/lib/score";
 import { ResumeScorer } from "@/lib/resume-scorer";
-import { PDFParse } from "pdf-parse";
+import { extractText, getDocumentProxy } from "unpdf";
 
 export const runtime = "nodejs";
 
@@ -41,13 +41,9 @@ function normalizeResumeText(text: string) {
 }
 
 async function extractResumeText(buffer: Buffer) {
-  const parser = new PDFParse({ data: new Uint8Array(buffer) });
-  try {
-    const result = await parser.getText();
-    return normalizeResumeText(result.text);
-  } finally {
-    await parser.destroy();
-  }
+  const pdf = await getDocumentProxy(new Uint8Array(buffer));
+  const { text } = await extractText(pdf, { mergePages: true });
+  return normalizeResumeText(text);
 }
 
 export async function POST(request: Request) {
