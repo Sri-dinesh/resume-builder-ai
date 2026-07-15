@@ -7,10 +7,7 @@ import {
   scoreRequestSchema,
 } from "@/lib/score";
 import { ResumeScorer } from "@/lib/resume-scorer";
-import {
-  getDocument,
-  GlobalWorkerOptions,
-} from "pdfjs-dist/legacy/build/pdf.mjs";
+import { PDFParse } from "pdf-parse";
 
 export const runtime = "nodejs";
 
@@ -43,52 +40,13 @@ function normalizeResumeText(text: string) {
     .trim();
 }
 
-async function ensurePdfWorkerMessageHandler() {
-  if (!globalThis.pdfjsWorker) {
-    const workerModule = (await import(
-      "pdfjs-dist/legacy/build/" + "pdf.worker.mjs"
-    )) as { WorkerMessageHandler: any };
-
-    globalThis.pdfjsWorker = {
-      WorkerMessageHandler: workerModule.WorkerMessageHandler,
-    };
-  }
-
-  if (!GlobalWorkerOptions.workerSrc) {
-    GlobalWorkerOptions.workerSrc = "./pdf.worker.mjs";
-  }
-}
-
 async function extractResumeText(buffer: Buffer) {
-  await ensurePdfWorkerMessageHandler();
-
-  const loadingTask = getDocument({
-    data: new Uint8Array(buffer),
-    useWorkerFetch: false,
-    isEvalSupported: false,
-  });
-
-  const document = await loadingTask.promise;
+  const parser = new PDFParse({ data: new Uint8Array(buffer) });
   try {
-    const pages: string[] = [];
-
-    for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber++) {
-      const page = await document.getPage(pageNumber);
-      try {
-        const textContent = await page.getTextContent();
-        const pageText = textContent.items
-          .map((item) => ("str" in item ? item.str : ""))
-          .join(" ");
-
-        pages.push(pageText);
-      } finally {
-        page.cleanup();
-      }
-    }
-
-    return normalizeResumeText(pages.join("\n\n"));
+    const result = await parser.getText();
+    return normalizeResumeText(result.text);
   } finally {
-    await document.destroy();
+    await parser.destroy();
   }
 }
 

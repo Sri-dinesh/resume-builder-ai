@@ -41,7 +41,7 @@ const SCAN_FEATURES = [
 export default function ScoreContent() {
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<ScoreAnalysisResult | null>(null);
-  const [, setError] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [analysisMode, setAnalysisMode] =
     useState<ScoreAnalysisMode>("general");
@@ -215,6 +215,11 @@ export default function ScoreContent() {
                         to evaluate your resume specifically against a target
                         role.
                       </p>
+                    </div>
+                  )}
+                  {error && (
+                    <div className="rounded-lg bg-destructive/15 p-3 text-sm text-destructive">
+                      {error}
                     </div>
                   )}
 
