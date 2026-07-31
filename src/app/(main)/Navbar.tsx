@@ -12,7 +12,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import logo from "@/images/CircleLogo.png";

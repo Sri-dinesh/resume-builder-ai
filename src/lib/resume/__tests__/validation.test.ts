@@ -123,12 +123,15 @@ describe("resumeSchema (full)", () => {
       educations: [],
       projects: [],
       certifications: [],
+      fontFamily: "Arial",
     });
     expect(result.success).toBe(true);
   });
 
   it("accepts minimal resume", () => {
-    const result = resumeSchema.safeParse({});
+    const result = resumeSchema.safeParse({
+      fontFamily: "Arial",
+    });
     expect(result.success).toBe(true);
   });
 });

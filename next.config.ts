@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 import withBundleAnalyzerBase from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 

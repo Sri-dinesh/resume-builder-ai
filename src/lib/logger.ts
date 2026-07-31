@@ -70,7 +70,6 @@ function log(level: LogLevel, msg: string, meta?: LogMeta): void {
       if (process.env.NODE_ENV === "production") {
         console.error(output);
       } else {
-        // eslint-disable-next-line no-console
         console.log(output);
       }
   }
