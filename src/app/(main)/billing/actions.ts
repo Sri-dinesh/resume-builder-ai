@@ -1,8 +1,8 @@
 "use server";
 
-import { env } from "@/env";
-import stripe from "@/lib/stripe";
 import { currentUser } from "@clerk/nextjs/server";
+import { env } from "@/env";
+import stripe from "@/lib/billing/stripe";
 
 export async function createCustomerPortalSession() {
   const user = await currentUser();

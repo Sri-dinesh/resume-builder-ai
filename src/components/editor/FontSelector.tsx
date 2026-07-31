@@ -1,11 +1,11 @@
-import { FONT_OPTIONS } from "@/lib/fonts";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check } from "lucide-react";
+import { FONT_OPTIONS } from "@/lib/fonts";
 
 interface FontSelectorProps {
   value: string;

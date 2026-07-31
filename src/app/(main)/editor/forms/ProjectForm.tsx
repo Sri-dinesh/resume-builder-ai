@@ -1,22 +1,6 @@
-import { Button } from "@/components/ui/button";
-import DOMPurify from "dompurify";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { EditorFormProps } from "@/lib/types";
-import { cn, sanitizeEditorInput } from "@/lib/utils";
-import { projectSchema, ProjectValues } from "@/lib/validation";
 import {
   closestCenter,
   DndContext,
-  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -32,11 +16,29 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { zodResolver } from "@hookform/resolvers/zod";
+import DOMPurify from "dompurify";
 import { GripHorizontal } from "lucide-react";
 import { useEffect } from "react";
-import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
+import { RichTextEditor } from "@/components/editor/RichTextEditor";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { projectSchema } from "@/lib/resume/validation";
+import { cn, sanitizeEditorInput } from "@/lib/utils";
 import GenerateProjectButton from "./GenerateProjectButton";
-import { RichTextEditor } from "@/components/RichTextEditor";
+import type { EditorFormProps } from "@/lib/resume/types";
+import type { ProjectValues } from "@/lib/resume/validation";
+import type { DragEndEvent } from "@dnd-kit/core";
+import type { UseFormReturn } from "react-hook-form";
 
 export default function ProjectForm({
   resumeData,
@@ -50,13 +52,15 @@ export default function ProjectForm({
   });
 
   useEffect(() => {
-    const { unsubscribe } = form.watch(async (values) => {
-      const isValid = await form.trigger();
-      if (!isValid) return;
-      setResumeData({
-        ...resumeData,
-        projects: values.projects?.filter((proj) => proj !== undefined) || [],
-      });
+    const { unsubscribe } = form.watch((values) => {
+      void (async () => {
+        const isValid = await form.trigger();
+        if (!isValid) return;
+        setResumeData({
+          ...resumeData,
+          projects: values.projects?.filter((proj) => proj !== undefined) || [],
+        });
+      })();
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);

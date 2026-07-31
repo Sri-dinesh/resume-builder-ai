@@ -1,12 +1,12 @@
-import LoadingButton from "@/components/LoadingButton";
-import { useToast } from "@/hooks/use-toast";
-import usePremiumModal from "@/hooks/usePremiumModal";
-import { canUseAITools } from "@/lib/permissions";
-import { ResumeValues } from "@/lib/validation";
 import { WandSparkles } from "lucide-react";
 import { useState } from "react";
+import LoadingButton from "@/components/shared/LoadingButton";
+import { useToast } from "@/hooks/use-toast";
+import usePremiumModal from "@/hooks/usePremiumModal";
+import { canUseAITools } from "@/lib/billing/permissions";
 import { useSubscriptionLevel } from "../../SubscriptionLevelProvider";
 import { generateSummary } from "./actions";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 interface GenerateSummaryButtonProps {
   resumeData: ResumeValues;
@@ -50,7 +50,9 @@ export default function GenerateSummaryButton({
     <LoadingButton
       variant="outline"
       type="button"
-      onClick={handleClick}
+      onClick={() => {
+        void handleClick();
+      }}
       loading={loading}
     >
       <WandSparkles className="size-4" />

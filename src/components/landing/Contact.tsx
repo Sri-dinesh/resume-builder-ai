@@ -1,16 +1,5 @@
 "use client";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -25,6 +14,17 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import { MagneticButton } from "./ui/MagneticButton";
 
 const contactFormSchema = z.object({
@@ -45,6 +45,10 @@ const contactFormSchema = z.object({
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
+type Web3FormsResponse = {
+  success: boolean;
+  message?: string;
+};
 
 const SUCCESS_MESSAGE_DURATION = 5000;
 
@@ -181,7 +185,7 @@ export const LandingContact = () => {
           }),
         });
 
-        const result = await response.json();
+        const result = (await response.json()) as Web3FormsResponse;
 
         if (result.success) {
           setSubmitStatus("success");
@@ -279,7 +283,9 @@ export const LandingContact = () => {
 
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(onSubmit)}
+                  onSubmit={(event) => {
+                    void form.handleSubmit(onSubmit)(event);
+                  }}
                   className="relative z-10 flex h-full flex-col justify-between space-y-6"
                   noValidate
                 >

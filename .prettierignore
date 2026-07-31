@@ -1,0 +1,8 @@
+.next/
+node_modules/
+public/
+prisma/migrations/
+coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo

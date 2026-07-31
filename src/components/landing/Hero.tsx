@@ -80,7 +80,7 @@ export const LandingHero: React.FC = () => {
 
   const { y, scale, isHydrated } = useHydratedScroll(containerRef);
 
-  const handleBuildResume = async () => {
+  const handleBuildResume = () => {
     setIsLoading(true);
     router.push("/editor");
   };

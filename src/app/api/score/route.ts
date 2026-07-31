@@ -1,12 +1,13 @@
-import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import {
   SCORE_ACCEPTED_FILE_TYPES,
   SCORE_MAX_TEXT_LENGTH,
   SCORE_UPLOAD_MAX_BYTES,
   scoreRequestSchema,
-} from "@/lib/score";
-import { ResumeScorer } from "@/lib/resume-scorer";
+} from "@/lib/resume/score";
+import { ResumeScorer } from "@/lib/resume/scorer";
 import { extractText, getDocumentProxy } from "unpdf";
 
 export const runtime = "nodejs";
@@ -124,7 +125,8 @@ export async function POST(request: Request) {
         "Cache-Control": "no-store",
       },
     });
-  } catch {
+  } catch (error) {
+    logger.error("Resume score analysis failed", { route: "/api/score", error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: "Failed to analyze resume" },
       {

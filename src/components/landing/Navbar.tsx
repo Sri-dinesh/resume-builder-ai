@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Compass, Gem, LayoutGrid, Mail, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 type NavItem = {
   id: string;

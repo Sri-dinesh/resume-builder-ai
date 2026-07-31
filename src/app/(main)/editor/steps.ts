@@ -1,12 +1,12 @@
-import { EditorFormProps } from "@/lib/types";
+import CertificationFrom from "./forms/CertificationForm";
 import EducationForm from "./forms/EducationForm";
 import GeneralInfoForm from "./forms/GeneralInfoForm";
 import PersonalInfoForm from "./forms/PersonalInfoForm";
+import ProjectForm from "./forms/ProjectForm";
 import SkillsForm from "./forms/SkillsForm";
 import SummaryForm from "./forms/SummaryForm";
 import WorkExperienceForm from "./forms/WorkExperienceForm";
-import ProjectForm from "./forms/ProjectForm";
-import CertificationFrom from "./forms/CertificationForm";
+import type { EditorFormProps } from "@/lib/resume/types";
 
 export const steps: {
   title: string;

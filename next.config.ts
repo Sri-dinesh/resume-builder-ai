@@ -1,5 +1,5 @@
-import type { NextConfig } from "next";
 import withBundleAnalyzerBase from "@next/bundle-analyzer";
+import type { NextConfig } from "next";
 
 type BundleAnalyzerConfig = (config: NextConfig) => NextConfig;
 
@@ -7,15 +7,37 @@ const withBundleAnalyzer = withBundleAnalyzerBase({
   enabled: process.env.ANALYZE === "true",
 }) as BundleAnalyzerConfig;
 
+type NextWebpackContext = {
+  dev: boolean;
+  isServer: boolean;
+};
+
 const nextConfig: NextConfig = {
+  output: "standalone",
   serverExternalPackages: ["pdf-parse", "pdfjs-dist"],
-  webpack: (config, { dev, isServer }) => {
-    config.resolve.alias.canvas = false;
-    config.resolve.alias.encoding = false;
+
+  webpack: (
+    config: Parameters<NonNullable<NextConfig["webpack"]>>[0],
+    { dev, isServer }: NextWebpackContext,
+  ) => {
+    const resolve = config.resolve ?? {};
+    const currentAlias =
+      typeof resolve.alias === "object" && resolve.alias !== null
+        ? resolve.alias
+        : {};
+
+    resolve.alias = {
+      ...currentAlias,
+      canvas: false,
+      encoding: false,
+    };
+    config.resolve = resolve;
 
     if (!dev && !isServer) {
+      const optimization = config.optimization ?? {};
+
       config.optimization = {
-        ...config.optimization,
+        ...optimization,
         splitChunks: {
           chunks: "all",
           minSize: 20000,
@@ -61,6 +83,7 @@ const nextConfig: NextConfig = {
         },
       };
     }
+
     return config;
   },
 
@@ -119,6 +142,29 @@ const nextConfig: NextConfig = {
   },
 
   productionBrowserSourceMaps: false,
+
+  headers() {
+    return [
+      {
+        source: "/:path*.js",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:path*.css",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);

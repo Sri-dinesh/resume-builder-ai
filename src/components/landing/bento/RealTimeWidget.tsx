@@ -1,7 +1,7 @@
 "use client";
 
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { gsap } from "gsap";
 import { useRef } from "react";
 
 const RealTimeWidget = () => {
@@ -115,8 +115,12 @@ const RealTimeWidget = () => {
     <div
       ref={container}
       className="group relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300 hover:border-primary/30"
-      onMouseEnter={() => masterTL.current?.play()}
-      onMouseLeave={() => masterTL.current?.reverse()}
+      onMouseEnter={() => {
+        void masterTL.current?.play();
+      }}
+      onMouseLeave={() => {
+        void masterTL.current?.reverse();
+      }}
     >
       <div className="z-10 flex flex-col">
         <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">

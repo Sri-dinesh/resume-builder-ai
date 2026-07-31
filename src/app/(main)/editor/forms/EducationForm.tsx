@@ -1,20 +1,6 @@
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { EditorFormProps } from "@/lib/types";
-import { cn, sanitizeEditorInput } from "@/lib/utils";
-import { educationSchema, EducationValues } from "@/lib/validation";
 import {
   closestCenter,
   DndContext,
-  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -32,7 +18,23 @@ import { CSS } from "@dnd-kit/utilities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GripHorizontal } from "lucide-react";
 import { useEffect } from "react";
-import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { educationSchema } from "@/lib/resume/validation";
+import { cn, sanitizeEditorInput } from "@/lib/utils";
+import type { EditorFormProps } from "@/lib/resume/types";
+import type { EducationValues } from "@/lib/resume/validation";
+import type { DragEndEvent } from "@dnd-kit/core";
+import type { UseFormReturn } from "react-hook-form";
 
 export default function EducationForm({
   resumeData,
@@ -46,13 +48,16 @@ export default function EducationForm({
   });
 
   useEffect(() => {
-    const { unsubscribe } = form.watch(async (values) => {
-      const isValid = await form.trigger();
-      if (!isValid) return;
-      setResumeData({
-        ...resumeData,
-        educations: values.educations?.filter((edu) => edu !== undefined) || [],
-      });
+    const { unsubscribe } = form.watch((values) => {
+      void (async () => {
+        const isValid = await form.trigger();
+        if (!isValid) return;
+        setResumeData({
+          ...resumeData,
+          educations:
+            values.educations?.filter((edu) => edu !== undefined) || [],
+        });
+      })();
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);

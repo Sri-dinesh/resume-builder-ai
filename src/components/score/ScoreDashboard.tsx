@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, FileText, Target } from "lucide-react";
-import type { ScoreAnalysisResult } from "@/lib/score";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { KeywordList } from "./KeywordList";
 import { ScoreGauge } from "./ScoreGauge";
 import { SectionAnalysis } from "./SectionAnalysis";
+import type { ScoreAnalysisResult } from "@/lib/resume/score";
 
 interface ScoreDashboardProps {
   analysis: ScoreAnalysisResult;

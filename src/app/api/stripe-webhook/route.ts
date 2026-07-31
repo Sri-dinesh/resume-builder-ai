@@ -1,9 +1,10 @@
-import { env } from "@/env";
-import prisma from "@/lib/prisma";
-import stripe from "@/lib/stripe";
 import { clerkClient } from "@clerk/nextjs/server";
-import { NextRequest } from "next/server";
-import Stripe from "stripe";
+import { env } from "@/env";
+import stripe from "@/lib/billing/stripe";
+import prisma from "@/lib/db/client";
+import { logger } from "@/lib/logger";
+import type { NextRequest } from "next/server";
+import type Stripe from "stripe";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
       env.STRIPE_WEBHOOK_SECRET,
     );
 
-    console.log(`Received event: ${event.type}`, event.data.object);
+    logger.info(`Stripe webhook received: ${event.type}`, { route: "/api/stripe-webhook" });
 
     switch (event.type) {
       case "checkout.session.completed":
@@ -34,13 +35,13 @@ export async function POST(req: NextRequest) {
         await handleSubscriptionDeleted(event.data.object);
         break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+        logger.info(`Unhandled Stripe event type: ${event.type}`, { route: "/api/stripe-webhook" });
         break;
     }
 
     return new Response("Event received", { status: 200 });
   } catch (error) {
-    console.error(error);
+    logger.error("Stripe webhook error", { route: "/api/stripe-webhook", error: error instanceof Error ? error.message : String(error) });
     return new Response("Internal server error", { status: 500 });
   }
 }

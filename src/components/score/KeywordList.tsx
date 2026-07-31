@@ -1,6 +1,6 @@
-import type { ScoreKeywordAnalysis } from "@/lib/score";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import type { ScoreKeywordAnalysis } from "@/lib/resume/score";
 
 interface KeywordListProps {
   keywords: ScoreKeywordAnalysis;

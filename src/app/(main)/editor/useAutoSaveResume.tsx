@@ -1,11 +1,11 @@
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import useDebounce from "@/hooks/useDebounce";
 import { fileReplacer } from "@/lib/utils";
-import { ResumeValues } from "@/lib/validation";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { saveResume } from "./actions";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 export default function useAutoSaveResume(resumeData: ResumeValues) {
   const searchParams = useSearchParams();
@@ -68,7 +68,7 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
                 variant="secondary"
                 onClick={() => {
                   dismiss();
-                  save();
+                  void save();
                 }}
               >
                 Retry
@@ -86,7 +86,7 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
       JSON.stringify(lastSavedData, fileReplacer);
 
     if (hasUnsavedChanges && debouncedResumeData && !isSaving && !isError) {
-      save();
+      void save();
     }
   }, [
     debouncedResumeData,

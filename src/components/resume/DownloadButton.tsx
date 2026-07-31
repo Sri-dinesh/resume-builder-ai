@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
-import { ResumeValues } from "@/lib/validation";
+import { Button } from "@/components/ui/button";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 interface DownloadButtonProps {
   resumeData: ResumeValues;
@@ -18,12 +18,13 @@ export default function DownloadButton({
   const reactToPrintFn = useReactToPrint({
     contentRef,
     documentTitle: resumeData.title || "Resume",
-    onBeforePrint: async () => {
+    onBeforePrint: () => {
       // Check if contentRef has content
       if (!contentRef.current || !contentRef.current.innerHTML.trim()) {
         console.error("No content to print");
         throw new Error("No content to print");
       }
+      return Promise.resolve();
     },
   });
 

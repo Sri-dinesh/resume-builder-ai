@@ -1,22 +1,26 @@
 "use server";
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { canUseAITools } from "@/lib/permissions";
-import { getUserSubscriptionLevel } from "@/lib/subscription";
-import {
-  GenerateSummaryInput,
-  generateSummarySchema,
-  GenerateWorkExperienceInput,
-  generateWorkExperienceSchema,
-  WorkExperience,
-} from "@/lib/validation";
-import {
-  GenerateProjectExperienceInput,
-  generateProjectExperienceSchema,
-  Project,
-} from "@/lib/validation";
 import { auth } from "@clerk/nextjs/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { env } from "@/env";
+import { canUseAITools } from "@/lib/billing/permissions";
+import { getUserSubscriptionLevel } from "@/lib/billing/subscription";
+import {
+  generateProjectExperienceSchema,
+  generateSummarySchema,
+  generateWorkExperienceSchema,
+} from "@/lib/resume/validation";
+import type {
+  GenerateProjectExperienceInput,
+  GenerateSummaryInput,
+  GenerateWorkExperienceInput,
+  Project,
+  WorkExperience,
+} from "@/lib/resume/validation";
+
+type Education = NonNullable<
+  GenerateSummaryInput["educations"]
+>[number];
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
@@ -56,7 +60,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
   ${formatExperiences(workExperiences)}
   ${formatProjects(projects)}
   ${formatEducation(educations)}
-  Core Skills: ${skills}
+  Core Skills: ${skills?.join(", ") ?? ""}
   
   Output Requirements:
   1. Length: 3-4 impactful sentences(Passage) (50-75 words)
@@ -97,35 +101,27 @@ export async function generateSummary(input: GenerateSummaryInput) {
   Return only the optimized professional summary paragraph without any additional sections or formatting.
   `;
 
-  // Helper functions to format the input data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function formatExperiences(experiences?: any[]) {
+  function formatExperiences(experiences?: WorkExperience[]) {
     return experiences?.length
-      ? `Work Experience: ${
-          experiences.length
-        } positions spanning ${calculateTotalYears(experiences)} years`
+      ? `Work Experience: ${experiences.length} positions spanning ${calculateTotalYears(experiences)} years`
       : "";
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function formatProjects(projects?: any[]) {
+  function formatProjects(projects?: Project[]) {
     return projects?.length
       ? `Project Experience: ${projects.length} major projects`
       : "";
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function formatEducation(education?: any[]) {
+  function formatEducation(education?: Education[]) {
     return education?.length
       ? `Education: ${education.map((edu) => edu.degree).join(", ")}`
       : "";
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function calculateTotalYears(experiences: any[]) {
-    // Implementation for calculating total years of experience
+  function calculateTotalYears(experiences: WorkExperience[]) {
     return experiences.reduce((total, exp) => {
-      const start = new Date(exp.startDate);
+      const start = exp.startDate ? new Date(exp.startDate) : new Date();
       const end = exp.endDate ? new Date(exp.endDate) : new Date();
       return total + (end.getFullYear() - start.getFullYear());
     }, 0);
@@ -133,7 +129,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
 
   try {
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = result.response;
     const text = response.text();
 
     if (!text) {
@@ -217,7 +213,7 @@ Critical Requirements:
 
   try {
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = result.response;
     const aiResponse = response.text();
 
     if (!aiResponse) {
@@ -312,7 +308,7 @@ Format Rules:
 
   try {
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = result.response;
     const aiResponse = response.text();
 
     if (!aiResponse) {

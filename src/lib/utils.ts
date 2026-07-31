@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ResumeServerData } from "./types";
-import { ResumeValues } from "./validation";
+import type { ResumeServerData } from "./resume/types";
+import type { ResumeValues } from "./resume/validation";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

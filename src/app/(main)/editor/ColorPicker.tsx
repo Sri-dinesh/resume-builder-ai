@@ -1,3 +1,6 @@
+import { Palette } from "lucide-react";
+import { useState } from "react";
+import { TwitterPicker } from "react-color";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -5,11 +8,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import usePremiumModal from "@/hooks/usePremiumModal";
-import { canUseCustomizations } from "@/lib/permissions";
-import { Palette } from "lucide-react";
-import { useState } from "react";
-import { Color, ColorChangeHandler, TwitterPicker } from "react-color";
+import { canUseCustomizations } from "@/lib/billing/permissions";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
+import type { Color, ColorChangeHandler} from "react-color";
 
 interface ColorPickerProps {
   color: Color | undefined;

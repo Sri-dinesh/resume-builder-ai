@@ -1,4 +1,8 @@
-import LoadingButton from "@/components/LoadingButton";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { WandSparkles } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import LoadingButton from "@/components/shared/LoadingButton";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,18 +22,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import usePremiumModal from "@/hooks/usePremiumModal";
-import { canUseAITools } from "@/lib/permissions";
-import {
-  GenerateProjectExperienceInput,
-  generateProjectExperienceSchema,
-  Project,
-} from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { WandSparkles } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { canUseAITools } from "@/lib/billing/permissions";
+import { generateProjectExperienceSchema } from "@/lib/resume/validation";
 import { useSubscriptionLevel } from "../../SubscriptionLevelProvider";
 import { generateProject } from "./actions";
+import type {
+  GenerateProjectExperienceInput,
+  Project,
+} from "@/lib/resume/validation";
 
 interface GenerateProjectButtonProps {
   onProjectGenerated: (projects: Project) => void;
@@ -116,7 +116,12 @@ function InputDialog({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form
+            onSubmit={(event) => {
+              void form.handleSubmit(onSubmit)(event);
+            }}
+            className="space-y-3"
+          >
             <FormField
               control={form.control}
               name="description"

@@ -1,9 +1,9 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import prisma from "@/lib/db/client";
 
 export async function deleteResume(id: string) {
   const { userId } = await auth();

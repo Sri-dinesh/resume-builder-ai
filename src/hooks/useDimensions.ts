@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type React from "react";
 
 export default function useDimensions(
   containerRef: React.RefObject<HTMLElement>,

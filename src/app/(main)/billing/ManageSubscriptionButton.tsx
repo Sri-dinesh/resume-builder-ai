@@ -1,8 +1,8 @@
 "use client";
 
-import LoadingButton from "@/components/LoadingButton";
-import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import LoadingButton from "@/components/shared/LoadingButton";
+import { useToast } from "@/hooks/use-toast";
 import { createCustomerPortalSession } from "./actions";
 
 export default function ManageSubscriptionButton() {
@@ -27,7 +27,12 @@ export default function ManageSubscriptionButton() {
   }
 
   return (
-    <LoadingButton onClick={handleClick} loading={loading}>
+    <LoadingButton
+      onClick={() => {
+        void handleClick();
+      }}
+      loading={loading}
+    >
       Manage subscription
     </LoadingButton>
   );

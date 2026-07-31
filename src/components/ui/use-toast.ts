@@ -1,9 +1,9 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import type React from "react";
 
 // Adapted from: https://github.com/shadcn-ui/ui/blob/main/apps/www/registry/default/ui/use-toast.ts
-import { useState, useCallback } from "react";
 
 const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 5000;
