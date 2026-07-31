@@ -1,30 +1,137 @@
-# AI Resume Builder
+# SparkCV
 
-## 🌟 About the Project
+> AI-powered resume builder, ATS scorer, and cover letter generator — built for job seekers who want to stand out.
 
-The **AI Resume Builder** is a modern, AI-powered platform designed to simplify and streamline the process of creating professional resumes. With features like automatic content generation, real-time previews, customizable templates, and ATS optimization, this tool empowers users to craft standout resumes tailored to their dream jobs. Whether you're a job seeker, freelancer, or career counselor, this application ensures your resume is polished, professional, and ready to impress recruiters.
+[![CI](https://github.com/Sri-dinesh/resume-builder-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Sri-dinesh/resume-builder-ai/actions/workflows/ci.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![License](https://img.shields.io/badge/License-Private-red)]()
 
-Key Features:
+---
 
-- **AI-Powered Suggestions**: Generate optimized content for work experience, skills, and summaries.
-- **Customizable Templates**: Choose from multiple designs and layouts to suit your style.
-- **Real-Time Preview**: See changes instantly as you build your resume.
-- **ATS Optimization**: Ensure your resume passes through Applicant Tracking Systems with ease.
-- **User-Friendly Interface**: Intuitive design for seamless navigation and usage.
+## Features
 
-<!-- [![Project Overview Video](https://media.licdn.com/dms/image/v2/D5616AQFxaJZt1Zqg6A/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1714659241429?e=1748476800&v=beta&t=V4DrrStTmpuUF3znPgu94VCfTrPqsaJspA6T7aI8Vis)](https://www.youtube.com/watch?v=your-video-id) -->
+| Feature               | Description                                                                 |
+| --------------------- | --------------------------------------------------------------------------- |
+| 📝 **Resume Builder** | Drag-and-drop editor with real-time preview, photo upload, and PDF export   |
+| 🤖 **AI Enhancement** | One-click resume improvement powered by Google Gemini                       |
+| 📊 **ATS Score**      | Instant resume scoring with keyword analysis and actionable recommendations |
+| 💌 **Cover Letter**   | AI-generated cover letters tailored to specific job descriptions            |
+| 💳 **Subscriptions**  | Free, Pro, and Pro Plus tiers via Stripe billing                            |
+| 🎨 **Customization**  | Font selection, color picker, and border styles (Pro Plus)                  |
+| 🌙 **Dark Mode**      | Full dark/light theme support                                               |
 
-## 🛠️ Technologies Used
+## Tech Stack
 
-- **Frontend**: React.js, Next.js, TypeScript, Shadcn UI
-- **Backend**: Prisma ORM, PostgreSQL
-- **Hosting**: Vercel
-- **Other Tools**: Tailwind CSS for styling, Stripe for subscription management
+| Layer             | Technology                              |
+| ----------------- | --------------------------------------- |
+| **Framework**     | Next.js 16 (App Router, Server Actions) |
+| **Language**      | TypeScript 5.9 (strict mode)            |
+| **Styling**       | Tailwind CSS + Radix UI                 |
+| **Database**      | PostgreSQL (Neon) via Prisma ORM        |
+| **Auth**          | Clerk                                   |
+| **Payments**      | Stripe                                  |
+| **AI**            | Google Gemini                           |
+| **Storage**       | Vercel Blob                             |
+| **Observability** | Structured logging                      |
+| **Hosting**       | Vercel (Production)                     |
+| **Container**     | Docker (Local Development)              |
 
-## 🚀 Quick Walkthrough
+## Project Structure
 
-![Project Overview]("https://github.com/Sri-dinesh/resume-builder-ai/blob/6537361dbe241a0ba35e08e298dd08999b1ec071/src/images/MockupBanner.png")
+```
+src/
+├── app/                  # Next.js App Router pages & API routes
+│   ├── (main)/           # Authenticated app routes
+│   │   ├── editor/       # Resume editor
+│   │   ├── resumes/      # Resume management
+│   │   ├── score/        # ATS scoring
+│   │   ├── cover-letter/ # Cover letter generator
+│   │   ├── enhance/      # AI resume enhancement
+│   │   └── billing/      # Subscription management
+│   └── api/              # REST API endpoints
+├── components/
+│   ├── resume/           # Resume preview, PDF, download
+│   ├── editor/           # Editor-specific components
+│   ├── shared/           # Shared UI components
+│   ├── score/            # Scoring dashboard
+│   ├── premium/          # Premium/billing components
+│   ├── landing/          # Marketing pages
+│   └── ui/               # Radix UI primitives
+└── lib/
+    ├── ai/               # Google Gemini client
+    ├── billing/          # Stripe, subscriptions, permissions
+    ├── db/               # Prisma client
+    ├── resume/           # Validation, scoring, types
+    ├── email/            # Email client
+    └── logger.ts         # Structured logging
+```
 
-## 📜 License
+## Getting Started
 
-This project is licensed under the MIT License.
+### Prerequisites
+
+- Node.js 20+
+- npm 10+
+- PostgreSQL (or [Neon](https://neon.tech) account)
+- [Clerk](https://clerk.com), [Stripe](https://stripe.com), and [Google AI](https://ai.google.dev/) accounts
+
+### Setup
+
+```bash
+# Clone
+git clone https://github.com/Sri-dinesh/resume-builder-ai.git
+cd resume-builder-ai
+
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env.local
+# Edit .env.local with your credentials
+
+# Set up database
+npx prisma migrate dev
+
+# Start development server
+npm run dev
+```
+
+### Available Scripts
+
+| Script                  | Description                  |
+| ----------------------- | ---------------------------- |
+| `npm run dev`           | Start dev server (Turbopack) |
+| `npm run build`         | Production build             |
+| `npm test`              | Run unit tests (Vitest)      |
+| `npm run test:watch`    | Watch mode tests             |
+| `npm run test:coverage` | Tests with coverage report   |
+| `npm run lint`          | ESLint check                 |
+| `npm run type-check`    | TypeScript type checking     |
+| `npm run format`        | Format with Prettier         |
+
+## Deployment
+
+### Production (Vercel)
+1. Push your repository to GitHub.
+2. Import the repository into [Vercel](https://vercel.com).
+3. Configure the environment variables (see `.env.example`).
+4. Deploy — Vercel automatically builds and deploys Next.js.
+
+### Local Development (Docker)
+```bash
+docker compose up --build -d
+```
+
+## Contributing
+
+1. Fork the repo
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit with conventional format: `git commit -m "feat: add new feature"`
+4. Push and create a PR
+
+Pre-commit hooks will automatically lint and format staged files.
+
+---
+
+Built with ❤️ by [Sri Dinesh](https://github.com/Sri-dinesh)

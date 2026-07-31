@@ -1,9 +1,9 @@
-import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, Roboto, Manrope, Playfair_Display } from "next/font/google";
-import { SystemHeartbeat } from "@/components/SystemHeartbeat";
+import { SystemHeartbeat } from "@/components/shared/SystemHeartbeat";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import type { Metadata } from "next";
 import "./globals.css";
 
 const inter = Inter({
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://sparkcv.netlify.app/",
+    canonical: "https://sparkcv.vercel.app/",
   },
 };
 
@@ -94,7 +94,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "Spark CV - AI Resume Builder",
-              url: "https://sparkcv.netlify.app/",
+              url: "https://sparkcv.vercel.app/",
               description: metadata.description,
               publisher: {
                 "@type": "Organization",

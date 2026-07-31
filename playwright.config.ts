@@ -1,6 +1,6 @@
-import { defineConfig, devices } from "@playwright/test";
 import os from "os";
 import path from "path";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/e2e",
