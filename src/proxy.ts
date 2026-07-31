@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { type NextFetchEvent, type NextRequest } from "next/server";
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -8,14 +9,18 @@ const isPublicRoute = createRouteMatcher([
   "/sitemap.xml",
   "/robots.txt",
   "/api/health",
-  "/tos"
+  "/tos",
 ]);
 
-export default clerkMiddleware(async (auth, request) => {
+const clerkAuth = clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
 });
+
+export default function proxy(request: NextRequest, event: NextFetchEvent) {
+  return clerkAuth(request, event);
+}
 
 export const config = {
   matcher: [
