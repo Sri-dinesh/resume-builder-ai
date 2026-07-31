@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Document,
   Page,
@@ -8,7 +7,8 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import { format } from "date-fns";
-import { ResumeValues } from "@/lib/validation";
+import React from "react";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 const stripHtml = (html: string) => {
   if (!html) return "";

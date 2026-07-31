@@ -1,12 +1,12 @@
+import { useRef } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import ResumePreview from "@/components/ResumePreview";
+import { FontSelector } from "@/components/editor/FontSelector";
+import DownloadButton from "@/components/resume/DownloadButton";
+import ResumePreview from "@/components/resume/ResumePreview";
 import { cn } from "@/lib/utils";
-import { ResumeValues } from "@/lib/validation";
 import BorderStyleButton from "./BorderStyleButton";
 import ColorPicker from "./ColorPicker";
-import { FontSelector } from "@/components/FontSelector";
-import DownloadButton from "@/components/DownloadButton";
-import { useRef } from "react";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 interface ResumePreviewSectionProps {
   resumeData: ResumeValues;

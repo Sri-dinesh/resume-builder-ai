@@ -1,13 +1,13 @@
-import { env } from "@/env";
-import { canCreateResume } from "@/lib/permissions";
-import prisma from "@/lib/prisma";
-import { type SubscriptionLevel } from "@/lib/subscription";
-import { resumeDataInclude } from "@/lib/types";
 import { auth } from "@clerk/nextjs/server";
-import { Metadata } from "next";
 import { FileText } from "lucide-react";
+import { canCreateResume } from "@/lib/billing/permissions";
+import { type SubscriptionLevel } from "@/lib/billing/subscription";
+import prisma from "@/lib/db/client";
+import { resumeDataInclude } from "@/lib/resume/types";
+import { env } from "@/env";
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Your resumes",

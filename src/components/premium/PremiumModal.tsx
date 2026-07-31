@@ -1,13 +1,13 @@
 "use client";
 
-import { env } from "@/env";
-import { useToast } from "@/hooks/use-toast";
-import usePremiumModal from "@/hooks/usePremiumModal";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import { MagneticButton } from "@/components/landing/ui/MagneticButton";
+import { env } from "@/env";
+import { useToast } from "@/hooks/use-toast";
+import usePremiumModal from "@/hooks/usePremiumModal";
+import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "./actions";
 
 const proFeatures = [
@@ -109,12 +109,12 @@ export default function PremiumModal() {
                   size="sm"
                   className="h-9 px-4 text-[13px]"
                   isLoading={loading === "pro"}
-                  onClick={() =>
-                    handlePremiumClick(
+                  onClick={() => {
+                    void handlePremiumClick(
                       env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
                       "pro",
-                    )
-                  }
+                    );
+                  }}
                 >
                   Choose
                 </MagneticButton>
@@ -167,12 +167,12 @@ export default function PremiumModal() {
                   size="sm"
                   className="h-9 px-4 text-[13px]"
                   isLoading={loading === "pro-plus"}
-                  onClick={() =>
-                    handlePremiumClick(
+                  onClick={() => {
+                    void handlePremiumClick(
                       env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
                       "pro-plus",
-                    )
-                  }
+                    );
+                  }}
                 >
                   Choose
                 </MagneticButton>

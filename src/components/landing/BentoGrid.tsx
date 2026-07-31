@@ -1,14 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
-
+import { cn } from "@/lib/utils";
 import AIContentWidget from "./bento/AIContentWidget";
-import RealTimeWidget from "./bento/RealTimeWidget";
-import CustomizationWidget from "./bento/CustomizationWidget";
-import CoverLetterWidget from "./bento/CoverLetterWidget";
 import ATSScoreWidget from "./bento/ATSScoreWidget";
+import CoverLetterWidget from "./bento/CoverLetterWidget";
+import CustomizationWidget from "./bento/CustomizationWidget";
+import RealTimeWidget from "./bento/RealTimeWidget";
 import SpeedWidget from "./bento/SpeedWidget";
 
 const BentoCard = ({

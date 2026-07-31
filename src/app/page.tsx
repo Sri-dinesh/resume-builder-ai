@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
 import {
   LandingHero,
   Narrative,
@@ -13,6 +12,7 @@ import {
   LandingFooter,
   ScrollToTop,
 } from "@/components/landing";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Home() {
   useEffect(() => {

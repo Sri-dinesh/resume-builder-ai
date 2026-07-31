@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -8,12 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { EditorFormProps } from "@/lib/types";
+import { personalInfoSchema } from "@/lib/resume/validation";
 import { sanitizeEditorInput } from "@/lib/utils";
-import { personalInfoSchema, PersonalInfoValues } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import type { EditorFormProps } from "@/lib/resume/types";
+import type { PersonalInfoValues } from "@/lib/resume/validation";
 
 export default function PersonalInfoForm({
   resumeData,
@@ -36,10 +37,12 @@ export default function PersonalInfoForm({
   });
 
   useEffect(() => {
-    const { unsubscribe } = form.watch(async (values) => {
-      const isValid = await form.trigger();
-      if (!isValid) return;
-      setResumeData({ ...resumeData, ...values });
+    const { unsubscribe } = form.watch((values) => {
+      void (async () => {
+        const isValid = await form.trigger();
+        if (!isValid) return;
+        setResumeData({ ...resumeData, ...values });
+      })();
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);

@@ -1,5 +1,5 @@
-import { Metadata } from "next";
 import EnhancePageWrapper from "./_components/EnhancePageWrapper";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "AI Resume Enhancer",

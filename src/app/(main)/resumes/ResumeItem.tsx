@@ -1,7 +1,13 @@
 "use client";
 
-import LoadingButton from "@/components/LoadingButton";
-import ResumePreview from "@/components/ResumePreview";
+import { formatDate } from "date-fns";
+import { Download, MoreVertical, Printer, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useRef, useState, useTransition } from "react";
+import { useReactToPrint } from "react-to-print";
+import ResumePreview from "@/components/resume/ResumePreview";
+import LoadingButton from "@/components/shared/LoadingButton";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,15 +24,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { ResumeServerData } from "@/lib/types";
 import { mapToResumeValues } from "@/lib/utils";
-import { formatDate } from "date-fns";
-import { Download, MoreVertical, Printer, Trash2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useRef, useState, useTransition } from "react";
-import { useReactToPrint } from "react-to-print";
 import { deleteResume } from "./actions";
+import type { ResumeServerData } from "@/lib/resume/types";
 
 interface ResumeItemProps {
   resume: ResumeServerData;
@@ -156,18 +156,20 @@ function DeleteConfirmationDialog({
 
   const [isPending, startTransition] = useTransition();
 
-  async function handleDelete() {
-    startTransition(async () => {
-      try {
-        await deleteResume(resumeId);
-        onOpenChange(false);
-      } catch (error) {
-        console.error(error);
-        toast({
-          variant: "destructive",
-          description: "Something went wrong. Please try again.",
-        });
-      }
+  function handleDelete() {
+    startTransition(() => {
+      void (async () => {
+        try {
+          await deleteResume(resumeId);
+          onOpenChange(false);
+        } catch (error) {
+          console.error(error);
+          toast({
+            variant: "destructive",
+            description: "Something went wrong. Please try again.",
+          });
+        }
+      })();
     });
   }
 
@@ -184,7 +186,9 @@ function DeleteConfirmationDialog({
         <DialogFooter>
           <LoadingButton
             variant="destructive"
-            onClick={handleDelete}
+            onClick={() => {
+              handleDelete();
+            }}
             loading={isPending}
           >
             Delete

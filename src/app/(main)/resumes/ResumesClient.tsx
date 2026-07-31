@@ -1,9 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
-import { useRef } from "react";
-import { ResumeServerData } from "@/lib/types";
+import type { ResumeServerData } from "@/lib/resume/types";
 
 export default function ResumesClient({
   resumes,

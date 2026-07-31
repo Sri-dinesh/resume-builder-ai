@@ -1,13 +1,13 @@
-import React from "react";
-import { useEditor, EditorContent, Editor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import Link from "@tiptap/extension-link";
-import BulletList from "@tiptap/extension-bullet-list";
-import OrderedList from "@tiptap/extension-ordered-list";
-import ListItem from "@tiptap/extension-list-item";
-import Blockquote from "@tiptap/extension-blockquote";
-import { useEffect } from "react";
+import BlockquoteExtension from "@tiptap/extension-blockquote";
+import BulletListExtension from "@tiptap/extension-bullet-list";
+import LinkExtension from "@tiptap/extension-link";
+import ListItemExtension from "@tiptap/extension-list-item";
+import OrderedListExtension from "@tiptap/extension-ordered-list";
+import UnderlineExtension from "@tiptap/extension-underline";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKitExtension from "@tiptap/starter-kit";
+import React, { useEffect } from "react";
+import type { Editor } from "@tiptap/react";
 
 interface RichTextEditorProps {
   value: string;
@@ -18,19 +18,19 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
       // Disable default list and blockquote functionality from StarterKit
-      StarterKit.configure({
+      StarterKitExtension.configure({
         bulletList: false,
         orderedList: false,
         listItem: false,
         blockquote: false,
       }),
       // Add our explicit extensions
-      BulletList,
-      OrderedList,
-      ListItem,
-      Blockquote,
-      Underline,
-      Link,
+      BulletListExtension,
+      OrderedListExtension,
+      ListItemExtension,
+      BlockquoteExtension,
+      UnderlineExtension,
+      LinkExtension,
     ],
     content: value,
     onUpdate: ({ editor }) => {

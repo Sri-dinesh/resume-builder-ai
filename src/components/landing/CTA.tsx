@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern";
 import { MagneticButton } from "./ui/MagneticButton";
 

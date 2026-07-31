@@ -1,8 +1,5 @@
 "use client";
 
-import ThemeToggle from "@/components/ThemeToggle";
-import logo from "@/images/CircleLogo.png";
-import { cn } from "@/lib/utils";
 import { UserButton } from "@clerk/nextjs";
 import {
   CreditCard,
@@ -15,7 +12,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import ThemeToggle from "@/components/shared/ThemeToggle";
+import logo from "@/images/CircleLogo.png";
+import { cn } from "@/lib/utils";
 
 interface NavLinkProps {
   href: string;

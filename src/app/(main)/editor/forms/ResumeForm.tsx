@@ -1,6 +1,8 @@
 "use client";
 
-import { FontSelector } from "@/components/FontSelector";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { FontSelector } from "@/components/editor/FontSelector";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,9 +12,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ResumeValues, resumeSchema } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { resumeSchema } from "@/lib/resume/validation";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 interface ResumeFormProps {
   defaultValues?: Partial<ResumeValues>;
@@ -33,7 +34,12 @@ export default function ResumeForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={(event) => {
+          void form.handleSubmit(onSubmit)(event);
+        }}
+        className="space-y-8"
+      >
         {/* Font Selector */}
         <FormField
           control={form.control}

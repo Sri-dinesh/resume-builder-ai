@@ -1,19 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import type { FormEvent } from "react";
 import { CheckCircle2, Loader2, Target, WandSparkles } from "lucide-react";
-import { FileUpload } from "@/components/ui/file-upload";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { ScoreDashboard } from "@/components/score/ScoreDashboard";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FileUpload } from "@/components/ui/file-upload";
+import { Textarea } from "@/components/ui/textarea";
 import {
   SCORE_ACCEPTED_FILE_TYPES,
   type ScoreAnalysisMode,
   type ScoreAnalysisResult,
-} from "@/lib/score";
-import { ScoreDashboard } from "@/components/score/ScoreDashboard";
+} from "@/lib/resume/score";
+import type { FormEvent } from "react";
 
 const SCAN_FEATURES = [
   {
@@ -176,7 +176,9 @@ export default function ScoreContent() {
             </CardHeader>
             <CardContent className="p-6">
               <form
-                onSubmit={handleSubmit}
+                onSubmit={(event) => {
+                  void handleSubmit(event);
+                }}
                 className="flex flex-col gap-8 lg:flex-row lg:items-stretch"
               >
                 <div className="w-full flex-1 overflow-hidden rounded-xl border border-border/50 bg-card/50 shadow-sm transition-all hover:border-border">

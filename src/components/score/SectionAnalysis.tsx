@@ -1,5 +1,5 @@
-import type { ScoreCategoryData, ScoreCategoryKey } from "@/lib/score";
 import { Progress } from "@/components/ui/progress";
+import type { ScoreCategoryData, ScoreCategoryKey } from "@/lib/resume/score";
 
 interface SectionAnalysisProps {
   sections: Record<ScoreCategoryKey, ScoreCategoryData>;

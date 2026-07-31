@@ -1,10 +1,9 @@
-import PremiumModal from "@/components/premium/PremiumModal";
-import { getUserSubscriptionLevel } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs/server";
+import PremiumModal from "@/components/premium/PremiumModal";
+import { getUserSubscriptionLevel } from "@/lib/billing/subscription";
 import Navbar from "./Navbar";
 import SubscriptionLevelProvider from "./SubscriptionLevelProvider";
-
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {

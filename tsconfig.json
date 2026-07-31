@@ -9,6 +9,11 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": false,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -25,11 +30,21 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@/lib/ai": ["./src/lib/ai/index.ts"],
+      "@/lib/billing": ["./src/lib/billing/index.ts"],
+      "@/lib/db": ["./src/lib/db/index.ts"],
+      "@/lib/resume": ["./src/lib/resume/index.ts"],
+      "@/lib/email": ["./src/lib/email/index.ts"],
+      "@/components/resume": ["./src/components/resume/index.ts"],
+      "@/components/editor": ["./src/components/editor/index.ts"],
+      "@/components/shared": ["./src/components/shared/index.ts"]
     }
   },
   "include": [
     "next-env.d.ts",
+    "**/*.js",
+    "**/*.mjs",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",

@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Service",
 };

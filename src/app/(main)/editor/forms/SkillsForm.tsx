@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useMemo, useRef } from "react";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -8,12 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { EditorFormProps } from "@/lib/types";
+import { skillsSchema } from "@/lib/resume/validation";
 import { sanitizeEditorInput } from "@/lib/utils";
-import { skillsSchema, SkillsValues } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo, useRef } from "react";
-import { useForm } from "react-hook-form";
+import type { EditorFormProps } from "@/lib/resume/types";
+import type { SkillsValues } from "@/lib/resume/validation";
 
 export default function SkillsForm({
   resumeData,
@@ -27,17 +28,19 @@ export default function SkillsForm({
   });
 
   useEffect(() => {
-    const { unsubscribe } = form.watch(async (values) => {
-      const isValid = await form.trigger();
-      if (!isValid) return;
-      setResumeData({
-        ...resumeData,
-        skills:
-          values.skills
-            ?.filter((skill) => skill !== undefined)
-            .map((skill) => skill.trim())
-            .filter((skill) => skill !== "") || [],
-      });
+    const { unsubscribe } = form.watch((values) => {
+      void (async () => {
+        const isValid = await form.trigger();
+        if (!isValid) return;
+        setResumeData({
+          ...resumeData,
+          skills:
+            values.skills
+              ?.filter((skill): skill is string => typeof skill === "string")
+              .map((skill) => skill.trim())
+              .filter((skill) => skill !== "") || [],
+        });
+      })();
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
@@ -430,8 +433,8 @@ export default function SkillsForm({
 
   const handleSkillButtonClick = (skill: string) => {
     const currentSkills = form.getValues("skills") as unknown;
-    const normalizedSkills = Array.isArray(currentSkills)
-      ? currentSkills
+    const normalizedSkills: string[] = Array.isArray(currentSkills)
+      ? currentSkills.filter((item): item is string => typeof item === "string")
       : typeof currentSkills === "string"
         ? currentSkills.split(",").map((item: string) => item.trim())
         : [];

@@ -1,9 +1,10 @@
+import { Circle, Square } from "lucide-react"; // Removed 'Squircle' from import
+import { forwardRef } from "react";
 import { Button } from "@/components/ui/button";
 import usePremiumModal from "@/hooks/usePremiumModal";
-import { canUseCustomizations } from "@/lib/permissions";
-import { Circle, Square, LucideProps } from "lucide-react"; // Removed 'Squircle' from import
+import { canUseCustomizations } from "@/lib/billing/permissions";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
-import { forwardRef } from "react";
+import type { LucideProps } from "lucide-react";
 
 // 1. Define the missing Squircle icon manually
 const SquircleIcon = forwardRef<SVGSVGElement, LucideProps>(

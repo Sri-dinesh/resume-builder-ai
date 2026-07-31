@@ -1,10 +1,19 @@
-import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
-import useDimensions from "@/hooks/useDimensions";
-import { cn } from "@/lib/utils";
-import { ResumeValues } from "@/lib/validation";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { formatDate } from "date-fns";
+import { Inter, Noto_Serif } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
+import { DraggableSection } from "@/components/editor";
+import useDimensions from "@/hooks/useDimensions";
+import { cn } from "@/lib/utils";
+import type { ResumeValues } from "@/lib/resume/validation";
+import type { DragEndEvent } from "@dnd-kit/core";
 
 type SectionType =
   | "personal"
@@ -14,14 +23,6 @@ type SectionType =
   | "education"
   | "skills"
   | "certifications";
-import { Inter, Noto_Serif } from "next/font/google";
-import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-  arrayMove,
-} from "@dnd-kit/sortable";
-import { DraggableSection } from "./DraggableSection";
 
 const inter = Inter({
   subsets: ["latin"],

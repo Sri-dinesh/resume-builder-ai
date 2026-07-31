@@ -1,11 +1,11 @@
-import prisma from "@/lib/prisma";
-import stripe from "@/lib/stripe";
 import { auth } from "@clerk/nextjs/server";
 import { formatDate } from "date-fns";
-import { Metadata } from "next";
-import Stripe from "stripe";
+import stripe from "@/lib/billing/stripe";
+import prisma from "@/lib/db/client";
 import GetSubscriptionButton from "./GetSubscriptionButton";
 import ManageSubscriptionButton from "./ManageSubscriptionButton";
+import type { Metadata } from "next";
+import type Stripe from "stripe";
 
 export const metadata: Metadata = {
   title: "Billing",

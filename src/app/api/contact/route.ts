@@ -1,8 +1,20 @@
 import { NextResponse } from "next/server";
 
+type ContactRequestBody = {
+  firstName?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+};
+
+type Web3FormsResponse = {
+  success: boolean;
+  message?: string;
+};
+
 export async function POST(request: Request) {
   try {
-    const formData = await request.json();
+    const formData = (await request.json()) as ContactRequestBody;
 
     // Validate required fields
     const { firstName, email, subject, message } = formData;
@@ -29,7 +41,7 @@ export async function POST(request: Request) {
       }),
     });
 
-    const result = await response.json();
+    const result = (await response.json()) as Web3FormsResponse;
 
     if (result.success) {
       return NextResponse.json(

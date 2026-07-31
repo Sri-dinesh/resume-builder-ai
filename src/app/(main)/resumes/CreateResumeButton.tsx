@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import usePremiumModal from "@/hooks/usePremiumModal";
 import { Loader2, PlusSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import usePremiumModal from "@/hooks/usePremiumModal";
 
 interface CreateResumeButtonProps {
   canCreate: boolean;

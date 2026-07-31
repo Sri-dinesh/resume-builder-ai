@@ -1,8 +1,8 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import prisma from "@/lib/prisma";
-import { resumeDataInclude } from "@/lib/types";
+import prisma from "@/lib/db/client";
+import { resumeDataInclude } from "@/lib/resume/types";
 
 export type CoverLetterResumeData = {
   id: string;

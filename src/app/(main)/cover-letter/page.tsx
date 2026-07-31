@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Check,
   CheckCircle2,
@@ -20,13 +19,14 @@ import {
   Briefcase,
   Palette,
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -35,8 +35,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { motion, AnimatePresence } from "framer-motion";
-import { z } from "zod";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { getUserResumes, type CoverLetterResumeData } from "./actions";
 
 const coverLetterTones = [
@@ -88,6 +88,10 @@ interface CoverLetterResult {
     generatedAt: string;
   };
 }
+
+type CoverLetterApiResponse = CoverLetterResult & {
+  error?: string;
+};
 
 interface ResumeData {
   id: string;
@@ -181,7 +185,7 @@ function ResumeSelector({
         if (active) setLoading(false);
       }
     }
-    fetchResumes();
+    void fetchResumes();
     return () => { active = false; };
   }, []);
 
@@ -326,7 +330,7 @@ export default function CoverLetterPage() {
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as CoverLetterApiResponse;
       if (!res.ok || !data.coverLetter)
         throw new Error(data.error || "Failed to generate");
 
@@ -414,7 +418,7 @@ export default function CoverLetterPage() {
     pdf.setFont("helvetica");
     pdf.setFontSize(11);
 
-    const lines = pdf.splitTextToSize(result.coverLetter, maxWidth);
+    const lines = pdf.splitTextToSize(result.coverLetter, maxWidth) as string[];
     for (const line of lines) {
       if (y > pdf.internal.pageSize.getHeight() - margin) {
         pdf.addPage();
@@ -451,7 +455,11 @@ export default function CoverLetterPage() {
         </div>
 
         <div className="overflow-hidden rounded-2xl border border-border/40 bg-card/50 shadow-sm backdrop-blur-sm">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            onSubmit={(event) => {
+              void handleSubmit(onSubmit)(event);
+            }}
+          >
             <div className="p-6 lg:p-8">
               <div className="mb-6 flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -904,7 +912,9 @@ export default function CoverLetterPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleCopy}
+                    onClick={() => {
+                      void handleCopy();
+                    }}
                     className="h-9 rounded-lg text-xs"
                   >
                     {copied ? (
@@ -933,7 +943,9 @@ export default function CoverLetterPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleDownloadDocx}
+                    onClick={() => {
+                      void handleDownloadDocx();
+                    }}
                     className="h-9 rounded-lg text-xs"
                     title="Download as Word document"
                   >
@@ -943,7 +955,9 @@ export default function CoverLetterPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleDownloadPdf}
+                    onClick={() => {
+                      void handleDownloadPdf();
+                    }}
                     className="h-9 rounded-lg text-xs"
                     title="Download as PDF"
                   >

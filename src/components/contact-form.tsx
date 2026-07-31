@@ -7,6 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+type ContactApiResponse = {
+  error?: string;
+  message?: string;
+};
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -47,7 +51,7 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const result = (await response.json()) as ContactApiResponse;
 
       if (response.ok) {
         setSuccess(true);
@@ -84,7 +88,12 @@ export default function ContactForm() {
             <CardTitle>Contact Us</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              onSubmit={(event) => {
+                void handleSubmit(event);
+              }}
+              className="space-y-6"
+            >
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="first-name">Name</Label>

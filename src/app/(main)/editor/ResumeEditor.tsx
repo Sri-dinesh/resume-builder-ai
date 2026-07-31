@@ -1,17 +1,17 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
-import useUnloadWarning from "@/hooks/useUnloadWarning";
-import { ResumeServerData } from "@/lib/types";
-import { cn, mapToResumeValues } from "@/lib/utils";
-import { ResumeValues } from "@/lib/validation";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import useUnloadWarning from "@/hooks/useUnloadWarning";
+import { cn, mapToResumeValues } from "@/lib/utils";
 import Breadcrumbs from "./Breadcrumbs";
 import Footer from "./Footer";
 import { steps } from "./steps";
 import useAutoSaveResume from "./useAutoSaveResume";
-import { Loader2 } from "lucide-react";
+import type { ResumeServerData } from "@/lib/resume/types";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 // Dynamically import the heavy ResumePreviewSection component
 const ResumePreviewSection = dynamic(() => import("./ResumePreviewSection"), {

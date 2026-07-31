@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
 import {
   motion,
   AnimatePresence,
@@ -9,6 +8,7 @@ import {
   useMotionValue,
 } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 export const ScrollToTop: React.FC = () => {

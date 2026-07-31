@@ -1,5 +1,5 @@
-import React from "react";
-import { HTMLMotionProps } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
+import type React from "react";
 
 export interface MagneticButtonProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;

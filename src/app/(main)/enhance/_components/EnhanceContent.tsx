@@ -1,13 +1,5 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import dynamic from "next/dynamic";
-import { FileUpload } from "@/components/ui/file-upload";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
 import {
   Loader2,
   Sparkles,
@@ -19,10 +11,18 @@ import {
   RefreshCw,
   AlertCircle,
 } from "lucide-react";
-import { ResumeValues } from "@/lib/validation";
+import dynamic from "next/dynamic";
+import { useState, useEffect, useCallback } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FileUpload } from "@/components/ui/file-upload";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 const DownloadableResume = dynamic(
-  () => import("@/components/DownloadableResume"),
+  () => import("@/components/resume/DownloadableResume"),
   {
     loading: () => (
       <div className="flex h-full items-center justify-center">
@@ -38,6 +38,11 @@ interface CachedData {
   enhancedText: ResumeValues;
   timestamp: number;
 }
+
+type ImproveApiResponse = {
+  enhancedText?: ResumeValues;
+  error?: string;
+};
 
 const FEATURES = [
   {
@@ -76,7 +81,6 @@ export default function EnhanceContent() {
 
         if (mounted) {
           setPdfLibLoaded(true);
-          console.log("PDF.js loaded successfully, version:", version);
         }
       } catch (e) {
         console.error("Failed to load pdfjs:", e);
@@ -86,7 +90,7 @@ export default function EnhanceContent() {
       }
     };
 
-    loadPdfJs();
+    void loadPdfJs();
 
     return () => {
       mounted = false;
@@ -152,7 +156,7 @@ export default function EnhanceContent() {
         body: JSON.stringify({ text }),
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as ImproveApiResponse;
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to enhance resume");
@@ -197,7 +201,7 @@ export default function EnhanceContent() {
             pageText += "\n";
           }
           pageText += item.str + " ";
-          lastY = item.transform[5];
+          lastY = typeof item.transform[5] === "number" ? item.transform[5] : lastY;
         }
       }
 
@@ -227,9 +231,7 @@ export default function EnhanceContent() {
       setLoading(true);
       setError("");
 
-      console.log("Starting PDF extraction for:", file.name);
       const extractedText = await extractTextFromPDF(file);
-      console.log("Extracted text length:", extractedText.length);
 
       if (!extractedText || extractedText.trim().length === 0) {
         throw new Error(
@@ -266,7 +268,7 @@ export default function EnhanceContent() {
       }
       const [{ pdf }, { default: ResumePDF }] = await Promise.all([
         import("@react-pdf/renderer"),
-        import("@/components/ResumePDF"),
+        import("@/components/resume/ResumePDF"),
       ]);
       const blob = await pdf(<ResumePDF resumeData={enhancedText} />).toBlob();
       const url = URL.createObjectURL(blob);
@@ -371,7 +373,7 @@ export default function EnhanceContent() {
                   <FileUpload
                     onChange={(files: File[]) => {
                       if (files.length > 0) {
-                        handleFileChange(files[0]);
+                        void handleFileChange(files[0]);
                       }
                     }}
                   />
@@ -492,7 +494,9 @@ export default function EnhanceContent() {
                     New Upload
                   </Button>
                   <Button
-                    onClick={handleDownloadPDF}
+                    onClick={() => {
+                      void handleDownloadPDF();
+                    }}
                     disabled={loading}
                     className="gap-2"
                   >

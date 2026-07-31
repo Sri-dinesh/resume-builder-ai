@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
-import { createAIChatSession } from "@/lib/google-ai-model";
 import { auth } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import { createAIChatSession } from "@/lib/ai/client";
+import { logger } from "@/lib/logger";
 export async function POST(request: Request) {
   try {
     const { userId } = await auth();
@@ -9,7 +10,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { text } = await request.json();
+    const requestBody = (await request.json()) as { text?: unknown };
+    const { text } = requestBody;
 
     if (typeof text !== "string" || !text.trim()) {
       return NextResponse.json({ error: "No text provided" }, { status: 400 });
@@ -78,11 +80,11 @@ export async function POST(request: Request) {
 
     const result = await createAIChatSession().sendMessage(prompt);
     const enhancedText = result.response.text();
-    const parsedResponse = JSON.parse(enhancedText);
+    const parsedResponse: unknown = JSON.parse(enhancedText);
 
     return NextResponse.json({ enhancedText: parsedResponse });
   } catch (error: unknown) {
-    console.error("Error enhancing resume:", error);
+    logger.error("Resume enhancement failed", { route: "/api/improve", error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       {
         error:

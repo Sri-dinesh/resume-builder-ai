@@ -1,5 +1,5 @@
 import React from "react";
-import { ResumeValues } from "@/lib/validation";
+import type { ResumeValues } from "@/lib/resume/validation";
 
 interface DownloadableResumeProps {
   resumeData: ResumeValues;

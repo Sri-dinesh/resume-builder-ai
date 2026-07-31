@@ -1,5 +1,5 @@
-import { Metadata } from "next";
 import ScoreContent from "./_components/ScoreContent";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "AI Resume Scorer",

@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { NextResponse } from "next/server";
 import { env } from "@/env";
+import { getUserSubscriptionLevel } from "@/lib/billing/subscription";
 import {
   coverLetterGenerationSchema,
   coverLetterOutputSchema,
   type CoverLetterGenerationInput,
 } from "@/lib/cover-letter-validation";
-import { getUserSubscriptionLevel } from "@/lib/subscription";
+import { logger } from "@/lib/logger";
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
@@ -250,6 +251,7 @@ export async function POST(request: Request) {
   const rateLimit = checkRateLimit(userId, subscriptionLevel);
 
   if (!rateLimit.allowed) {
+    logger.info("Cover letter rate limit hit", { route: "/api/cover-letter", userId });
     return jsonResponse(
       {
         error: "Rate limit exceeded. Please wait a moment before trying again.",
@@ -264,7 +266,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = await request.json();
+    const body: unknown = await request.json();
     const validationResult = coverLetterGenerationSchema.safeParse(body);
 
     if (!validationResult.success) {
@@ -308,7 +310,9 @@ export async function POST(request: Request) {
     });
 
     const result = await chatSession.sendMessage(buildPrompt(validatedInput));
-    const parsedModelOutput = JSON.parse(extractJson(result.response.text()));
+    const parsedModelOutput: unknown = JSON.parse(
+      extractJson(result.response.text()),
+    );
     const outputValidation =
       coverLetterOutputSchema.safeParse(parsedModelOutput);
 
@@ -334,7 +338,8 @@ export async function POST(request: Request) {
     return jsonResponse(sanitizedOutput, 200, {
       "X-RateLimit-Remaining": rateLimit.remaining.toString(),
     });
-  } catch {
+  } catch (error) {
+    logger.error("Cover letter generation failed", { route: "/api/cover-letter", error: error instanceof Error ? error.message : String(error) });
     return jsonResponse(
       { error: "An unexpected error occurred. Please try again later." },
       500,
@@ -345,6 +350,6 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export function GET() {
   return jsonResponse({ error: "Method not allowed" }, 405);
 }

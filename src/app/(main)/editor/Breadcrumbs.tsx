@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,7 +8,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { steps } from "./steps";
-import React from "react";
 
 interface BreadcrumbsProps {
   currentStep: string;

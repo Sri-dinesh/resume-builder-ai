@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef, useCallback, useImperativeHandle, forwardRef } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
-import { MagneticButtonProps } from "../types";
-import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import React, { useRef, useCallback, useImperativeHandle, forwardRef } from "react";
+import { cn } from "@/lib/utils";
+import type { MagneticButtonProps } from "../types";
 
 export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>(
   (

@@ -28,12 +28,6 @@ async function pingHealthEndpoint() {
   if (!isRunning) return;
 
   try {
-    const now = new Date();
-    // Log to console so you can verify it's working
-    console.log(
-      `[SystemHeartbeat] 💓 Pinging server at ${now.toLocaleTimeString()}...`,
-    );
-
     const response = await fetch(HEALTH_ENDPOINT, {
       method: "GET",
       headers: {
@@ -46,7 +40,6 @@ async function pingHealthEndpoint() {
 
     if (response.ok) {
       lastPingTime = Date.now();
-      console.log(`[SystemHeartbeat] ✅ Server active. Next ping in ~5 mins.`);
     } else {
       console.warn(
         `[SystemHeartbeat] ⚠️ Server responded with status: ${response.status}`,
@@ -66,7 +59,9 @@ function scheduleNextPing() {
   if (timeoutId) clearTimeout(timeoutId);
   // Use a slight random jitter (0-5s) to avoid thundering herd if multiple tabs open
   const jitter = Math.floor(Math.random() * 5000);
-  timeoutId = setTimeout(pingHealthEndpoint, PING_INTERVAL + jitter);
+  timeoutId = setTimeout(() => {
+    void pingHealthEndpoint();
+  }, PING_INTERVAL + jitter);
 }
 
 function handleVisibilityChange() {
@@ -76,9 +71,8 @@ function handleVisibilityChange() {
 
     // If we missed a ping (or it's been longer than interval), ping immediately
     if (timeSinceLastPing >= PING_INTERVAL) {
-      console.log("[SystemHeartbeat] 👁️ Tab active. Recovering missed ping...");
       if (timeoutId) clearTimeout(timeoutId);
-      pingHealthEndpoint();
+      void pingHealthEndpoint();
     }
   }
 }
@@ -90,13 +84,10 @@ export function startPingSystem() {
     sessionId = generateSessionId();
   }
 
-  console.log(
-    `[SystemHeartbeat] 🚀 System Heartbeat started (5 min interval) Session: ${sessionId}`,
-  );
   isRunning = true;
 
   // Initial ping
-  pingHealthEndpoint();
+  void pingHealthEndpoint();
 
   // Listen for tab wake-ups
   if (typeof document !== "undefined") {
@@ -105,7 +96,6 @@ export function startPingSystem() {
 }
 
 export function stopPingSystem() {
-  console.log("[SystemHeartbeat] 🛑 System Heartbeat stopped");
   isRunning = false;
   if (timeoutId) clearTimeout(timeoutId);
   timeoutId = null;
