@@ -79,8 +79,11 @@ export function buildResumeFactory(index = 1): ResumeValues {
         company: `Company ${index}`,
         startDate: "2023-01-01",
         endDate: "2025-03-01",
-        description:
-          "\u2022 Built features used by 25k users\n\u2022 Improved conversion by 18%\n\u2022 Reduced release time by 40%",
+        description: [
+          "Built features used by 25k users",
+          "Improved conversion by 18%",
+          "Reduced release time by 40%",
+        ],
         locationType: "Hybrid",
       },
     ],
@@ -90,8 +93,9 @@ export function buildResumeFactory(index = 1): ResumeValues {
         toolsUsed: skillSet.join(", "),
         startDate: "2024-02-01",
         endDate: "2024-10-01",
-        description:
+        description: [
           "Developed an internal platform with analytics dashboards and automation workflows.",
+        ],
         demoLink: `https://demo${index}.example.com`,
       },
     ],
@@ -132,7 +136,7 @@ export function buildResumeText(index = 1) {
     ...(resume.workExperiences ?? []).flatMap((exp) => [
       `${exp.position} | ${exp.company}`,
       `${exp.startDate} - ${exp.endDate}`,
-      ...(exp.description?.split("\n") ?? []),
+      ...(exp.description ?? []),
     ]),
     "Education",
     ...(resume.educations ?? []).map((edu) => `${edu.degree} - ${edu.school}`),

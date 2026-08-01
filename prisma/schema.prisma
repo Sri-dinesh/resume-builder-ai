@@ -56,7 +56,7 @@ model WorkExperience {
   company     String?
   startDate   DateTime?
   endDate     DateTime?
-  description String?
+  description String[]  @default([])
 
   locationType String?
 
@@ -76,7 +76,7 @@ model Project {
   toolsUsed   String?
   startDate   DateTime?
   endDate     DateTime?
-  description String?
+  description String[]  @default([])
   demoLink    String?
 
   resumeId String

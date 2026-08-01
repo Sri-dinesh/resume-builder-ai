@@ -48,6 +48,34 @@ export function fileReplacer(key: unknown, value: unknown) {
     : value;
 }
 
+export function normalizeBullets(
+  value: string | string[] | undefined | null,
+): string[] {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.filter(
+      (item): item is string =>
+        typeof item === "string" && item.trim().length > 0,
+    );
+  }
+  if (typeof value === "string") {
+    if (!value.trim()) return [];
+    if (value.includes("<li")) {
+      const matches = value.match(/<li[^>]*>(.*?)<\/li>/gi);
+      if (matches && matches.length > 0) {
+        return matches
+          .map((m) => m.replace(/<\/?li[^>]*>/gi, "").trim())
+          .filter(Boolean);
+      }
+    }
+    return value
+      .split(/\r?\n/)
+      .map((s) => s.replace(/^[•\-\*\s]+/, "").trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
 export function mapToResumeValues(data: ResumeServerData): ResumeValues {
   return {
     id: data.id,
@@ -69,7 +97,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       company: exp.company || undefined,
       startDate: exp.startDate?.toISOString().split("T")[0],
       endDate: exp.endDate?.toISOString().split("T")[0],
-      description: exp.description || undefined,
+      description: normalizeBullets(exp.description),
       locationType: exp.locationType || undefined,
     })),
     projects: data.projects.map((proj) => ({
@@ -77,7 +105,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       toolsUsed: proj.toolsUsed || undefined,
       startDate: proj.startDate?.toISOString().split("T")[0],
       endDate: proj.endDate?.toISOString().split("T")[0],
-      description: proj.description || undefined,
+      description: normalizeBullets(proj.description),
       demoLink: proj.demoLink || undefined,
     })),
     certifications: data.certifications.map((cert) => ({

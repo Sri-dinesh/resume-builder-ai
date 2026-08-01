@@ -55,7 +55,7 @@ describe("workExperienceSchema", () => {
           company: "Acme",
           startDate: "2020-01",
           endDate: "2023-06",
-          description: "Built things",
+          description: ["Built things"],
         },
       ],
     });

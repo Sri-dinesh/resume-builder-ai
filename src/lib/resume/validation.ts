@@ -39,6 +39,8 @@ export const personalInfoSchema = z.object({
 
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 
+export const descriptionArray = z.array(z.string()).optional();
+
 export const workExperienceSchema = z.object({
   workExperiences: z
     .array(
@@ -47,7 +49,7 @@ export const workExperienceSchema = z.object({
         company: optionalString,
         startDate: optionalString,
         endDate: optionalString,
-        description: optionalString,
+        description: descriptionArray,
         locationType: optionalString,
       }),
     )
@@ -67,7 +69,7 @@ export const projectSchema = z.object({
         toolsUsed: optionalString,
         startDate: optionalString,
         endDate: optionalString,
-        description: optionalString,
+        description: descriptionArray,
         demoLink: optionalString,
         // demoLink: z.string().url().optional().or(z.string().length(0)), // Add URL validation
       }),
