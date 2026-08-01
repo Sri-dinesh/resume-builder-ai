@@ -370,11 +370,24 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
               <p className="text-sm font-semibold">{exp.company}</p>
               <p className="text-sm font-light">{exp.locationType}</p>
             </div>
-            {/* Render the description as HTML */}
-            <div
-              className="prose text-justify text-sm"
-              dangerouslySetInnerHTML={{ __html: exp.description || "" }}
-            ></div>
+            {!!exp.description?.length && (
+              <ul className="mt-1 space-y-0.5 text-sm">
+                {exp.description.map((bullet, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <span
+                      className="font-bold select-none"
+                      style={{ color: colorHex || "currentColor" }}
+                    >
+                      •
+                    </span>
+                    <div
+                      className="flex-1 text-justify"
+                      dangerouslySetInnerHTML={{ __html: bullet }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))}
       </div>
@@ -443,11 +456,24 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
               )}
             </div>
 
-            {/* Render the description as HTML so formatted text appears */}
-            <div
-              className="prose text-justify text-sm"
-              dangerouslySetInnerHTML={{ __html: proj.description || "" }}
-            ></div>
+            {!!proj.description?.length && (
+              <ul className="mt-1 space-y-0.5 text-sm">
+                {proj.description.map((bullet, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <span
+                      className="font-bold select-none"
+                      style={{ color: colorHex || "currentColor" }}
+                    >
+                      •
+                    </span>
+                    <div
+                      className="flex-1 text-justify"
+                      dangerouslySetInnerHTML={{ __html: bullet }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))}
       </div>

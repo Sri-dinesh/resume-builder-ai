@@ -45,7 +45,7 @@ export async function POST(request: Request) {
             "company": "",
             "startDate": "",
             "endDate": "",
-            "description": "",
+            "description": ["bullet point 1", "bullet point 2"],
             "locationType": ""
           }
         ],
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
             "toolsUsed": "",
             "startDate": "",
             "endDate": "",
-            "description": "",
+            "description": ["bullet point 1", "bullet point 2"],
             "demoLink": ""
           }
         ],

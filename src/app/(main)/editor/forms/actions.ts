@@ -204,12 +204,18 @@ Critical Requirements:
       throw new Error("Failed to generate AI response");
     }
 
+    const rawDesc = (
+      aiResponse.match(/Description:([\s\S]*)/)?.[1] || ""
+    ).trim();
+    const descriptionBullets = rawDesc
+      .split(/\r?\n/)
+      .map((s) => s.replace(/^[•\-\*\s]+/, "").trim())
+      .filter(Boolean);
+
     return {
       position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
       company: aiResponse.match(/Company: (.*)/)?.[1] || "",
-      description: (
-        aiResponse.match(/Description:([\s\S]*)/)?.[1] || ""
-      ).trim(),
+      description: descriptionBullets,
       startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
       endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
     } satisfies WorkExperience;
@@ -298,14 +304,20 @@ Format Rules:
       throw new Error("Failed to generate AI response");
     }
 
+    const rawDesc = (
+      aiResponse.match(/Description:([\s\S]*)/)?.[1] || ""
+    ).trim();
+    const descriptionBullets = rawDesc
+      .split(/\r?\n/)
+      .map((s) => s.replace(/^[•\-\*\s]+/, "").trim())
+      .filter(Boolean);
+
     return {
       ProjectName: aiResponse.match(/Project name: (.*)/)?.[1] || "",
       toolsUsed: aiResponse.match(/toolsUsed: (.*)/)?.[1] || "",
       startDate: aiResponse.match(/Duration: (.*)/)?.[1] || "",
       endDate: aiResponse.match(/Duration: (.*)/)?.[1] || "",
-      description: (
-        aiResponse.match(/Description:([\s\S]*)/)?.[1] || ""
-      ).trim(),
+      description: descriptionBullets,
     } satisfies Project;
   } catch (error) {
     console.error("Error generating project experience:", error);

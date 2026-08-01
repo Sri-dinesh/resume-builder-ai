@@ -110,10 +110,20 @@ export default function DownloadableResume({
                     </span>
                   )}
                 </div>
-                {exp.description && (
-                  <p className="mt-1 text-sm leading-relaxed whitespace-pre-line text-gray-700">
-                    {exp.description}
-                  </p>
+                {!!exp.description?.length && (
+                  <ul className="mt-1 space-y-0.5 text-sm leading-relaxed text-gray-700">
+                    {exp.description.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-1.5">
+                        <span className="font-bold text-gray-700 select-none">
+                          •
+                        </span>
+                        <div
+                          className="flex-1 text-justify"
+                          dangerouslySetInnerHTML={{ __html: bullet }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
             ))}
@@ -142,10 +152,20 @@ export default function DownloadableResume({
                     Technologies: {proj.toolsUsed}
                   </p>
                 )}
-                {proj.description && (
-                  <p className="mt-1 text-sm leading-relaxed whitespace-pre-line text-gray-700">
-                    {proj.description}
-                  </p>
+                {!!proj.description?.length && (
+                  <ul className="mt-1 space-y-0.5 text-sm leading-relaxed text-gray-700">
+                    {proj.description.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-1.5">
+                        <span className="font-bold text-gray-700 select-none">
+                          •
+                        </span>
+                        <div
+                          className="flex-1 text-justify"
+                          dangerouslySetInnerHTML={{ __html: bullet }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 )}
                 {proj.demoLink && (
                   <a

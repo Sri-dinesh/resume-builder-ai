@@ -168,7 +168,9 @@ export function getAIProvider(): AIProvider {
   if (providerType === "gemini") {
     const apiKey = env.GEMINI_API_KEY || "";
     if (!apiKey) {
-      throw new Error("GEMINI_API_KEY must be provided when using Gemini provider");
+      throw new Error(
+        "GEMINI_API_KEY must be provided when using Gemini provider",
+      );
     }
     const model = env.AI_MODEL || "gemini-3.5-flash";
     return new GeminiProvider(apiKey, model);
@@ -190,7 +192,7 @@ export function getAIProvider(): AIProvider {
   const baseURL = env.AI_BASE_URL;
   if (!baseURL) {
     throw new Error(
-      `AI_BASE_URL must be provided when using custom/OpenAI-compatible provider "${env.AI_PROVIDER}"`
+      `AI_BASE_URL must be provided when using custom/OpenAI-compatible provider "${env.AI_PROVIDER}"`,
     );
   }
   const model = env.AI_MODEL || "custom-model";

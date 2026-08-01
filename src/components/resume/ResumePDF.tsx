@@ -218,9 +218,15 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                       {exp.locationType}
                     </Text>
                   </View>
-                  <Text style={styles.description}>
-                    {stripHtml(exp.description || "")}
-                  </Text>
+                  {exp.description && exp.description.length > 0 && (
+                    <View style={{ marginTop: 2 }}>
+                      {exp.description.map((bullet, i) => (
+                        <Text key={i} style={styles.description}>
+                          • {stripHtml(bullet)}
+                        </Text>
+                      ))}
+                    </View>
+                  )}
                 </View>
               ))}
             </View>
@@ -244,10 +250,14 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
                       : "Present"}
                   </Text>
                 </View>
-                {proj.description && (
-                  <Text style={styles.description}>
-                    {stripHtml(proj.description)}
-                  </Text>
+                {proj.description && proj.description.length > 0 && (
+                  <View style={{ marginTop: 2 }}>
+                    {proj.description.map((bullet, i) => (
+                      <Text key={i} style={styles.description}>
+                        • {stripHtml(bullet)}
+                      </Text>
+                    ))}
+                  </View>
                 )}
               </View>
             ))}

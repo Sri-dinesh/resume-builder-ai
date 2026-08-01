@@ -131,10 +131,12 @@ function buildPrompt(input: CoverLetterGenerationInput) {
 
   const workExperienceContext =
     resumeData.workExperiences
-      ?.map(
-        (exp) =>
-          `- ${exp.position || "Position"} at ${exp.company || "Company"}: ${exp.description || ""}`,
-      )
+      ?.map((exp) => {
+        const descText = Array.isArray(exp.description)
+          ? exp.description.join("; ")
+          : exp.description || "";
+        return `- ${exp.position || "Position"} at ${exp.company || "Company"}: ${descText}`;
+      })
       .join("\n") || "No work experience provided";
 
   const educationContext =
@@ -146,10 +148,12 @@ function buildPrompt(input: CoverLetterGenerationInput) {
 
   const projectContext =
     resumeData.projects
-      ?.map(
-        (project) =>
-          `- ${project.ProjectName || "Project"}: ${project.description || ""} (Tools: ${project.toolsUsed || ""})`,
-      )
+      ?.map((project) => {
+        const descText = Array.isArray(project.description)
+          ? project.description.join("; ")
+          : project.description || "";
+        return `- ${project.ProjectName || "Project"}: ${descText} (Tools: ${project.toolsUsed || ""})`;
+      })
       .join("\n") || "";
 
   const certificationContext =

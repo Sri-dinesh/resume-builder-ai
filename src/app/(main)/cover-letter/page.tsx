@@ -104,7 +104,7 @@ interface ResumeData {
   workExperiences?: Array<{
     position?: string;
     company?: string;
-    description?: string;
+    description?: string[];
   }>;
   skills?: string[];
 }
@@ -250,11 +250,14 @@ function resumeToFormValues(
     summary: resume.summary || "",
     workExperience:
       resume.workExperiences
-        ?.map((exp) =>
-          [exp.position, exp.company, exp.description]
+        ?.map((exp) => {
+          const descStr = Array.isArray(exp.description)
+            ? exp.description.join("; ")
+            : exp.description;
+          return [exp.position, exp.company, descStr]
             .filter(Boolean)
-            .join("\n"),
-        )
+            .join("\n");
+        })
         .filter(Boolean)
         .join("\n\n") || "",
   };

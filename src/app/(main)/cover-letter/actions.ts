@@ -22,7 +22,7 @@ export type CoverLetterResumeData = {
     company: string | null;
     startDate: string | undefined;
     endDate: string | undefined;
-    description: string | null;
+    description: string[];
   }>;
   educations: Array<{
     degree: string | null;
@@ -32,7 +32,7 @@ export type CoverLetterResumeData = {
   }>;
   projects: Array<{
     ProjectName: string | null;
-    description: string | null;
+    description: string[];
     toolsUsed: string | null;
   }>;
   certifications: Array<{
