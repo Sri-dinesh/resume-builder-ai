@@ -16,11 +16,10 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { zodResolver } from "@hookform/resolvers/zod";
-import DOMPurify from "dompurify";
 import { GripHorizontal } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { RichTextEditor } from "@/components/editor/RichTextEditor";
+import { BulletPointsEditor } from "@/components/editor/BulletPointsEditor";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -129,7 +128,7 @@ export default function WorkExperienceForm({
                   company: "",
                   startDate: "",
                   endDate: "",
-                  description: "",
+                  description: [],
                 })
               }
             >
@@ -325,29 +324,11 @@ function WorkExperienceItem({
         name={`workExperiences.${index}.description`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Description</FormLabel>
             <FormControl>
-              <RichTextEditor
-                value={field.value || ""}
-                // onChange={(html) => field.onChange(html)}
-                onChange={(html) => {
-                  const cleaned = DOMPurify.sanitize(html, {
-                    ALLOWED_TAGS: [
-                      "b",
-                      "i",
-                      "u",
-                      "p",
-                      "br",
-                      "ul",
-                      "ol",
-                      "li",
-                      "strong",
-                      "em",
-                    ],
-                    ALLOWED_ATTR: [],
-                  });
-                  field.onChange(cleaned);
-                }}
+              <BulletPointsEditor
+                value={field.value || []}
+                onChange={field.onChange}
+                label="Responsibilities / Achievements"
               />
             </FormControl>
             <FormMessage />
