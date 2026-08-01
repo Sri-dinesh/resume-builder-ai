@@ -33,13 +33,13 @@ export default function Navbar() {
   };
 
   return (
-    <div className="pointer-events-none fixed left-0 right-0 top-2 z-50 flex justify-center px-4 sm:top-4">
+    <div className="pointer-events-none fixed top-2 right-0 left-0 z-50 flex justify-center px-4 sm:top-4">
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className={`pointer-events-auto w-fit max-w-full rounded-full transition-all duration-300 ${
           scrolled
-            ? "border border-border/40 bg-background/95 shadow-md backdrop-blur supports-[backdrop-filter]:bg-background/80"
+            ? "border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/80 border shadow-md backdrop-blur"
             : "bg-background/80 backdrop-blur-md"
         }`}
       >
@@ -54,7 +54,7 @@ export default function Navbar() {
               transition={{ duration: 0.5 }}
             ></motion.div>
             <motion.span
-              className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-base font-bold text-transparent sm:text-lg"
+              className="from-primary to-primary/70 bg-gradient-to-r bg-clip-text text-base font-bold text-transparent sm:text-lg"
               // whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
@@ -72,11 +72,11 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative rounded-md px-2 py-1 transition-colors hover:text-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="focus-visible:ring-primary relative rounded-md px-2 py-1 transition-colors hover:text-violet-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 <span>{item.name}</span>
                 <motion.span
-                  className="absolute -bottom-1 left-0 h-0.5 bg-primary"
+                  className="bg-primary absolute -bottom-1 left-0 h-0.5"
                   initial={{ width: 0 }}
                   whileHover={{ width: "100%" }}
                   transition={{ duration: 0.2 }}
@@ -128,7 +128,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto fixed left-4 right-4 top-16 z-50 rounded-lg border border-border/10 bg-background/95 shadow-lg backdrop-blur"
+            className="border-border/10 bg-background/95 pointer-events-auto fixed top-16 right-4 left-4 z-50 rounded-lg border shadow-lg backdrop-blur"
           >
             <div className="space-y-4 p-4">
               <nav className="flex flex-col space-y-2 text-sm font-medium">
@@ -141,17 +141,17 @@ export default function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="rounded-md px-2 py-1.5 transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="hover:bg-primary/10 focus-visible:ring-primary rounded-md px-2 py-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
               </nav>
-              <div className="border-t border-border/10 pt-2">
+              <div className="border-border/10 border-t pt-2">
                 <Button
                   size="sm"
-                  className="w-full focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  className="focus-visible:ring-primary w-full focus-visible:ring-2 focus-visible:ring-offset-2"
                   onClick={() => {
                     handleTryFree();
                     setMobileMenuOpen(false);

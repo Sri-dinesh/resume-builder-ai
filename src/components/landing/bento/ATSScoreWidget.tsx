@@ -232,31 +232,31 @@ const ATSScoreWidget = () => {
   return (
     <div
       ref={container}
-      className="group relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300 hover:border-primary/30"
+      className="group hover:border-primary/30 relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
+        <span className="text-muted-foreground/60 dark:text-muted-foreground/80 mb-4 font-mono text-[9px] tracking-[0.15em] uppercase">
           05 / ATS Analysis
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
+        <h3 className="text-foreground font-['Syne'] text-[19px] leading-tight font-bold tracking-[-0.02em]">
           Beat the Bots.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground mt-2 max-w-[240px] text-[12.5px] leading-relaxed font-light">
           Real-time, in-depth scoring against industry-standard ATS algorithms.
         </p>
       </div>
 
       <div
-        className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute top-0 left-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
             "radial-gradient(circle at 0% 0%, rgba(217,119,87,0.12) 0%, transparent 75%)",
         }}
       />
 
-      <div className="absolute bottom-0 left-0 right-0 flex h-[62%] items-center justify-center">
+      <div className="absolute right-0 bottom-0 left-0 flex h-[62%] items-center justify-center">
         <svg
           className="h-full w-full max-w-[300px]"
           viewBox="0 0 280 150"

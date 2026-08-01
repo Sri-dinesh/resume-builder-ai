@@ -126,7 +126,10 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
-    logger.error("Resume score analysis failed", { route: "/api/score", error: error instanceof Error ? error.message : String(error) });
+    logger.error("Resume score analysis failed", {
+      route: "/api/score",
+      error: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json(
       { error: "Failed to analyze resume" },
       {

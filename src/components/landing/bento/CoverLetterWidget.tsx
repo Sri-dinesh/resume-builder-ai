@@ -84,27 +84,27 @@ const CoverLetterWidget = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
+        <span className="text-muted-foreground/60 dark:text-muted-foreground/80 mb-4 font-mono text-[9px] tracking-[0.15em] uppercase">
           06 / Cover Letter
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
+        <h3 className="text-foreground font-['Syne'] text-[19px] leading-tight font-bold tracking-[-0.02em]">
           Context-Aware Letters.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground mt-2 max-w-[240px] text-[12.5px] leading-relaxed font-light">
           Instantly generate highly personalized cover letters perfectly matched
           to the job description.
         </p>
       </div>
 
       <div
-        className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute top-0 left-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
             "radial-gradient(circle at 0% 0%, rgba(217,119,87,0.12) 0%, transparent 75%)",
         }}
       />
 
-      <div className="absolute bottom-0 left-0 right-0 flex h-[62%] items-end justify-center pb-2">
+      <div className="absolute right-0 bottom-0 left-0 flex h-[62%] items-end justify-center pb-2">
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -186,88 +186,88 @@ const CoverLetterWidget = () => {
                         className="flex flex-col gap-[8px] font-sans"
                       >
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             Dear
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             Hiring
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             Manager,
                           </span>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             I&apos;m
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             excited
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             to
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             apply
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             for
                           </span>
-                          <span className="cl-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[8px] font-bold text-primary">
+                          <span className="cl-word border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 text-primary inline-block rounded-[2px] border px-[3px] py-[1px] text-[8px] font-bold">
                             Senior Frontend
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             role.
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             My
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             skills
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             in
                           </span>
-                          <span className="cl-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[8px] font-bold text-primary">
+                          <span className="cl-word border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 text-primary inline-block rounded-[2px] border px-[3px] py-[1px] text-[8px] font-bold">
                             React ecosystem
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             align
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             perfectly.
                           </span>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-x-[3px] gap-y-[3px]">
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             I
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             recently
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             led
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             a
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             team
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             to
                           </span>
-                          <span className="cl-word inline-block rounded-[2px] border border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 px-[3px] py-[1px] text-[8px] font-bold text-primary">
+                          <span className="cl-word border-primary/20 dark:border-primary/30 bg-primary/10 dark:bg-primary/20 text-primary inline-block rounded-[2px] border px-[3px] py-[1px] text-[8px] font-bold">
                             scale architecture
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             for
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             1M+
                           </span>
-                          <span className="cl-word inline-block text-[8px] text-muted-foreground">
+                          <span className="cl-word text-muted-foreground inline-block text-[8px]">
                             MAU.
                           </span>
                         </div>

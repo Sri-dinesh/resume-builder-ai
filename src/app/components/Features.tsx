@@ -1,44 +1,43 @@
-import { CheckCircle, Zap, Users, TrendingUp } from "lucide-react"
+import { CheckCircle, Zap, Users, TrendingUp } from "lucide-react";
 
 const features = [
   {
-    icon: <CheckCircle className="h-8 w-8 text-primary" />,
+    icon: <CheckCircle className="text-primary h-8 w-8" />,
     title: "Task Management",
     description: "Organize and prioritize tasks with ease.",
   },
   {
-    icon: <Zap className="h-8 w-8 text-primary" />,
+    icon: <Zap className="text-primary h-8 w-8" />,
     title: "Real-time Collaboration",
     description: "Work together seamlessly in real-time.",
   },
   {
-    icon: <Users className="h-8 w-8 text-primary" />,
+    icon: <Users className="text-primary h-8 w-8" />,
     title: "Team Communication",
     description: "Stay connected with built-in messaging.",
   },
   {
-    icon: <TrendingUp className="h-8 w-8 text-primary" />,
+    icon: <TrendingUp className="text-primary h-8 w-8" />,
     title: "Analytics Dashboard",
     description: "Track progress and gain insights with powerful analytics.",
   },
-]
+];
 
 export default function Features() {
   return (
-    <section id="features" className="py-20 bg-gray-50">
+    <section id="features" className="bg-gray-50 py-20">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <h2 className="mb-12 text-center text-3xl font-bold">Key Features</h2>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+            <div key={index} className="rounded-lg bg-white p-6 shadow-md">
               <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
-

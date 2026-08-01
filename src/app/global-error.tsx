@@ -16,16 +16,18 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-          fontFamily: "system-ui, sans-serif",
-          padding: "2rem",
-          textAlign: "center",
-        }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "100vh",
+            fontFamily: "system-ui, sans-serif",
+            padding: "2rem",
+            textAlign: "center",
+          }}
+        >
           <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
             Something went wrong
           </h2>

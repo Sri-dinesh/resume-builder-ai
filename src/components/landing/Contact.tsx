@@ -85,7 +85,7 @@ const StatusMessage = React.memo<StatusMessageProps>(({ type, message }) => {
       aria-live="polite"
     >
       <Icon className="mt-0.5 h-5 w-5 shrink-0" />
-      <span className="flex-1 font-medium leading-relaxed">{message}</span>
+      <span className="flex-1 leading-relaxed font-medium">{message}</span>
     </motion.div>
   );
 });
@@ -106,18 +106,18 @@ const ContactMethodCard = ({
   const CardContent = (
     <motion.div
       whileHover={{ y: -2 }}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/40 bg-card/30 p-6 transition-all duration-500 hover:border-primary/30 hover:bg-card/50 hover:shadow-[0_8px_30px_-10px_rgba(var(--primary),0.1)]"
+      className="group border-border/40 bg-card/30 hover:border-primary/30 hover:bg-card/50 relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 transition-all duration-500 hover:shadow-[0_8px_30px_-10px_rgba(var(--primary),0.1)]"
     >
-      <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/5 blur-[40px] transition-all duration-500 group-hover:bg-primary/10" />
+      <div className="bg-primary/5 group-hover:bg-primary/10 absolute -top-12 -right-12 h-32 w-32 rounded-full blur-[40px] transition-all duration-500" />
 
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-background shadow-sm ring-1 ring-border/50 transition-transform duration-500 group-hover:scale-110 group-hover:ring-primary/30">
-        <Icon className="h-5 w-5 text-foreground/80 transition-colors duration-500 group-hover:text-primary" />
+      <div className="bg-background ring-border/50 group-hover:ring-primary/30 mb-4 flex h-12 w-12 items-center justify-center rounded-xl shadow-sm ring-1 transition-transform duration-500 group-hover:scale-110">
+        <Icon className="text-foreground/80 group-hover:text-primary h-5 w-5 transition-colors duration-500" />
       </div>
       <div>
-        <h3 className="mb-1.5 text-base font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+        <h3 className="text-foreground group-hover:text-primary mb-1.5 text-base font-semibold tracking-tight transition-colors">
           {title}
         </h3>
-        <p className="text-sm font-medium leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground text-sm leading-relaxed font-medium">
           {subtitle}
         </p>
       </div>
@@ -218,7 +218,7 @@ export const LandingContact = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary"
+            className="border-primary/20 bg-primary/10 text-primary mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase"
           >
             Get In Touch
           </motion.div>
@@ -227,17 +227,17 @@ export const LandingContact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="mb-6 font-serif text-4xl font-light leading-none tracking-tight text-foreground md:text-5xl lg:text-6xl"
+            className="text-foreground mb-6 font-serif text-4xl leading-none font-light tracking-tight md:text-5xl lg:text-6xl"
           >
             Let&apos;s build your <br className="md:hidden" />
-            <span className="italic text-primary/90">next chapter.</span>
+            <span className="text-primary/90 italic">next chapter.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="max-w-2xl text-base font-light leading-relaxed text-muted-foreground md:text-lg"
+            className="text-muted-foreground max-w-2xl text-base leading-relaxed font-light md:text-lg"
           >
             Whether you have a question, need support, or want to explore
             partnership opportunities, we&apos;re always ready to listen.
@@ -277,9 +277,9 @@ export const LandingContact = () => {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-8"
           >
-            <div className="relative h-full overflow-hidden rounded-[2.5rem] border border-border/40 bg-card/40 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:shadow-none sm:p-10">
+            <div className="border-border/40 bg-card/40 relative h-full overflow-hidden rounded-[2.5rem] border p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] backdrop-blur-xl sm:p-10 dark:shadow-none">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-50 dark:from-white/5" />
-              <div className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-primary/10 blur-[100px]" />
+              <div className="bg-primary/10 pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full blur-[100px]" />
 
               <Form {...form}>
                 <form
@@ -296,7 +296,7 @@ export const LandingContact = () => {
                         name="firstName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
+                            <FormLabel className="text-foreground/80 text-xs font-semibold tracking-wider uppercase">
                               Your Name
                             </FormLabel>
                             <FormControl>
@@ -304,7 +304,7 @@ export const LandingContact = () => {
                                 {...field}
                                 placeholder="Jane Doe"
                                 disabled={isSubmitting || isSuccess}
-                                className="h-12 rounded-xl border-border/50 bg-background/50 px-4 text-sm transition-all placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-4 focus:ring-primary/10"
+                                className="border-border/50 bg-background/50 placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-primary/10 h-12 rounded-xl px-4 text-sm transition-all focus:ring-4"
                                 maxLength={100}
                               />
                             </FormControl>
@@ -318,7 +318,7 @@ export const LandingContact = () => {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
+                            <FormLabel className="text-foreground/80 text-xs font-semibold tracking-wider uppercase">
                               Email Address
                             </FormLabel>
                             <FormControl>
@@ -327,7 +327,7 @@ export const LandingContact = () => {
                                 type="email"
                                 placeholder="jane@example.com"
                                 disabled={isSubmitting || isSuccess}
-                                className="h-12 rounded-xl border-border/50 bg-background/50 px-4 text-sm transition-all placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-4 focus:ring-primary/10"
+                                className="border-border/50 bg-background/50 placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-primary/10 h-12 rounded-xl px-4 text-sm transition-all focus:ring-4"
                               />
                             </FormControl>
                             <FormMessage className="text-xs opacity-90" />
@@ -341,7 +341,7 @@ export const LandingContact = () => {
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
+                          <FormLabel className="text-foreground/80 text-xs font-semibold tracking-wider uppercase">
                             Subject
                           </FormLabel>
                           <FormControl>
@@ -349,7 +349,7 @@ export const LandingContact = () => {
                               {...field}
                               placeholder="How can we help you today?"
                               disabled={isSubmitting || isSuccess}
-                              className="h-12 rounded-xl border-border/50 bg-background/50 px-4 text-sm transition-all placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-4 focus:ring-primary/10"
+                              className="border-border/50 bg-background/50 placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-primary/10 h-12 rounded-xl px-4 text-sm transition-all focus:ring-4"
                               maxLength={200}
                             />
                           </FormControl>
@@ -364,10 +364,10 @@ export const LandingContact = () => {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex items-center justify-between">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
+                            <FormLabel className="text-foreground/80 text-xs font-semibold tracking-wider uppercase">
                               Your Message
                             </FormLabel>
-                            <span className="text-[10px] font-bold tracking-wider text-muted-foreground/50">
+                            <span className="text-muted-foreground/50 text-[10px] font-bold tracking-wider">
                               {form.watch("message")?.length || 0} / 2000
                             </span>
                           </div>
@@ -376,7 +376,7 @@ export const LandingContact = () => {
                               {...field}
                               placeholder="Share your thoughts, questions, or project details..."
                               disabled={isSubmitting || isSuccess}
-                              className="min-h-[140px] resize-none rounded-xl border-border/50 bg-background/50 px-4 py-3 text-sm transition-all placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-4 focus:ring-primary/10"
+                              className="border-border/50 bg-background/50 placeholder:text-muted-foreground/50 hover:border-border/80 focus:border-primary/50 focus:bg-background focus:ring-primary/10 min-h-[140px] resize-none rounded-xl px-4 py-3 text-sm transition-all focus:ring-4"
                               maxLength={2000}
                             />
                           </FormControl>
@@ -413,7 +413,7 @@ export const LandingContact = () => {
                         isSuccess ? (
                           <Check className="h-4 w-4" />
                         ) : (
-                          <Send className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                          <Send className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                         )
                       }
                     >

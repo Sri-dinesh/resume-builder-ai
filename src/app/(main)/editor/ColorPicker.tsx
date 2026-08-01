@@ -10,7 +10,7 @@ import {
 import usePremiumModal from "@/hooks/usePremiumModal";
 import { canUseCustomizations } from "@/lib/billing/permissions";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
-import type { Color, ColorChangeHandler} from "react-color";
+import type { Color, ColorChangeHandler } from "react-color";
 
 interface ColorPickerProps {
   color: Color | undefined;

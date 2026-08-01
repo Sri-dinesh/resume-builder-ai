@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative flex min-h-screen flex-col transition-colors duration-500 selection:bg-primary/30 selection:text-foreground">
+      <div className="selection:bg-primary/30 selection:text-foreground relative flex min-h-screen flex-col transition-colors duration-500">
         <LandingNavbar />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-grow flex-col px-6 md:px-12">

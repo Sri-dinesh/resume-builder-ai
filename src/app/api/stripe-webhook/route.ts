@@ -21,7 +21,9 @@ export async function POST(req: NextRequest) {
       env.STRIPE_WEBHOOK_SECRET,
     );
 
-    logger.info(`Stripe webhook received: ${event.type}`, { route: "/api/stripe-webhook" });
+    logger.info(`Stripe webhook received: ${event.type}`, {
+      route: "/api/stripe-webhook",
+    });
 
     switch (event.type) {
       case "checkout.session.completed":
@@ -35,13 +37,18 @@ export async function POST(req: NextRequest) {
         await handleSubscriptionDeleted(event.data.object);
         break;
       default:
-        logger.info(`Unhandled Stripe event type: ${event.type}`, { route: "/api/stripe-webhook" });
+        logger.info(`Unhandled Stripe event type: ${event.type}`, {
+          route: "/api/stripe-webhook",
+        });
         break;
     }
 
     return new Response("Event received", { status: 200 });
   } catch (error) {
-    logger.error("Stripe webhook error", { route: "/api/stripe-webhook", error: error instanceof Error ? error.message : String(error) });
+    logger.error("Stripe webhook error", {
+      route: "/api/stripe-webhook",
+      error: error instanceof Error ? error.message : String(error),
+    });
     return new Response("Internal server error", { status: 500 });
   }
 }

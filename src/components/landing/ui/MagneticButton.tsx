@@ -2,11 +2,19 @@
 
 import { motion, useSpring, useMotionValue } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import React, { useRef, useCallback, useImperativeHandle, forwardRef } from "react";
+import React, {
+  useRef,
+  useCallback,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { cn } from "@/lib/utils";
 import type { MagneticButtonProps } from "../types";
 
-export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>(
+export const MagneticButton = forwardRef<
+  HTMLButtonElement,
+  MagneticButtonProps
+>(
   (
     {
       children,
@@ -20,7 +28,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       style,
       ...props
     },
-    ref
+    ref,
   ) => {
     const internalRef = useRef<HTMLButtonElement>(null);
     useImperativeHandle(ref, () => internalRef.current!);
@@ -37,7 +45,8 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!internalRef.current || isLoading) return;
         const { clientX, clientY } = e;
-        const { left, top, width, height } = internalRef.current.getBoundingClientRect();
+        const { left, top, width, height } =
+          internalRef.current.getBoundingClientRect();
 
         const centerX = left + width / 2;
         const centerY = top + height / 2;
@@ -48,7 +57,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         mouseX.set(pullX);
         mouseY.set(pullY);
       },
-      [strength, mouseX, mouseY, isLoading]
+      [strength, mouseX, mouseY, isLoading],
     );
 
     const handleMouseLeave = useCallback(() => {
@@ -61,22 +70,22 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         "bg-primary text-primary-foreground border-transparent",
         "shadow-[0_1px_2px_rgba(0,0,0,0.05),0_0_0_1px_rgba(0,0,0,0.05)]",
         "hover:bg-primary/95 hover:shadow-[0_8px_16px_-4px_rgba(var(--primary),0.2)]",
-        "active:scale-[0.985]"
+        "active:scale-[0.985]",
       ),
       secondary: cn(
         "bg-secondary text-secondary-foreground border-transparent",
         "hover:bg-secondary/80",
-        "active:scale-[0.985]"
+        "active:scale-[0.985]",
       ),
       outline: cn(
         "border border-border bg-background text-foreground",
         "hover:border-primary/30 hover:bg-primary/[0.02]",
-        "active:scale-[0.985]"
+        "active:scale-[0.985]",
       ),
       ghost: cn(
         "bg-transparent text-foreground",
         "hover:bg-secondary/50",
-        "active:scale-[0.985]"
+        "active:scale-[0.985]",
       ),
     };
 
@@ -90,12 +99,12 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       <motion.button
         ref={internalRef}
         className={cn(
-          "group relative inline-flex items-center justify-center transition-all duration-200 select-none border whitespace-nowrap",
+          "group relative inline-flex items-center justify-center border whitespace-nowrap transition-all duration-200 select-none",
           "disabled:cursor-not-allowed disabled:opacity-40",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-1",
+          "focus-visible:ring-primary/20 focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none",
           variants[variant],
           sizes[size],
-          className
+          className,
         )}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -104,16 +113,18 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       >
         {/* Loading Overlay */}
         {isLoading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center bg-inherit rounded-[inherit]">
+          <div className="absolute inset-0 z-20 flex items-center justify-center rounded-[inherit] bg-inherit">
             <Loader2 className="h-4 w-4 animate-spin opacity-70" />
           </div>
         )}
 
         {/* Content Wrapper */}
-        <span className={cn(
-          "relative z-10 flex items-center gap-2.5 transition-opacity duration-200",
-          isLoading ? "opacity-0" : "opacity-100"
-        )}>
+        <span
+          className={cn(
+            "relative z-10 flex items-center gap-2.5 transition-opacity duration-200",
+            isLoading ? "opacity-0" : "opacity-100",
+          )}
+        >
           {leftIcon && (
             <span className="inline-flex shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
               {leftIcon}
@@ -128,7 +139,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         </span>
       </motion.button>
     );
-  }
+  },
 );
 
 MagneticButton.displayName = "MagneticButton";

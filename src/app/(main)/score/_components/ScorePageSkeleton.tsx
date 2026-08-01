@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ScorePageSkeleton() {
   return (
-    <div className="min-h-screen bg-muted/5 py-8 md:py-10">
+    <div className="bg-muted/5 min-h-screen py-8 md:py-10">
       <div className="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
         <div className="space-y-3">
           <Skeleton className="h-5 w-32" />

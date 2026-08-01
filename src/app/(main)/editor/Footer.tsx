@@ -55,7 +55,10 @@ export default function Footer({
         }
 
         return {
-          x: Math.min(currentPosition.x, Math.max(window.innerWidth - offsetWidth, 0)),
+          x: Math.min(
+            currentPosition.x,
+            Math.max(window.innerWidth - offsetWidth, 0),
+          ),
           y: currentPosition.y,
         };
       });
@@ -75,8 +78,14 @@ export default function Footer({
     }
 
     return {
-      x: Math.min(Math.max(x, 0), Math.max(window.innerWidth - element.offsetWidth, 0)),
-      y: Math.min(Math.max(y, 0), Math.max(window.innerHeight - element.offsetHeight, 0)),
+      x: Math.min(
+        Math.max(x, 0),
+        Math.max(window.innerWidth - element.offsetWidth, 0),
+      ),
+      y: Math.min(
+        Math.max(y, 0),
+        Math.max(window.innerHeight - element.offsetHeight, 0),
+      ),
     };
   }
 
@@ -146,12 +155,12 @@ export default function Footer({
           {saveStatus}
         </p>
       </div>
-      <div className="flex items-center gap-2 rounded-full border bg-background px-2 py-1 shadow-sm">
+      <div className="bg-background flex items-center gap-2 rounded-full border px-2 py-1 shadow-sm">
         <Button
           variant="ghost"
           size="icon"
           type="button"
-          className="h-8 w-8 cursor-grab touch-none rounded-full text-muted-foreground active:cursor-grabbing"
+          className="text-muted-foreground h-8 w-8 cursor-grab touch-none rounded-full active:cursor-grabbing"
           title="Drag controls"
           onPointerDown={handleDragStart}
           onPointerMove={handleDragMove}
@@ -166,7 +175,9 @@ export default function Footer({
         <Button
           variant="ghost"
           size="sm"
-          onClick={previousStep ? () => setCurrentStep(previousStep) : undefined}
+          onClick={
+            previousStep ? () => setCurrentStep(previousStep) : undefined
+          }
           disabled={!previousStep}
         >
           Previous

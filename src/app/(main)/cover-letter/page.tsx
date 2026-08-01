@@ -186,7 +186,9 @@ function ResumeSelector({
       }
     }
     void fetchResumes();
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, []);
 
   const handleSelect = (resumeId: string) => {
@@ -200,8 +202,8 @@ function ResumeSelector({
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 rounded-lg border border-border/50 bg-background/60 px-4 py-3 text-sm text-muted-foreground">
-        <Loader2 className="h-4 w-4 animate-spin text-primary" />
+      <div className="border-border/50 bg-background/60 text-muted-foreground flex items-center gap-2 rounded-lg border px-4 py-3 text-sm">
+        <Loader2 className="text-primary h-4 w-4 animate-spin" />
         Loading saved resumes...
       </div>
     );
@@ -209,7 +211,7 @@ function ResumeSelector({
 
   if (error || resumes.length === 0) {
     return (
-      <div className="rounded-lg border border-border/50 bg-background/60 px-4 py-3 text-sm text-muted-foreground">
+      <div className="border-border/50 bg-background/60 text-muted-foreground rounded-lg border px-4 py-3 text-sm">
         No saved resumes found. Enter your details manually below.
       </div>
     );
@@ -219,7 +221,7 @@ function ResumeSelector({
     <div className="space-y-2">
       <Label className="text-xs font-medium">Import Resume Data</Label>
       <Select onValueChange={handleSelect} value={selectedId || undefined}>
-        <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm">
+        <SelectTrigger className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm">
           <SelectValue placeholder="Select a saved resume" />
         </SelectTrigger>
         <SelectContent>
@@ -439,22 +441,22 @@ export default function CoverLetterPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background py-8 md:py-12">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background dark:from-primary/5" />
-      <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-sky-500/10 blur-[100px] dark:bg-sky-500/5" />
+    <div className="bg-background relative min-h-screen overflow-hidden py-8 md:py-12">
+      <div className="from-primary/10 via-background to-background dark:from-primary/5 absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]" />
+      <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-sky-500/10 blur-[100px] dark:bg-sky-500/5" />
 
       <div className="mx-auto max-w-5xl space-y-8 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Badge
             variant="outline"
-            className="border-primary/20 bg-primary/10 px-6 py-2 text-sm font-semibold tracking-wide text-primary shadow-sm dark:border-primary/20 dark:bg-primary/10"
+            className="border-primary/20 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/10 px-6 py-2 text-sm font-semibold tracking-wide shadow-sm"
           >
             <WandSparkles className="mr-1.5 h-4 w-4" />
             AI Cover Letter Generator
           </Badge>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-border/40 bg-card/50 shadow-sm backdrop-blur-sm">
+        <div className="border-border/40 bg-card/50 overflow-hidden rounded-2xl border shadow-sm backdrop-blur-sm">
           <form
             onSubmit={(event) => {
               void handleSubmit(onSubmit)(event);
@@ -462,12 +464,12 @@ export default function CoverLetterPage() {
           >
             <div className="p-6 lg:p-8">
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
                   <Briefcase className="h-4 w-4" />
                 </div>
                 <div>
                   <h2 className="text-sm font-semibold">Role Details</h2>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Information about the position you&apos;re applying for
                   </p>
                 </div>
@@ -484,11 +486,11 @@ export default function CoverLetterPage() {
                     <Input
                       id="jobTitle"
                       placeholder="Senior Product Designer"
-                      className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm focus-visible:ring-primary/20"
+                      className="border-border/50 bg-background/60 focus-visible:ring-primary/20 h-10 rounded-lg border text-sm"
                       {...register("jobTitle")}
                     />
                     {errors.jobTitle && (
-                      <p className="text-[11px] text-destructive">
+                      <p className="text-destructive text-[11px]">
                         {errors.jobTitle.message}
                       </p>
                     )}
@@ -503,11 +505,11 @@ export default function CoverLetterPage() {
                     <Input
                       id="companyName"
                       placeholder="Acme Inc."
-                      className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm focus-visible:ring-primary/20"
+                      className="border-border/50 bg-background/60 focus-visible:ring-primary/20 h-10 rounded-lg border text-sm"
                       {...register("companyName")}
                     />
                     {errors.companyName && (
-                      <p className="text-[11px] text-destructive">
+                      <p className="text-destructive text-[11px]">
                         {errors.companyName.message}
                       </p>
                     )}
@@ -523,18 +525,18 @@ export default function CoverLetterPage() {
                       Job Description{" "}
                       <span className="text-destructive">*</span>
                     </Label>
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-muted-foreground text-[10px]">
                       {jobDescription.length.toLocaleString()} / 10,000
                     </span>
                   </div>
                   <Textarea
                     id="jobDescription"
                     placeholder="Paste the job description here to match keywords and tailor your letter..."
-                    className="min-h-[140px] resize-none rounded-lg border border-border/50 bg-background/60 text-sm leading-relaxed focus-visible:ring-primary/20"
+                    className="border-border/50 bg-background/60 focus-visible:ring-primary/20 min-h-[140px] resize-none rounded-lg border text-sm leading-relaxed"
                     {...register("jobDescription")}
                   />
                   {errors.jobDescription && (
-                    <p className="text-[11px] text-destructive">
+                    <p className="text-destructive text-[11px]">
                       {errors.jobDescription.message}
                     </p>
                   )}
@@ -551,18 +553,18 @@ export default function CoverLetterPage() {
                 className="group flex w-full items-center justify-between"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-hover:text-foreground">
+                  <div className="bg-muted text-muted-foreground group-hover:text-foreground flex h-8 w-8 items-center justify-center rounded-lg transition-colors">
                     <User className="h-4 w-4" />
                   </div>
                   <div className="text-left">
                     <h2 className="text-sm font-semibold">Your Profile</h2>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Personalize the letter with your information
                     </p>
                   </div>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-muted-foreground transition-transform ${showProfile ? "rotate-180" : ""}`}
+                  className={`text-muted-foreground h-4 w-4 transition-transform ${showProfile ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -578,38 +580,38 @@ export default function CoverLetterPage() {
                       <div className="grid gap-4 sm:grid-cols-3">
                         <Input
                           placeholder="First Name"
-                          className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm"
+                          className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm"
                           {...register("firstName")}
                         />
                         <Input
                           placeholder="Last Name"
-                          className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm"
+                          className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm"
                           {...register("lastName")}
                         />
                         <Input
                           placeholder="Email Address"
                           type="email"
-                          className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm"
+                          className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm"
                           {...register("email")}
                         />
                       </div>
                       <Input
                         placeholder="Current Job Title"
-                        className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm"
+                        className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm"
                         {...register("currentJobTitle")}
                       />
                       <div className="grid gap-4 sm:grid-cols-2">
                         <div className="space-y-2">
                           <Label
                             htmlFor="summary"
-                            className="text-xs text-muted-foreground"
+                            className="text-muted-foreground text-xs"
                           >
                             Professional Summary
                           </Label>
                           <Textarea
                             id="summary"
                             placeholder="Brief overview of your background..."
-                            className="min-h-[100px] resize-none rounded-lg border border-border/50 bg-background/60 text-sm transition-colors focus:border-primary/50 focus-visible:ring-1 focus-visible:ring-primary/20"
+                            className="border-border/50 bg-background/60 focus:border-primary/50 focus-visible:ring-primary/20 min-h-[100px] resize-none rounded-lg border text-sm transition-colors focus-visible:ring-1"
                             {...register("summary")}
                           />
                         </div>
@@ -617,18 +619,18 @@ export default function CoverLetterPage() {
                           <div className="flex items-center justify-between">
                             <Label
                               htmlFor="workExperience"
-                              className="text-xs text-muted-foreground"
+                              className="text-muted-foreground text-xs"
                             >
                               Work Experience
                             </Label>
-                            <span className="text-[10px] text-muted-foreground">
+                            <span className="text-muted-foreground text-[10px]">
                               {workExperience.length.toLocaleString()} / 5,000
                             </span>
                           </div>
                           <Textarea
                             id="workExperience"
                             placeholder={`Role\nCompany\nAchievements\n\nRole...`}
-                            className="min-h-[100px] resize-none rounded-lg border border-border/50 bg-background/60 text-sm transition-colors focus:border-primary/50 focus-visible:ring-1 focus-visible:ring-primary/20"
+                            className="border-border/50 bg-background/60 focus:border-primary/50 focus-visible:ring-primary/20 min-h-[100px] resize-none rounded-lg border text-sm transition-colors focus-visible:ring-1"
                             {...register("workExperience")}
                           />
                         </div>
@@ -648,20 +650,20 @@ export default function CoverLetterPage() {
                 className="group flex w-full items-center justify-between"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-hover:text-foreground">
+                  <div className="bg-muted text-muted-foreground group-hover:text-foreground flex h-8 w-8 items-center justify-center rounded-lg transition-colors">
                     <Palette className="h-4 w-4" />
                   </div>
                   <div className="text-left">
                     <h2 className="text-sm font-semibold">
                       Generation Settings
                     </h2>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Customize how your cover letter is written
                     </p>
                   </div>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-muted-foreground transition-transform ${showSettings ? "rotate-180" : ""}`}
+                  className={`text-muted-foreground h-4 w-4 transition-transform ${showSettings ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -683,7 +685,7 @@ export default function CoverLetterPage() {
                               setValue("tone", value)
                             }
                           >
-                            <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm capitalize">
+                            <SelectTrigger className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm capitalize">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -707,7 +709,7 @@ export default function CoverLetterPage() {
                               setValue("length", value)
                             }
                           >
-                            <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm capitalize">
+                            <SelectTrigger className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm capitalize">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -733,7 +735,7 @@ export default function CoverLetterPage() {
                               setValue("industry", value)
                             }
                           >
-                            <SelectTrigger className="h-10 rounded-lg border border-border/50 bg-background/60 text-sm capitalize">
+                            <SelectTrigger className="border-border/50 bg-background/60 h-10 rounded-lg border text-sm capitalize">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -765,7 +767,7 @@ export default function CoverLetterPage() {
                               })
                             }
                           >
-                            <SelectTrigger className="h-8 w-full sm:w-[260px] rounded-lg border border-border/50 bg-background/60 text-xs text-muted-foreground transition-colors hover:bg-muted/50">
+                            <SelectTrigger className="border-border/50 bg-background/60 text-muted-foreground hover:bg-muted/50 h-8 w-full rounded-lg border text-xs transition-colors sm:w-[260px]">
                               <SelectValue placeholder="💡 Try a quick preset..." />
                             </SelectTrigger>
                             <SelectContent>
@@ -799,7 +801,7 @@ export default function CoverLetterPage() {
                         <Textarea
                           id="customInstructions"
                           placeholder="Add any specific requests for your cover letter..."
-                          className="min-h-[80px] w-full resize-none rounded-lg border border-border/50 bg-background/60 text-sm transition-colors focus:border-primary/50 focus-visible:ring-1 focus-visible:ring-primary/20"
+                          className="border-border/50 bg-background/60 focus:border-primary/50 focus-visible:ring-primary/20 min-h-[80px] w-full resize-none rounded-lg border text-sm transition-colors focus-visible:ring-1"
                           {...register("customInstructions")}
                         />
                       </div>
@@ -810,15 +812,15 @@ export default function CoverLetterPage() {
             </div>
 
             {/* Action Section */}
-            <div className="border-t border-border/40 bg-muted/20 px-6 py-5 lg:px-8">
+            <div className="border-border/40 bg-muted/20 border-t px-6 py-5 lg:px-8">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 {error ? (
-                  <div className="flex items-center gap-2 text-xs text-destructive">
+                  <div className="text-destructive flex items-center gap-2 text-xs">
                     <Info className="h-4 w-4" />
                     {error}
                   </div>
                 ) : (
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     All fields marked with{" "}
                     <span className="text-destructive">*</span> are required
                   </p>
@@ -858,15 +860,15 @@ export default function CoverLetterPage() {
                   {QUALITY_HINTS.map((hint) => (
                     <div
                       key={hint.title}
-                      className="group rounded-xl border border-border/40 bg-card/30 p-4 transition-colors hover:bg-card/50"
+                      className="group border-border/40 bg-card/30 hover:bg-card/50 rounded-xl border p-4 transition-colors"
                     >
-                      <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <div className="bg-primary/10 text-primary mb-3 flex h-8 w-8 items-center justify-center rounded-lg">
                         <CheckCircle2 className="h-4 w-4" />
                       </div>
-                      <h3 className="text-sm font-medium text-foreground">
+                      <h3 className="text-foreground text-sm font-medium">
                         {hint.title}
                       </h3>
-                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                      <p className="text-muted-foreground mt-1 text-xs leading-relaxed">
                         {hint.detail}
                       </p>
                     </div>
@@ -879,13 +881,13 @@ export default function CoverLetterPage() {
                   className="flex flex-col items-center justify-center py-16"
                 >
                   <div className="relative mb-6">
-                    <Loader2 className="h-12 w-12 animate-spin text-primary/20" />
-                    <WandSparkles className="absolute inset-0 m-auto h-6 w-6 animate-pulse text-primary" />
+                    <Loader2 className="text-primary/20 h-12 w-12 animate-spin" />
+                    <WandSparkles className="text-primary absolute inset-0 m-auto h-6 w-6 animate-pulse" />
                   </div>
                   <h3 className="text-lg font-medium">
                     Crafting your letter...
                   </h3>
-                  <p className="mt-1 max-w-xs text-center text-sm text-muted-foreground">
+                  <p className="text-muted-foreground mt-1 max-w-xs text-center text-sm">
                     Analyzing the job requirements and tailoring your
                     experience.
                   </p>
@@ -929,7 +931,7 @@ export default function CoverLetterPage() {
                       </>
                     )}
                   </Button>
-                  <div className="h-5 w-px bg-border/60 hidden sm:block" />
+                  <div className="bg-border/60 hidden h-5 w-px sm:block" />
                   <Button
                     variant="outline"
                     size="sm"
@@ -964,7 +966,7 @@ export default function CoverLetterPage() {
                     <Download className="mr-1.5 h-3.5 w-3.5" />
                     PDF
                   </Button>
-                  <div className="h-5 w-px bg-border/60 hidden sm:block" />
+                  <div className="bg-border/60 hidden h-5 w-px sm:block" />
                   <Button
                     variant="outline"
                     size="sm"
@@ -978,10 +980,10 @@ export default function CoverLetterPage() {
               </div>
 
               <div className="grid gap-6 lg:grid-cols-[1fr,280px]">
-                <div className="overflow-hidden rounded-xl border border-border/40 bg-card/50 shadow-sm">
+                <div className="border-border/40 bg-card/50 overflow-hidden rounded-xl border shadow-sm">
                   <Tabs defaultValue="preview" className="w-full">
-                    <div className="border-b border-border/40 bg-muted/20 px-4 py-3">
-                      <TabsList className="h-8 rounded-lg bg-background/60">
+                    <div className="border-border/40 bg-muted/20 border-b px-4 py-3">
+                      <TabsList className="bg-background/60 h-8 rounded-lg">
                         <TabsTrigger
                           value="preview"
                           className="rounded-md px-3 text-xs"
@@ -997,7 +999,7 @@ export default function CoverLetterPage() {
                       </TabsList>
                     </div>
                     <TabsContent value="preview" className="m-0 p-6">
-                      <div className="prose prose-sm dark:prose-invert max-w-none leading-relaxed text-foreground/90">
+                      <div className="prose prose-sm dark:prose-invert text-foreground/90 max-w-none leading-relaxed">
                         {result.coverLetter
                           .split("\n")
                           .map((para, i) =>
@@ -1016,21 +1018,21 @@ export default function CoverLetterPage() {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="rounded-xl border border-border/40 bg-card/50 p-5">
-                    <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <div className="border-border/40 bg-card/50 rounded-xl border p-5">
+                    <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wider uppercase">
                       Letter Stats
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-lg bg-muted/40 p-3">
-                        <p className="text-[10px] font-medium uppercase text-muted-foreground">
+                      <div className="bg-muted/40 rounded-lg p-3">
+                        <p className="text-muted-foreground text-[10px] font-medium uppercase">
                           Words
                         </p>
                         <p className="text-2xl font-semibold">
                           {result.metadata.wordCount}
                         </p>
                       </div>
-                      <div className="rounded-lg bg-muted/40 p-3">
-                        <p className="text-[10px] font-medium uppercase text-muted-foreground">
+                      <div className="bg-muted/40 rounded-lg p-3">
+                        <p className="text-muted-foreground text-[10px] font-medium uppercase">
                           Tone
                         </p>
                         <p className="text-sm font-semibold capitalize">
@@ -1040,7 +1042,7 @@ export default function CoverLetterPage() {
                     </div>
                     {result.metadata.keySkillsHighlighted.length > 0 && (
                       <div className="mt-4">
-                        <p className="mb-2 text-[10px] font-medium uppercase text-muted-foreground">
+                        <p className="text-muted-foreground mb-2 text-[10px] font-medium uppercase">
                           Keywords Matched
                         </p>
                         <div className="flex flex-wrap gap-1.5">
@@ -1057,7 +1059,7 @@ export default function CoverLetterPage() {
                       </div>
                     )}
                   </div>
-                  <div className="rounded-xl border border-border/40 bg-amber-500/5 p-5">
+                  <div className="border-border/40 rounded-xl border bg-amber-500/5 p-5">
                     <div className="flex items-start gap-3">
                       <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
                       <div>
@@ -1065,12 +1067,12 @@ export default function CoverLetterPage() {
                           Pro Tips
                         </h4>
                         <ul className="mt-2 space-y-2">
-                          <li className="flex items-start gap-2 text-[11px] text-muted-foreground">
+                          <li className="text-muted-foreground flex items-start gap-2 text-[11px]">
                             <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-amber-500" />
                             Add a specific project detail from the job
                             description
                           </li>
-                          <li className="flex items-start gap-2 text-[11px] text-muted-foreground">
+                          <li className="text-muted-foreground flex items-start gap-2 text-[11px]">
                             <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-amber-500" />
                             Find and use the hiring manager&apos;s name if
                             possible

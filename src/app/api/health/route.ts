@@ -39,7 +39,9 @@ export async function GET() {
 
     if (dbCheck.status === "fail") {
       overallStatus = "degraded";
-      logger.warn("Health check: database check failed", { route: "/api/health" });
+      logger.warn("Health check: database check failed", {
+        route: "/api/health",
+      });
     }
   } catch (error) {
     overallStatus = "unhealthy";

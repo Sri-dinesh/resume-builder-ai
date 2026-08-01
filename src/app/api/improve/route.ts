@@ -84,7 +84,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ enhancedText: parsedResponse });
   } catch (error: unknown) {
-    logger.error("Resume enhancement failed", { route: "/api/improve", error: error instanceof Error ? error.message : String(error) });
+    logger.error("Resume enhancement failed", {
+      route: "/api/improve",
+      error: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json(
       {
         error:

@@ -86,7 +86,7 @@ export const ScrollToTop: React.FC = () => {
             stiffness: 260,
             damping: 20,
           }}
-          className="fixed bottom-8 right-8 z-[100]"
+          className="fixed right-8 bottom-8 z-[100]"
         >
           <motion.button
             ref={buttonRef}
@@ -102,7 +102,7 @@ export const ScrollToTop: React.FC = () => {
             className={cn(
               "flex h-16 w-16 items-center justify-center rounded-full",
               "bg-background/40 backdrop-blur-2xl",
-              "border border-primary/20",
+              "border-primary/20 border",
               "shadow-[0_15px_35px_-5px_rgba(0,0,0,0.2),0_5px_15px_-5px_rgba(0,0,0,0.1)]",
               "dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5),0_0_20px_rgba(var(--primary),0.05)]",
               "group overflow-hidden transition-colors duration-500",
@@ -156,7 +156,7 @@ export const ScrollToTop: React.FC = () => {
                 }}
               >
                 <ArrowUp
-                  className="h-6 w-6 text-foreground/80 transition-colors duration-300 group-hover:text-primary"
+                  className="text-foreground/80 group-hover:text-primary h-6 w-6 transition-colors duration-300"
                   strokeWidth={1.5}
                 />
               </motion.div>

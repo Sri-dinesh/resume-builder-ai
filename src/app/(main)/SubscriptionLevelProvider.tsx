@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from "react";
 import type { SubscriptionLevel } from "@/lib/billing/subscription";
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 
 const SubscriptionLevelContext = createContext<SubscriptionLevel | undefined>(
   undefined,

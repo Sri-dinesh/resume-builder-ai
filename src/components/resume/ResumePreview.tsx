@@ -122,10 +122,7 @@ export default function ResumePreview({
 
   return (
     <div
-      className={cn(
-        "w-full bg-white text-black",
-        className,
-      )}
+      className={cn("w-full bg-white text-black", className)}
       style={{
         minHeight: previewHeight,
       }}
@@ -317,7 +314,7 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
             borderColor: colorHex,
           }}
         />
-        <div className="whitespace-pre-line text-justify text-sm">
+        <div className="text-justify text-sm whitespace-pre-line">
           {summary}
         </div>
       </div>

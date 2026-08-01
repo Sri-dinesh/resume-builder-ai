@@ -54,7 +54,7 @@ export default function Pricing() {
               <ul className="mb-8">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="mb-2 flex items-center">
-                    <Check className="mr-2 h-5 w-5 text-primary" />
+                    <Check className="text-primary mr-2 h-5 w-5" />
                     <span>{feature}</span>
                   </li>
                 ))}

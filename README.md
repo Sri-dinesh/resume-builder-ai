@@ -113,12 +113,14 @@ npm run dev
 ## Deployment
 
 ### Production (Vercel)
+
 1. Push your repository to GitHub.
 2. Import the repository into [Vercel](https://vercel.com).
 3. Configure the environment variables (see `.env.example`).
 4. Deploy — Vercel automatically builds and deploys Next.js.
 
 ### Local Development (Docker)
+
 ```bash
 docker compose up --build -d
 ```

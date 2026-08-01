@@ -10,7 +10,7 @@ import { MagneticButton } from "./ui/MagneticButton";
 export const LandingCTA = () => {
   return (
     <section className="relative w-full overflow-hidden px-4 py-20 md:py-32">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-primary/20 bg-card/30 p-8 backdrop-blur-sm md:rounded-[3rem] md:p-24">
+      <div className="border-primary/20 bg-card/30 relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border p-8 backdrop-blur-sm md:rounded-[3rem] md:p-24">
         <InteractiveGridPattern
           className="opacity-40 dark:opacity-20"
           width={40}
@@ -31,17 +31,17 @@ export const LandingCTA = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary md:mb-8"
+            className="border-primary/20 bg-primary/10 text-primary mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase md:mb-8"
           >
             Make an Impact
           </motion.div>
 
-          <motion.h2 className="mb-6 font-serif text-4xl font-light leading-none tracking-tight text-foreground md:mb-8 md:text-7xl lg:text-8xl">
+          <motion.h2 className="text-foreground mb-6 font-serif text-4xl leading-none font-light tracking-tight md:mb-8 md:text-7xl lg:text-8xl">
             Ready for your <br />
-            <span className="italic text-primary">next chapter?</span>
+            <span className="text-primary italic">next chapter?</span>
           </motion.h2>
 
-          <p className="mb-8 max-w-xl text-base font-light leading-relaxed text-muted-foreground md:mb-12 md:text-xl">
+          <p className="text-muted-foreground mb-8 max-w-xl text-base leading-relaxed font-light md:mb-12 md:text-xl">
             Build a Resume. Land Interviews. Get Hired. It&apos;s That Simple.
           </p>
 
@@ -49,8 +49,10 @@ export const LandingCTA = () => {
             <MagneticButton
               variant="primary"
               size="lg"
-              className="px-12 md:px-14 font-semibold"
-              rightIcon={<ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />}
+              className="px-12 font-semibold md:px-14"
+              rightIcon={
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+              }
             >
               Build Now
             </MagneticButton>

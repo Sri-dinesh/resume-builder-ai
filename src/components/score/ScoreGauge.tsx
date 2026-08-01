@@ -63,13 +63,13 @@ export function ScoreGauge({ score, verdict }: ScoreGaugeProps) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-4xl font-bold text-foreground">{score}</span>
-          <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+          <span className="text-foreground text-4xl font-bold">{score}</span>
+          <span className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
             out of 100
           </span>
         </div>
       </div>
-      <p className="mt-3 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      <p className="text-muted-foreground mt-3 text-[10px] font-medium tracking-[0.2em] uppercase">
         ATS Score
       </p>
       <p className={`mt-1 text-sm font-semibold ${tone.label}`}>{verdict}</p>

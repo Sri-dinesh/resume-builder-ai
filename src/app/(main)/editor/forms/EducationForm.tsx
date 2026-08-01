@@ -89,7 +89,7 @@ export default function EducationForm({
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
         <h2 className="text-2xl font-semibold">Education</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Add as many educations as you like.
         </p>
       </div>
@@ -157,7 +157,7 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
   return (
     <div
       className={cn(
-        "space-y-3 rounded-md border bg-background p-3",
+        "bg-background space-y-3 rounded-md border p-3",
         isDragging && "relative z-50 cursor-grab shadow-xl",
       )}
       ref={setNodeRef}
@@ -169,7 +169,7 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
       <div className="flex justify-between gap-2">
         <span className="font-semibold">Education {index + 1}</span>
         <GripHorizontal
-          className="size-5 cursor-grab text-muted-foreground focus:outline-none"
+          className="text-muted-foreground size-5 cursor-grab focus:outline-none"
           {...attributes}
           {...listeners}
         />

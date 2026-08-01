@@ -77,7 +77,9 @@ describe("ResumeScorer", () => {
   });
 
   it("scores higher for detailed resume vs minimal one", () => {
-    const minimalScorer = new ResumeScorer("John Doe. Engineer. Skills: JavaScript. Experience at Acme Corp 2020-2023.");
+    const minimalScorer = new ResumeScorer(
+      "John Doe. Engineer. Skills: JavaScript. Experience at Acme Corp 2020-2023.",
+    );
     const detailedScorer = new ResumeScorer(MINIMAL_RESUME);
 
     const minResult = minimalScorer.analyze();

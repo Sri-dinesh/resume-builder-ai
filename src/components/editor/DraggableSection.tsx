@@ -32,7 +32,7 @@ export function DraggableSection({ id, children }: DraggableSectionProps) {
       <div
         {...attributes}
         {...listeners}
-        className="absolute -left-6 top-1/2 hidden -translate-y-1/2 cursor-grab group-hover:block"
+        className="absolute top-1/2 -left-6 hidden -translate-y-1/2 cursor-grab group-hover:block"
       >
         <GripVertical className="h-4 w-4 text-gray-400" />
       </div>

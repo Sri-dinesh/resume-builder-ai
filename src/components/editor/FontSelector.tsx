@@ -51,7 +51,7 @@ export function FontSelector({ value, onValueChange }: FontSelectorProps) {
               {font.name} */}
               <div className="flex w-full items-start">
                 {value === font.value && (
-                  <Check className="mr-2 mt-0.5 size-4 flex-shrink-0" />
+                  <Check className="mt-0.5 mr-2 size-4 flex-shrink-0" />
                 )}
                 <div className="min-w-0 flex-1">
                   <div className="truncate font-medium">{font.name}</div>

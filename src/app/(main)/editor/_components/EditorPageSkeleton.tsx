@@ -8,7 +8,7 @@ export default function EditorPageSkeleton() {
         <Skeleton className="mx-auto h-4 w-96" />
       </header>
       <main className="relative grow">
-        <div className="absolute bottom-0 top-0 flex w-full">
+        <div className="absolute top-0 bottom-0 flex w-full">
           {/* Left side - Form */}
           <div className="w-full space-y-6 overflow-y-auto p-3 md:block md:w-1/2">
             {/* Breadcrumbs skeleton */}
@@ -37,7 +37,7 @@ export default function EditorPageSkeleton() {
 
           {/* Right side - Preview */}
           <div className="hidden w-1/2 md:flex">
-            <div className="flex w-full justify-center bg-secondary p-3">
+            <div className="bg-secondary flex w-full justify-center p-3">
               <Skeleton className="aspect-[210/297] h-auto w-full max-w-2xl shadow-md" />
             </div>
           </div>

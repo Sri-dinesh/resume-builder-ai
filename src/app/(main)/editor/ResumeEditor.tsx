@@ -16,8 +16,8 @@ import type { ResumeValues } from "@/lib/resume/validation";
 // Dynamically import the heavy ResumePreviewSection component
 const ResumePreviewSection = dynamic(() => import("./ResumePreviewSection"), {
   loading: () => (
-    <div className="hidden w-1/2 items-center justify-center bg-secondary md:flex">
-      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    <div className="bg-secondary hidden w-1/2 items-center justify-center md:flex">
+      <Loader2 className="text-primary h-8 w-8 animate-spin" />
     </div>
   ),
   ssr: false,
@@ -89,7 +89,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
           isSaving={isSaving}
           hasUnsavedChanges={hasUnsavedChanges}
         />
-        <div className="absolute inset-0 flex min-h-0 w-full px-3 pb-3 pt-3 md:px-4 md:pb-4 md:pt-4">
+        <div className="absolute inset-0 flex min-h-0 w-full px-3 pt-3 pb-3 md:px-4 md:pt-4 md:pb-4">
           <div
             className={cn(
               "min-h-0 w-full space-y-5 overflow-y-auto pr-1 md:block md:w-1/2 md:pr-4",

@@ -5,6 +5,8 @@ test("homepage loads and shows primary call to action", async ({ page }) => {
 
   await expect(page).toHaveTitle(/SparkCV|Resume|AI/i);
   await expect(
-    page.getByRole("link", { name: /get started|sign in|start building/i }).first(),
+    page
+      .getByRole("link", { name: /get started|sign in|start building/i })
+      .first(),
   ).toBeVisible();
 });

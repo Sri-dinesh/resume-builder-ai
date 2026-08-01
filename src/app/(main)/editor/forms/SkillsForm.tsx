@@ -465,7 +465,7 @@ export default function SkillsForm({
       <div className="space-y-1.5 text-center">
         <h2 className="text-2xl font-semibold">Skills</h2>
         <p
-          className="text-sm text-muted-foreground"
+          className="text-muted-foreground text-sm"
           style={{ color: `hsl(var(--muted-foreground))` }}
         >
           What are you good at?

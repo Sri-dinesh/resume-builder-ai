@@ -26,7 +26,7 @@ const DownloadableResume = dynamic(
   {
     loading: () => (
       <div className="flex h-full items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="text-primary h-8 w-8 animate-spin" />
       </div>
     ),
     ssr: false,
@@ -201,7 +201,8 @@ export default function EnhanceContent() {
             pageText += "\n";
           }
           pageText += item.str + " ";
-          lastY = typeof item.transform[5] === "number" ? item.transform[5] : lastY;
+          lastY =
+            typeof item.transform[5] === "number" ? item.transform[5] : lastY;
         }
       }
 
@@ -298,29 +299,29 @@ export default function EnhanceContent() {
   const isProcessing = loading || isEnhancing;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background py-8 md:py-12">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background dark:from-primary/5" />
-      <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-violet-500/10 blur-[100px] dark:bg-violet-500/5" />
+    <div className="bg-background relative min-h-screen overflow-hidden py-8 md:py-12">
+      <div className="from-primary/10 via-background to-background dark:from-primary/5 absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]" />
+      <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-violet-500/10 blur-[100px] dark:bg-violet-500/5" />
 
       <div className="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Badge
             variant="outline"
-            className="border-primary/20 bg-primary/10 px-6 py-2 text-sm font-semibold tracking-wide text-primary shadow-sm dark:border-primary/20 dark:bg-primary/10"
+            className="border-primary/20 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/10 px-6 py-2 text-sm font-semibold tracking-wide shadow-sm"
           >
             AI Resume Enhancer
           </Badge>
         </div>
 
         <div className="flex justify-center">
-          <div className="grid w-full max-w-md grid-cols-2 gap-2 rounded-xl border border-border/50 bg-muted/50 p-1.5 dark:bg-muted/20">
+          <div className="border-border/50 bg-muted/50 dark:bg-muted/20 grid w-full max-w-md grid-cols-2 gap-2 rounded-xl border p-1.5">
             <button
               type="button"
               onClick={() => setActiveTab("upload")}
               className={cn(
                 "rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200",
                 activeTab === "upload"
-                  ? "bg-background text-foreground shadow-sm ring-1 ring-border/50"
+                  ? "bg-background text-foreground ring-border/50 shadow-sm ring-1"
                   : "text-muted-foreground hover:bg-background/50 hover:text-foreground",
               )}
             >
@@ -336,7 +337,7 @@ export default function EnhanceContent() {
               className={cn(
                 "rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200",
                 activeTab === "result"
-                  ? "bg-background text-foreground shadow-sm ring-1 ring-border/50"
+                  ? "bg-background text-foreground ring-border/50 shadow-sm ring-1"
                   : "text-muted-foreground hover:bg-background/50 hover:text-foreground",
                 !enhancedText && "cursor-not-allowed opacity-50",
               )}
@@ -354,14 +355,14 @@ export default function EnhanceContent() {
             <Card className="border-border/50 bg-card/60 shadow-lg backdrop-blur-xl">
               <CardHeader className="p-6 pb-2">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                  <div className="bg-primary/10 text-primary rounded-xl p-2.5">
                     <Wand2 className="h-5 w-5" />
                   </div>
                   <div>
                     <CardTitle className="text-xl">
                       Enhance Your Resume
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Upload your PDF and let AI transform it into a
                       professional masterpiece.
                     </p>
@@ -369,7 +370,7 @@ export default function EnhanceContent() {
                 </div>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="overflow-hidden rounded-xl border border-border/50 bg-card/50 shadow-sm transition-all hover:border-border">
+                <div className="border-border/50 bg-card/50 hover:border-border overflow-hidden rounded-xl border shadow-sm transition-all">
                   <FileUpload
                     onChange={(files: File[]) => {
                       if (files.length > 0) {
@@ -381,9 +382,9 @@ export default function EnhanceContent() {
 
                 {isProcessing && (
                   <div className="mt-6">
-                    <div className="flex items-center justify-center gap-3 rounded-xl border border-border/50 bg-background/50 p-6">
-                      <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                      <p className="text-sm font-medium text-foreground">
+                    <div className="border-border/50 bg-background/50 flex items-center justify-center gap-3 rounded-xl border p-6">
+                      <Loader2 className="text-primary h-5 w-5 animate-spin" />
+                      <p className="text-foreground text-sm font-medium">
                         {loading
                           ? "Extracting text from your resume..."
                           : "AI is enhancing your resume..."}
@@ -394,7 +395,7 @@ export default function EnhanceContent() {
 
                 {error && (
                   <div className="mt-6">
-                    <div className="flex items-center gap-2 rounded-lg bg-destructive/10 p-4 text-sm font-medium text-destructive">
+                    <div className="bg-destructive/10 text-destructive flex items-center gap-2 rounded-lg p-4 text-sm font-medium">
                       <AlertCircle className="h-4 w-4 shrink-0" />
                       <span>{error}</span>
                     </div>
@@ -403,7 +404,7 @@ export default function EnhanceContent() {
 
                 {!pdfLibLoaded && !isProcessing && !error && (
                   <div className="mt-6">
-                    <div className="flex items-center justify-center gap-2 rounded-xl border border-border/50 bg-background/50 p-4 text-sm text-muted-foreground">
+                    <div className="border-border/50 bg-background/50 text-muted-foreground flex items-center justify-center gap-2 rounded-xl border p-4 text-sm">
                       <Loader2 className="h-4 w-4 animate-spin" />
                       <span>Loading PDF parser...</span>
                     </div>
@@ -417,18 +418,18 @@ export default function EnhanceContent() {
                 {FEATURES.map((feature) => (
                   <Card
                     key={feature.title}
-                    className="border-border/50 bg-card/60 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md dark:bg-card/40"
+                    className="border-border/50 bg-card/60 hover:border-primary/30 dark:bg-card/40 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                   >
                     <CardContent className="p-5">
                       <div className="flex items-start gap-4">
-                        <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <div className="bg-primary/10 text-primary mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
                           <CheckCircle2 className="h-5 w-5" />
                         </div>
                         <div>
-                          <h3 className="text-base font-semibold text-foreground">
+                          <h3 className="text-foreground text-base font-semibold">
                             {feature.title}
                           </h3>
-                          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                          <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
                             {feature.description}
                           </p>
                         </div>
@@ -443,14 +444,14 @@ export default function EnhanceContent() {
               <Card className="border-primary/30 bg-primary/5 shadow-sm">
                 <CardContent className="flex items-center justify-between p-6">
                   <div className="flex items-center gap-3">
-                    <div className="rounded-full bg-primary/20 p-2 text-primary">
+                    <div className="bg-primary/20 text-primary rounded-full p-2">
                       <CheckCircle2 className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">
+                      <p className="text-foreground font-medium">
                         Previous enhancement available
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         You have an enhanced resume from your last session.
                       </p>
                     </div>
@@ -476,10 +477,10 @@ export default function EnhanceContent() {
                     <CheckCircle2 className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">
+                    <p className="text-foreground font-semibold">
                       Resume Enhanced Successfully
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Your professional resume is ready for download.
                     </p>
                   </div>
@@ -511,22 +512,22 @@ export default function EnhanceContent() {
               </CardContent>
             </Card>
 
-            <Card className="overflow-hidden border-border/50 bg-card/60 shadow-lg backdrop-blur-xl">
-              <CardHeader className="border-b border-border/50 bg-primary/5 px-6 py-4">
+            <Card className="border-border/50 bg-card/60 overflow-hidden shadow-lg backdrop-blur-xl">
+              <CardHeader className="border-border/50 bg-primary/5 border-b px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-primary" />
-                    <CardTitle className="text-sm font-semibold text-primary">
+                    <Sparkles className="text-primary h-4 w-4" />
+                    <CardTitle className="text-primary text-sm font-semibold">
                       Enhanced Resume Preview
                     </CardTitle>
                   </div>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-muted-foreground text-xs">
                     A4 Format
                   </span>
                 </div>
               </CardHeader>
               <CardContent className="p-0">
-                <div className="relative w-full overflow-auto bg-muted/30 p-4 sm:p-6 lg:p-8">
+                <div className="bg-muted/30 relative w-full overflow-auto p-4 sm:p-6 lg:p-8">
                   <div
                     className="mx-auto bg-white shadow-2xl dark:bg-neutral-950"
                     style={{
@@ -541,11 +542,11 @@ export default function EnhanceContent() {
               </CardContent>
             </Card>
 
-            <Card className="overflow-hidden border-border/50 bg-card/60 shadow-lg backdrop-blur-xl">
-              <CardHeader className="border-b border-border/50 bg-muted/30 px-6 py-4">
+            <Card className="border-border/50 bg-card/60 overflow-hidden shadow-lg backdrop-blur-xl">
+              <CardHeader className="border-border/50 bg-muted/30 border-b px-6 py-4">
                 <div className="flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-muted-foreground" />
-                  <CardTitle className="text-sm font-semibold text-muted-foreground">
+                  <Eye className="text-muted-foreground h-4 w-4" />
+                  <CardTitle className="text-muted-foreground text-sm font-semibold">
                     Original Content (Raw Text)
                   </CardTitle>
                 </div>
@@ -553,7 +554,7 @@ export default function EnhanceContent() {
               <CardContent className="p-0">
                 <ScrollArea className="h-[300px]">
                   <div className="p-6">
-                    <pre className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
+                    <pre className="text-muted-foreground text-sm leading-relaxed whitespace-pre-wrap">
                       {parsedText || "No original content available."}
                     </pre>
                   </div>

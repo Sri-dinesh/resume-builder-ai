@@ -25,7 +25,7 @@ const BentoCard = ({
     <motion.div
       whileHover={{ scale: 1.015 }}
       className={cn(
-        "group relative overflow-hidden rounded-3xl border border-border/20 bg-card backdrop-blur-sm",
+        "group border-border/20 bg-card relative overflow-hidden rounded-3xl border backdrop-blur-sm",
         colSpan === 2 ? "md:col-span-2" : "md:col-span-1",
         rowSpan === 2 ? "md:row-span-2" : "md:row-span-1",
         className,
@@ -40,13 +40,13 @@ export const BentoGrid: React.FC = () => {
   return (
     <section className="w-full pb-24">
       <div className="mx-auto mb-16 text-center">
-        <h2 className="font-['Syne'] text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+        <h2 className="text-foreground font-['Syne'] text-4xl leading-[1.1] font-bold tracking-tight md:text-5xl lg:text-6xl">
           Engineered for your{" "}
-          <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          <span className="from-primary to-primary/70 bg-gradient-to-r bg-clip-text text-transparent">
             next move.
           </span>
         </h2>
-        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg lg:text-xl">
+        <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-base leading-relaxed md:text-lg lg:text-xl">
           Precision tools to craft, optimize, and land your next role instantly.
         </p>
       </div>

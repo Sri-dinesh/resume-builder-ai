@@ -125,7 +125,7 @@ export const FileUpload = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         layout
-                        className="w-fit shrink-0 rounded-lg px-1.5 py-0.5 text-[10px] text-neutral-600 shadow-input dark:bg-neutral-800 dark:text-white"
+                        className="shadow-input w-fit shrink-0 rounded-lg px-1.5 py-0.5 text-[10px] text-neutral-600 dark:bg-neutral-800 dark:text-white"
                       >
                         {(file.size / (1024 * 1024)).toFixed(2)} MB
                       </motion.p>
@@ -172,7 +172,7 @@ export const FileUpload = ({
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
-                className="absolute inset-0 z-30 mx-auto mt-2 flex h-20 w-full max-w-[5rem] items-center justify-center rounded-md border border-dashed border-primary bg-transparent opacity-0"
+                className="border-primary absolute inset-0 z-30 mx-auto mt-2 flex h-20 w-full max-w-[5rem] items-center justify-center rounded-md border border-dashed bg-transparent opacity-0"
               ></motion.div>
             )}
           </div>

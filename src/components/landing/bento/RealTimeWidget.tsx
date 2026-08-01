@@ -114,7 +114,7 @@ const RealTimeWidget = () => {
   return (
     <div
       ref={container}
-      className="group relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300 hover:border-primary/30"
+      className="group hover:border-primary/30 relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300"
       onMouseEnter={() => {
         void masterTL.current?.play();
       }}
@@ -123,26 +123,26 @@ const RealTimeWidget = () => {
       }}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
+        <span className="text-muted-foreground/60 dark:text-muted-foreground/80 mb-4 font-mono text-[9px] tracking-[0.15em] uppercase">
           01 / Real-Time
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
+        <h3 className="text-foreground font-['Syne'] text-[19px] leading-tight font-bold tracking-[-0.02em]">
           Instant Mirroring.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground mt-2 max-w-[240px] text-[12.5px] leading-relaxed font-light">
           Edit details and watch your resume update instantly.
         </p>
       </div>
 
       <div
-        className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute top-0 left-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
             "radial-gradient(circle at 0% 0%, rgba(217,119,87,0.12) 0%, transparent 75%)",
         }}
       />
 
-      <div className="absolute bottom-0 left-0 right-0 flex h-[62%] items-center justify-center">
+      <div className="absolute right-0 bottom-0 left-0 flex h-[62%] items-center justify-center">
         <svg
           className="h-full w-full max-w-[340px]"
           viewBox="0 0 340 180"
@@ -187,7 +187,7 @@ const RealTimeWidget = () => {
               <foreignObject x="6" y="16" width="90" height="12">
                 <div
                   {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                  className="flex items-center font-sans text-[7.5px] font-bold text-foreground"
+                  className="text-foreground flex items-center font-sans text-[7.5px] font-bold"
                 >
                   {renderText("Product Designer", "input-char")}
                 </div>
@@ -207,7 +207,7 @@ const RealTimeWidget = () => {
                 <foreignObject x="6" y="16" width="90" height="12">
                   <div
                     {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                    className="flex items-center font-sans text-[7.5px] font-medium text-muted-foreground"
+                    className="text-muted-foreground flex items-center font-sans text-[7.5px] font-medium"
                   >
                     {renderText("San Francisco", "loc-char")}
                   </div>
@@ -228,7 +228,7 @@ const RealTimeWidget = () => {
                 <foreignObject x="6" y="16" width="90" height="24">
                   <div
                     {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                    className="font-sans text-[6.5px] leading-[1.3] text-muted-foreground"
+                    className="text-muted-foreground font-sans text-[6.5px] leading-[1.3]"
                   >
                     {renderText(
                       "Crafting elegant user experiences.",
@@ -301,7 +301,7 @@ const RealTimeWidget = () => {
               <foreignObject x="36" y="14" width="85" height="12">
                 <div
                   {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                  className="font-sans text-[8px] font-bold text-primary"
+                  className="text-primary font-sans text-[8px] font-bold"
                 >
                   {renderText("Product Designer", "resume-char")}
                 </div>
@@ -310,7 +310,7 @@ const RealTimeWidget = () => {
               <foreignObject x="36" y="24" width="85" height="10">
                 <div
                   {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                  className="font-sans text-[6px] text-muted-foreground"
+                  className="text-muted-foreground font-sans text-[6px]"
                 >
                   {renderText("San Francisco", "loc-resume-char")}
                 </div>
@@ -331,10 +331,10 @@ const RealTimeWidget = () => {
                     className="flex flex-col gap-[8px] font-sans"
                   >
                     <div className="flex flex-col gap-[3px]">
-                      <span className="text-[5.5px] font-bold text-foreground">
+                      <span className="text-foreground text-[5.5px] font-bold">
                         SUMMARY
                       </span>
-                      <div className="text-[6px] leading-[1.3] text-muted-foreground">
+                      <div className="text-muted-foreground text-[6px] leading-[1.3]">
                         {renderText(
                           "Crafting elegant user experiences.",
                           "bio-resume-char",
@@ -342,10 +342,10 @@ const RealTimeWidget = () => {
                       </div>
                     </div>
                     <div className="doc-section-reveal flex flex-col gap-[3px]">
-                      <span className="text-[5.5px] font-bold text-foreground">
+                      <span className="text-foreground text-[5.5px] font-bold">
                         EXPERIENCE
                       </span>
-                      <div className="flex flex-col gap-[2px] text-[5px] text-muted-foreground">
+                      <div className="text-muted-foreground flex flex-col gap-[2px] text-[5px]">
                         <span>Led redesign of core user dashboard</span>
                         <span>Optimized mobile engagement by 20%</span>
                       </div>

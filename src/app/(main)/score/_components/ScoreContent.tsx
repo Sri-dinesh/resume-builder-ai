@@ -119,42 +119,42 @@ export default function ScoreContent() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background py-8 md:py-12">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background dark:from-primary/5" />
-      <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-sky-500/10 blur-[100px] dark:bg-sky-500/5" />
+    <div className="bg-background relative min-h-screen overflow-hidden py-8 md:py-12">
+      <div className="from-primary/10 via-background to-background dark:from-primary/5 absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]" />
+      <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-sky-500/10 blur-[100px] dark:bg-sky-500/5" />
 
       <div className="mx-auto max-w-6xl space-y-8 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Badge
             variant="outline"
-            className="border-primary/20 bg-primary/10 px-6 py-2 text-sm font-semibold tracking-wide text-primary shadow-sm dark:border-primary/20 dark:bg-primary/10"
+            className="border-primary/20 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/10 px-6 py-2 text-sm font-semibold tracking-wide shadow-sm"
           >
             ATS Resume Score
           </Badge>
         </div>
 
         <div className="grid gap-12">
-          <Card className="h-fit w-full border-border/50 bg-card/60 shadow-lg backdrop-blur-xl">
+          <Card className="border-border/50 bg-card/60 h-fit w-full shadow-lg backdrop-blur-xl">
             <CardHeader className="p-6 pb-2">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                  <div className="bg-primary/10 text-primary rounded-xl p-2.5">
                     <WandSparkles className="h-5 w-5" />
                   </div>
                   <div>
                     <CardTitle className="text-xl">Analysis Settings</CardTitle>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Choose your scan type and upload.
                     </p>
                   </div>
                 </div>
-                <div className="grid w-full grid-cols-2 gap-2 rounded-xl border border-border/50 bg-muted/50 p-1.5 dark:bg-muted/20 sm:w-auto">
+                <div className="border-border/50 bg-muted/50 dark:bg-muted/20 grid w-full grid-cols-2 gap-2 rounded-xl border p-1.5 sm:w-auto">
                   <button
                     type="button"
                     onClick={() => setAnalysisMode("general")}
                     className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
                       analysisMode === "general"
-                        ? "bg-background text-foreground shadow-sm ring-1 ring-border/50"
+                        ? "bg-background text-foreground ring-border/50 shadow-sm ring-1"
                         : "text-muted-foreground hover:bg-background/50 hover:text-foreground"
                     }`}
                   >
@@ -165,7 +165,7 @@ export default function ScoreContent() {
                     onClick={() => setAnalysisMode("jd")}
                     className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
                       analysisMode === "jd"
-                        ? "bg-background text-foreground shadow-sm ring-1 ring-border/50"
+                        ? "bg-background text-foreground ring-border/50 shadow-sm ring-1"
                         : "text-muted-foreground hover:bg-background/50 hover:text-foreground"
                     }`}
                   >
@@ -181,7 +181,7 @@ export default function ScoreContent() {
                 }}
                 className="flex flex-col gap-8 lg:flex-row lg:items-stretch"
               >
-                <div className="w-full flex-1 overflow-hidden rounded-xl border border-border/50 bg-card/50 shadow-sm transition-all hover:border-border">
+                <div className="border-border/50 bg-card/50 hover:border-border w-full flex-1 overflow-hidden rounded-xl border shadow-sm transition-all">
                   <FileUpload
                     accept={SCORE_ACCEPTED_FILE_TYPES}
                     onChange={handleFileUpload}
@@ -191,9 +191,9 @@ export default function ScoreContent() {
 
                 <div className="flex w-full shrink-0 flex-col gap-4 lg:w-[380px] xl:w-[440px]">
                   {analysisMode === "jd" ? (
-                    <div className="flex flex-1 flex-col space-y-3 rounded-xl border border-border/50 bg-background/50 p-4 backdrop-blur-sm">
-                      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                        <Target className="h-4 w-4 text-primary" />
+                    <div className="border-border/50 bg-background/50 flex flex-1 flex-col space-y-3 rounded-xl border p-4 backdrop-blur-sm">
+                      <div className="text-foreground flex items-center gap-2 text-sm font-medium">
+                        <Target className="text-primary h-4 w-4" />
                         Job Description
                       </div>
                       <Textarea
@@ -201,17 +201,17 @@ export default function ScoreContent() {
                         value={jobDescription}
                         onChange={(e) => setJobDescription(e.target.value)}
                         placeholder="Paste the target job requirements here to match keywords..."
-                        className="flex-1 resize-none rounded-lg bg-background/80 text-sm"
+                        className="bg-background/80 flex-1 resize-none rounded-lg text-sm"
                       />
                     </div>
                   ) : (
-                    <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-border/50 bg-background/30 p-6 text-center text-sm text-muted-foreground">
-                      <div className="mb-3 rounded-full bg-primary/10 p-2.5 text-primary">
+                    <div className="border-border/50 bg-background/30 text-muted-foreground flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed p-6 text-center text-sm">
+                      <div className="bg-primary/10 text-primary mb-3 rounded-full p-2.5">
                         <CheckCircle2 className="h-5 w-5" />
                       </div>
                       <p className="max-w-[280px]">
                         Select{" "}
-                        <span className="font-semibold text-foreground">
+                        <span className="text-foreground font-semibold">
                           Job Match
                         </span>{" "}
                         to evaluate your resume specifically against a target
@@ -220,7 +220,7 @@ export default function ScoreContent() {
                     </div>
                   )}
                   {error && (
-                    <div className="rounded-lg bg-destructive/15 p-3 text-sm text-destructive">
+                    <div className="bg-destructive/15 text-destructive rounded-lg p-3 text-sm">
                       {error}
                     </div>
                   )}
@@ -251,18 +251,18 @@ export default function ScoreContent() {
                   {SCAN_FEATURES.map((feature) => (
                     <Card
                       key={feature.title}
-                      className="border-border/50 bg-card/60 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md dark:bg-card/40"
+                      className="border-border/50 bg-card/60 hover:border-primary/30 dark:bg-card/40 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                     >
                       <CardContent className="p-5">
                         <div className="flex items-start gap-4">
-                          <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          <div className="bg-primary/10 text-primary mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
                             <CheckCircle2 className="h-5 w-5" />
                           </div>
                           <div>
-                            <h2 className="text-base font-semibold text-foreground">
+                            <h2 className="text-foreground text-base font-semibold">
                               {feature.title}
                             </h2>
-                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                            <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
                               {feature.detail}
                             </p>
                           </div>
@@ -272,36 +272,36 @@ export default function ScoreContent() {
                   ))}
                 </div>
 
-                <Card className="border-border/50 bg-card/60 shadow-sm backdrop-blur-xl dark:bg-card/40">
+                <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-sm backdrop-blur-xl">
                   <CardHeader className="p-8 pb-0">
                     <CardTitle className="text-xl">
                       How to get the highest score
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="grid gap-6 p-8 md:grid-cols-3">
-                    <div className="group rounded-2xl border border-border/50 bg-background/50 p-6 transition-colors hover:border-primary/30">
-                      <p className="text-base font-semibold text-foreground transition-colors group-hover:text-primary">
+                    <div className="group border-border/50 bg-background/50 hover:border-primary/30 rounded-2xl border p-6 transition-colors">
+                      <p className="text-foreground group-hover:text-primary text-base font-semibold transition-colors">
                         Standard Headings
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                         Use specific labels like &quot;Work Experience&quot; and
                         &quot;Skills&quot; for accurate ATS parsing.
                       </p>
                     </div>
-                    <div className="group rounded-2xl border border-border/50 bg-background/50 p-6 transition-colors hover:border-primary/30">
-                      <p className="text-base font-semibold text-foreground transition-colors group-hover:text-primary">
+                    <div className="group border-border/50 bg-background/50 hover:border-primary/30 rounded-2xl border p-6 transition-colors">
+                      <p className="text-foreground group-hover:text-primary text-base font-semibold transition-colors">
                         Quantify Outcomes
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                         Include direct numbers, percentages, and metrics to
                         prove your real business impact.
                       </p>
                     </div>
-                    <div className="group rounded-2xl border border-border/50 bg-background/50 p-6 transition-colors hover:border-primary/30">
-                      <p className="text-base font-semibold text-foreground transition-colors group-hover:text-primary">
+                    <div className="group border-border/50 bg-background/50 hover:border-primary/30 rounded-2xl border p-6 transition-colors">
+                      <p className="text-foreground group-hover:text-primary text-base font-semibold transition-colors">
                         Tailor Content
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                         Use a target job description to identify missing skill
                         keywords and close gaps.
                       </p>

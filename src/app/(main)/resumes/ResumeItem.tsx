@@ -46,23 +46,24 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
   const wasUpdated = resume.updatedAt !== resume.createdAt;
 
   return (
-    <div className="group relative flex flex-col rounded-lg border border-border bg-card p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex flex-col space-y-0.5 flex-grow pr-3">
+    <div className="group border-border bg-card hover:border-primary/50 relative flex flex-col rounded-lg border p-4 shadow-sm transition-all hover:shadow-md">
+      <div className="mb-4 flex items-start justify-between">
+        <div className="flex flex-grow flex-col space-y-0.5 pr-3">
           <Link
             href={`/editor?resumeId=${resume.id}`}
-            className="text-lg font-semibold tracking-tight text-foreground hover:text-primary transition-colors line-clamp-1"
+            className="text-foreground hover:text-primary line-clamp-1 text-lg font-semibold tracking-tight transition-colors"
           >
             {resume.title || "Untitled Resume"}
           </Link>
           {resume.description && (
-            <p className="line-clamp-2 text-sm text-muted-foreground">
+            <p className="text-muted-foreground line-clamp-2 text-sm">
               {resume.description}
             </p>
           )}
-          <div className="flex items-center text-xs text-muted-foreground font-medium">
+          <div className="text-muted-foreground flex items-center text-xs font-medium">
             <span suppressHydrationWarning>
-              {wasUpdated ? "Updated" : "Created"} {formatDate(resume.updatedAt, "MMM d, yyyy")}
+              {wasUpdated ? "Updated" : "Created"}{" "}
+              {formatDate(resume.updatedAt, "MMM d, yyyy")}
             </span>
           </div>
         </div>
@@ -73,7 +74,7 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
 
       <div
         onClick={() => router.push(`/editor?resumeId=${resume.id}`)}
-        className="relative mt-auto block w-full cursor-pointer overflow-hidden rounded-md border border-border/50 bg-muted/20"
+        className="border-border/50 bg-muted/20 relative mt-auto block w-full cursor-pointer overflow-hidden rounded-md border"
         style={{ aspectRatio: "210/297" }}
         role="button"
         tabIndex={0}
@@ -103,7 +104,7 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="text-muted-foreground hover:bg-muted hover:text-foreground h-8 w-8 rounded-full"
           >
             <MoreVertical className="size-4" />
           </Button>

@@ -3,8 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EnhancePageSkeleton() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background py-8 md:py-12">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background dark:from-primary/5" />
+    <div className="bg-background relative min-h-screen overflow-hidden py-8 md:py-12">
+      <div className="from-primary/10 via-background to-background dark:from-primary/5 absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]" />
 
       <div className="mx-auto max-w-6xl space-y-8 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center">
@@ -25,7 +25,7 @@ export default function EnhancePageSkeleton() {
             </div>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="h-48 rounded-xl border border-border/50 bg-muted/30" />
+            <div className="border-border/50 bg-muted/30 h-48 rounded-xl border" />
           </CardContent>
         </Card>
 

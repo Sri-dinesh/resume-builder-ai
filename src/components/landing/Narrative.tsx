@@ -15,23 +15,23 @@ export const Narrative: React.FC = () => {
           transition={{ duration: 0.8 }}
           className={cn(
             "relative overflow-hidden rounded-[2rem] p-8 md:p-12",
-            "border border-border/80 bg-gradient-to-b from-card/60 to-card/30 shadow-[0_8px_30px_rgba(0,0,0,0.02)] backdrop-blur-sm",
+            "border-border/80 from-card/60 to-card/30 border bg-gradient-to-b shadow-[0_8px_30px_rgba(0,0,0,0.02)] backdrop-blur-sm",
             "dark:border-border/50 dark:bg-gradient-to-b dark:from-white/[0.03] dark:to-transparent dark:shadow-none",
           )}
         >
-          <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-3xl" />
+          <div className="bg-primary/5 absolute -top-4 -right-4 h-24 w-24 rounded-full blur-3xl" />
 
           <div className="relative z-10 flex flex-col items-center text-center">
-            <span className="mb-6 text-[10px] font-bold uppercase tracking-[0.4em] text-primary/60">
+            <span className="text-primary/60 mb-6 text-[10px] font-bold tracking-[0.4em] uppercase">
               The Reality
             </span>
 
-            <h3 className="mb-6 font-serif text-3xl font-light leading-tight tracking-tight text-foreground md:text-5xl">
+            <h3 className="text-foreground mb-6 font-serif text-3xl leading-tight font-light tracking-tight md:text-5xl">
               The blank page is <br className="hidden sm:block" />
-              <span className="italic text-primary/80">lying to you.</span>
+              <span className="text-primary/80 italic">lying to you.</span>
             </h3>
 
-            <p className="mb-8 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            <p className="text-muted-foreground mb-8 max-w-2xl text-base leading-relaxed md:text-lg">
               You&apos;re qualified, but an empty document makes you
               second-guess your value.
               <span className="text-foreground/80">
@@ -41,20 +41,20 @@ export const Narrative: React.FC = () => {
               </span>
             </p>
 
-            <div className="grid w-full grid-cols-1 gap-6 border-t border-border/80 pt-8 dark:border-border/50 sm:grid-cols-2">
+            <div className="border-border/80 dark:border-border/50 grid w-full grid-cols-1 gap-6 border-t pt-8 sm:grid-cols-2">
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-bold uppercase tracking-widest text-primary/70">
+                <span className="text-primary/70 text-xs font-bold tracking-widest uppercase">
                   The Problem
                 </span>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Second-guessing your impact.
                 </p>
               </div>
-              <div className="flex flex-col gap-1 sm:border-l sm:border-border/80 sm:pl-6 dark:sm:border-border/50">
-                <span className="text-xs font-bold uppercase tracking-widest text-primary/70">
+              <div className="sm:border-border/80 dark:sm:border-border/50 flex flex-col gap-1 sm:border-l sm:pl-6">
+                <span className="text-primary/70 text-xs font-bold tracking-widest uppercase">
                   The Solution
                 </span>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   AI that translates your talent.
                 </p>
               </div>

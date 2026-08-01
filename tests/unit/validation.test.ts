@@ -1,5 +1,8 @@
 import { personalInfoSchema, resumeSchema } from "@/lib/validation";
-import { buildEdgeCaseInputs, buildResumeFactory } from "../factories/resume.factory";
+import {
+  buildEdgeCaseInputs,
+  buildResumeFactory,
+} from "../factories/resume.factory";
 
 describe("validation schemas", () => {
   it("accepts a valid resume payload", () => {

@@ -34,7 +34,7 @@ export default function ResumePreviewSection({
         )}
       >
         {/* Customization Controls */}
-        <div className="absolute left-1 top-1 flex flex-none flex-col gap-3 opacity-50 transition-opacity group-hover:opacity-100 lg:left-3 lg:top-3 xl:opacity-100">
+        <div className="absolute top-1 left-1 flex flex-none flex-col gap-3 opacity-50 transition-opacity group-hover:opacity-100 lg:top-3 lg:left-3 xl:opacity-100">
           {/* Color Picker */}
           <ColorPicker
             color={resumeData.colorHex}
@@ -64,7 +64,7 @@ export default function ResumePreviewSection({
         </div>
 
         {/* Resume Preview */}
-        <div className="flex min-h-0 w-full justify-center overflow-y-auto bg-secondary p-3">
+        <div className="bg-secondary flex min-h-0 w-full justify-center overflow-y-auto p-3">
           <ResumePreview
             resumeData={resumeData}
             contentRef={contentRef}

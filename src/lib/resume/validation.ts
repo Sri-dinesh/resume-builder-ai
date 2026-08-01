@@ -20,7 +20,8 @@ export const personalInfoSchema = z.object({
       "Must be an image file",
     )
     .refine(
-      (file) => !file || typeof file === "string" || file.size <= 1024 * 1024 * 4,
+      (file) =>
+        !file || typeof file === "string" || file.size <= 1024 * 1024 * 4,
       "File must be less than 4MB",
     )
     .optional(),

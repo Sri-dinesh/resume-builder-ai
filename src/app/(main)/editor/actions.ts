@@ -4,7 +4,10 @@ import crypto from "crypto";
 import path from "path";
 import { auth } from "@clerk/nextjs/server";
 import { del, put } from "@vercel/blob";
-import { canCreateResume, canUseCustomizations } from "@/lib/billing/permissions";
+import {
+  canCreateResume,
+  canUseCustomizations,
+} from "@/lib/billing/permissions";
 import { getUserSubscriptionLevel } from "@/lib/billing/subscription";
 import prisma from "@/lib/db/client";
 import { resumeSchema } from "@/lib/resume/validation";

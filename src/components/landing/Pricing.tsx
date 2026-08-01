@@ -55,14 +55,14 @@ const PricingCard = ({
       className={cn(
         "group relative flex flex-col rounded-[2.5rem] border p-8 transition-all duration-700 md:p-10",
         isPopular
-          ? "z-20 border-primary/40 bg-card shadow-[0_30px_70px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)] md:scale-105"
-          : "z-10 border-border/40 bg-card/30 hover:border-border/60 dark:bg-card/10",
+          ? "border-primary/40 bg-card z-20 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.15)] md:scale-105 dark:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)]"
+          : "border-border/40 bg-card/30 hover:border-border/60 dark:bg-card/10 z-10",
         className,
       )}
     >
       {isPopular && (
         <div className="absolute -top-4 left-1/2 z-30 -translate-x-1/2">
-          <div className="flex items-center gap-2 whitespace-nowrap rounded-full bg-primary px-4 py-1 text-[10px] font-black uppercase tracking-widest text-primary-foreground shadow-lg">
+          <div className="bg-primary text-primary-foreground flex items-center gap-2 rounded-full px-4 py-1 text-[10px] font-black tracking-widest whitespace-nowrap uppercase shadow-lg">
             <Award className="h-3 w-3" />
             Gold Standard
           </div>
@@ -72,7 +72,7 @@ const PricingCard = ({
       <div className="mb-10 flex flex-col items-center text-center">
         <h3
           className={cn(
-            "mb-4 font-serif text-2xl italic tracking-tight transition-colors",
+            "mb-4 font-serif text-2xl tracking-tight italic transition-colors",
             isPopular ? "text-foreground" : "text-foreground/70",
           )}
         >
@@ -80,20 +80,20 @@ const PricingCard = ({
         </h3>
 
         <div className="mb-4 flex items-start justify-center">
-          <span className="mt-2 font-serif text-3xl font-light text-foreground/40">
+          <span className="text-foreground/40 mt-2 font-serif text-3xl font-light">
             $
           </span>
-          <span className="font-serif text-7xl font-light tracking-tighter text-foreground md:text-8xl">
+          <span className="text-foreground font-serif text-7xl font-light tracking-tighter md:text-8xl">
             {price.replace("$", "").replace(",", "")}
           </span>
           {period && (
-            <span className="ml-1 mt-auto pb-4 text-sm font-medium text-foreground/30">
+            <span className="text-foreground/30 mt-auto ml-1 pb-4 text-sm font-medium">
               {period}
             </span>
           )}
         </div>
 
-        <p className="max-w-[180px] text-xs leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground max-w-[180px] text-xs leading-relaxed">
           {description}
         </p>
       </div>
@@ -102,7 +102,7 @@ const PricingCard = ({
         {features.map((feature, i) => (
           <div
             key={i}
-            className="flex items-center gap-3 text-sm font-light text-foreground/80"
+            className="text-foreground/80 flex items-center gap-3 text-sm font-light"
           >
             <div
               className={cn(
@@ -112,7 +112,7 @@ const PricingCard = ({
             />
             <span className="leading-tight">{feature.text}</span>
             {feature.isNew && (
-              <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[8px] font-bold uppercase text-primary">
+              <span className="bg-primary/20 text-primary rounded-full px-2 py-0.5 text-[8px] font-bold uppercase">
                 New
               </span>
             )}
@@ -141,7 +141,7 @@ export const LandingPricing = () => {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground"
+          className="border-border bg-card/50 text-muted-foreground mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase"
         >
           <CircleDollarSign className="h-3 w-3" />
           Pricing Plans
@@ -151,10 +151,10 @@ export const LandingPricing = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="mb-6 font-serif text-4xl font-light tracking-tight text-foreground md:text-6xl"
+          className="text-foreground mb-6 font-serif text-4xl font-light tracking-tight md:text-6xl"
         >
           Elevate your career. <br />
-          <span className="italic text-muted-foreground/60">
+          <span className="text-muted-foreground/60 italic">
             Choose your plan.
           </span>
         </motion.h2>

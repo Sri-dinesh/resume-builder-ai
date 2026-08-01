@@ -19,8 +19,8 @@ const MIN_LEVEL: LogLevel =
 
 const COLORS: Record<LogLevel, string> = {
   debug: "\x1b[36m", // cyan
-  info: "\x1b[32m",  // green
-  warn: "\x1b[33m",  // yellow
+  info: "\x1b[32m", // green
+  warn: "\x1b[33m", // yellow
   error: "\x1b[31m", // red
 };
 const RESET = "\x1b[0m";
@@ -34,9 +34,7 @@ function formatDev(level: LogLevel, msg: string, meta?: LogMeta): string {
   const color = COLORS[level];
   const tag = `${color}[${level.toUpperCase()}]${RESET}`;
   const metaStr =
-    meta && Object.keys(meta).length > 0
-      ? ` | ${JSON.stringify(meta)}`
-      : "";
+    meta && Object.keys(meta).length > 0 ? ` | ${JSON.stringify(meta)}` : "";
   return `${tag} [${ts}] ${msg}${metaStr}`;
 }
 

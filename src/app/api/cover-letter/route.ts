@@ -251,7 +251,10 @@ export async function POST(request: Request) {
   const rateLimit = checkRateLimit(userId, subscriptionLevel);
 
   if (!rateLimit.allowed) {
-    logger.info("Cover letter rate limit hit", { route: "/api/cover-letter", userId });
+    logger.info("Cover letter rate limit hit", {
+      route: "/api/cover-letter",
+      userId,
+    });
     return jsonResponse(
       {
         error: "Rate limit exceeded. Please wait a moment before trying again.",
@@ -339,7 +342,10 @@ export async function POST(request: Request) {
       "X-RateLimit-Remaining": rateLimit.remaining.toString(),
     });
   } catch (error) {
-    logger.error("Cover letter generation failed", { route: "/api/cover-letter", error: error instanceof Error ? error.message : String(error) });
+    logger.error("Cover letter generation failed", {
+      route: "/api/cover-letter",
+      error: error instanceof Error ? error.message : String(error),
+    });
     return jsonResponse(
       { error: "An unexpected error occurred. Please try again later." },
       500,

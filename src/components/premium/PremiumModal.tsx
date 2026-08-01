@@ -56,14 +56,14 @@ export default function PremiumModal() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 16 }}
           transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-          className="overflow-hidden rounded-3xl border border-border/40 bg-card/95 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-xl"
+          className="border-border/40 bg-card/95 overflow-hidden rounded-3xl border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-xl"
         >
           <div className="px-8 pt-8 text-center">
             <motion.h2
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.35 }}
-              className="font-serif text-2xl font-medium tracking-tight text-foreground"
+              className="text-foreground font-serif text-2xl font-medium tracking-tight"
             >
               Upgrade to Pro
             </motion.h2>
@@ -71,7 +71,7 @@ export default function PremiumModal() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.35 }}
-              className="mt-1.5 text-sm text-muted-foreground"
+              className="text-muted-foreground mt-1.5 text-sm"
             >
               Unlock your full potential
             </motion.p>
@@ -82,24 +82,24 @@ export default function PremiumModal() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
-              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/50 p-5 transition-all duration-300 hover:border-primary/30 hover:bg-background"
+              className="group border-border/50 bg-background/50 hover:border-primary/30 hover:bg-background relative overflow-hidden rounded-2xl border p-5 transition-all duration-300"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-[15px] font-semibold text-foreground">
+                  <h3 className="text-foreground text-[15px] font-semibold">
                     Professional
                   </h3>
                   <div className="mt-1 flex items-baseline gap-0.5">
-                    <span className="text-[13px] font-medium text-muted-foreground">
+                    <span className="text-muted-foreground text-[13px] font-medium">
                       $
                     </span>
-                    <span className="font-serif text-[26px] font-semibold tracking-tight text-foreground">
+                    <span className="text-foreground font-serif text-[26px] font-semibold tracking-tight">
                       9
                     </span>
-                    <span className="text-[13px] font-medium text-muted-foreground">
+                    <span className="text-muted-foreground text-[13px] font-medium">
                       .99
                     </span>
-                    <span className="ml-0.5 text-[13px] font-medium text-muted-foreground">
+                    <span className="text-muted-foreground ml-0.5 text-[13px] font-medium">
                       /mo
                     </span>
                   </div>
@@ -124,10 +124,10 @@ export default function PremiumModal() {
                 {proFeatures.map((feature) => (
                   <div
                     key={feature}
-                    className="flex items-center gap-2.5 text-[13px] text-foreground/80"
+                    className="text-foreground/80 flex items-center gap-2.5 text-[13px]"
                   >
                     <Check
-                      className="h-3.5 w-3.5 shrink-0 text-primary"
+                      className="text-primary h-3.5 w-3.5 shrink-0"
                       strokeWidth={2}
                     />
                     <span>{feature}</span>
@@ -140,24 +140,24 @@ export default function PremiumModal() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25, duration: 0.4 }}
-              className="relative overflow-hidden rounded-2xl border border-primary/40 bg-primary/[0.03] p-5"
+              className="border-primary/40 bg-primary/[0.03] relative overflow-hidden rounded-2xl border p-5"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-[15px] font-semibold text-foreground">
+                  <h3 className="text-foreground text-[15px] font-semibold">
                     Professional Plus
                   </h3>
                   <div className="mt-1 flex items-baseline gap-0.5">
-                    <span className="text-[13px] font-medium text-muted-foreground">
+                    <span className="text-muted-foreground text-[13px] font-medium">
                       $
                     </span>
-                    <span className="font-serif text-[26px] font-semibold tracking-tight text-foreground">
+                    <span className="text-foreground font-serif text-[26px] font-semibold tracking-tight">
                       19
                     </span>
-                    <span className="text-[13px] font-medium text-muted-foreground">
+                    <span className="text-muted-foreground text-[13px] font-medium">
                       .99
                     </span>
-                    <span className="ml-0.5 text-[13px] font-medium text-muted-foreground">
+                    <span className="text-muted-foreground ml-0.5 text-[13px] font-medium">
                       /mo
                     </span>
                   </div>
@@ -182,10 +182,10 @@ export default function PremiumModal() {
                 {proPlusFeatures.map((feature) => (
                   <div
                     key={feature}
-                    className="flex items-center gap-2.5 text-[13px] font-medium text-foreground"
+                    className="text-foreground flex items-center gap-2.5 text-[13px] font-medium"
                   >
                     <Check
-                      className="h-3.5 w-3.5 shrink-0 text-primary"
+                      className="text-primary h-3.5 w-3.5 shrink-0"
                       strokeWidth={2}
                     />
                     <span>{feature}</span>
@@ -199,9 +199,9 @@ export default function PremiumModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.3 }}
-            className="mt-6 border-t border-border/30 px-8 py-4 text-center"
+            className="border-border/30 mt-6 border-t px-8 py-4 text-center"
           >
-            <p className="text-[11px] font-medium text-muted-foreground/70">
+            <p className="text-muted-foreground/70 text-[11px] font-medium">
               Cancel anytime. 30-day money-back guarantee.
             </p>
           </motion.div>

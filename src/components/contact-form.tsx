@@ -74,10 +74,10 @@ export default function ContactForm() {
   return (
     <section id="contact" className="container space-y-16 py-24 md:py-32">
       <div className="mx-auto max-w-[58rem] text-center">
-        <h2 className="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
+        <h2 className="text-3xl leading-[1.1] font-bold sm:text-3xl md:text-5xl">
           Get in Touch
         </h2>
-        <p className="mt-4 text-muted-foreground sm:text-lg">
+        <p className="text-muted-foreground mt-4 sm:text-lg">
           Have questions? We&apos;d love to hear from you. Send us a message and
           we&apos;ll respond as soon as possible.
         </p>
@@ -154,7 +154,7 @@ export default function ContactForm() {
                 <span className="relative z-10">
                   {loading ? "Sending..." : "Send Message"}
                 </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-primary via-violet-400 to-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <span className="from-primary to-primary absolute inset-0 bg-gradient-to-r via-violet-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </Button>
             </form>
           </CardContent>

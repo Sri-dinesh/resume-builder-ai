@@ -26,18 +26,18 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
       className="space-y-6"
     >
       <div className="grid gap-4 xl:grid-cols-[280px,1fr]">
-        <Card className="border-border/50 bg-card/60 shadow-md backdrop-blur-xl dark:bg-card/40">
+        <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
           <CardContent className="flex h-full flex-col items-center justify-center p-6">
             <ScoreGauge score={analysis.score} verdict={analysis.verdict} />
           </CardContent>
         </Card>
 
-        <Card className="border-border/50 bg-card/60 shadow-md backdrop-blur-xl dark:bg-card/40">
+        <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
           <CardHeader className="p-5 pb-0">
             <div className="flex flex-wrap items-center gap-2">
               <Badge
                 variant="secondary"
-                className="text-[10px] uppercase tracking-wider"
+                className="text-[10px] tracking-wider uppercase"
               >
                 {analysis.verdict}
               </Badge>
@@ -54,44 +54,44 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
             <CardTitle className="mt-1 text-xl">ATS Summary</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5 p-5">
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               {analysis.summary}
             </p>
 
             <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              <div className="rounded-xl border border-border/50 bg-background/50 p-3 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20">
-                <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+              <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">
+                <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
                   <Target className="h-3.5 w-3.5" />
                   Match
                 </div>
-                <p className="mt-1 text-lg font-semibold text-foreground">
+                <p className="text-foreground mt-1 text-lg font-semibold">
                   {analysis.keywords.coverage}%
                 </p>
               </div>
-              <div className="rounded-xl border border-border/50 bg-background/50 p-3 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20">
-                <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+              <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">
+                <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
                   <FileText className="h-3.5 w-3.5" />
                   Words
                 </div>
-                <p className="mt-1 text-lg font-semibold text-foreground">
+                <p className="text-foreground mt-1 text-lg font-semibold">
                   {analysis.metrics.wordCount}
                 </p>
               </div>
-              <div className="rounded-xl border border-border/50 bg-background/50 p-3 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20">
-                <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+              <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">
+                <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   Bullets
                 </div>
-                <p className="mt-1 text-lg font-semibold text-foreground">
+                <p className="text-foreground mt-1 text-lg font-semibold">
                   {analysis.metrics.measurableBulletCount}
                 </p>
               </div>
-              <div className="rounded-xl border border-border/50 bg-background/50 p-3 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20">
-                <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+              <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">
+                <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
                   <AlertTriangle className="h-3.5 w-3.5" />
                   Missing
                 </div>
-                <p className="mt-1 text-lg font-semibold text-foreground">
+                <p className="text-foreground mt-1 text-lg font-semibold">
                   {analysis.metrics.sectionsMissing.length}
                 </p>
               </div>
@@ -101,7 +101,7 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">
-        <Card className="border-border/50 bg-card/60 shadow-md backdrop-blur-xl dark:bg-card/40">
+        <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
           <CardHeader className="p-5 pb-0">
             <CardTitle className="text-base">Priority Fixes</CardTitle>
           </CardHeader>
@@ -110,32 +110,32 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
               analysis.recommendations.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-xl border border-border/50 bg-background/50 p-3.5 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20"
+                  className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3.5 backdrop-blur-sm"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-semibold text-foreground">
+                    <h3 className="text-foreground text-sm font-semibold">
                       {item.title}
                     </h3>
                     <span
-                      className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ${PRIORITY_STYLES[item.priority]}`}
+                      className={`rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase ${PRIORITY_STYLES[item.priority]}`}
                     >
                       {item.priority}
                     </span>
                   </div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                  <p className="text-muted-foreground mt-1.5 text-xs leading-relaxed">
                     {item.detail}
                   </p>
                 </div>
               ))
             ) : (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 No major fixes surfaced in the current analysis.
               </p>
             )}
           </CardContent>
         </Card>
 
-        <Card className="border-border/50 bg-card/60 shadow-md backdrop-blur-xl dark:bg-card/40">
+        <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
           <CardHeader className="p-5 pb-0">
             <CardTitle className="text-base">What Is Working</CardTitle>
           </CardHeader>
@@ -150,14 +150,14 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
                 </div>
               ))
             ) : (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 Add more measurable results and standard sections to surface
                 clearer strengths.
               </p>
             )}
 
-            <div className="rounded-xl border border-border/50 bg-background/50 p-3.5 backdrop-blur-sm dark:border-border/40 dark:bg-muted/20">
-              <p className="text-xs font-medium text-foreground">
+            <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3.5 backdrop-blur-sm">
+              <p className="text-foreground text-xs font-medium">
                 Sections Found
               </p>
               <div className="mt-2.5 flex flex-wrap gap-1.5">
@@ -195,7 +195,7 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
         </Card>
       </div>
 
-      <Card className="border-border/50 bg-card/60 shadow-md backdrop-blur-xl dark:bg-card/40">
+      <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
         <CardHeader className="p-5 pb-0">
           <CardTitle className="text-base">Section Analysis</CardTitle>
         </CardHeader>
@@ -204,7 +204,7 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-border/50 bg-card/60 shadow-md backdrop-blur-xl dark:bg-card/40">
+      <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
         <CardHeader className="p-5 pb-0">
           <CardTitle className="text-base">Keyword Alignment</CardTitle>
         </CardHeader>

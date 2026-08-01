@@ -53,7 +53,7 @@ export default function PersonalInfoForm({
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
         <h2 className="text-2xl font-semibold">Personal info</h2>
-        <p className="text-sm text-muted-foreground">Tell us about yourself.</p>
+        <p className="text-muted-foreground text-sm">Tell us about yourself.</p>
       </div>
       <Form {...form}>
         <form className="space-y-3">
@@ -105,7 +105,9 @@ export default function PersonalInfoForm({
                       {...field}
                       onChange={(e) =>
                         field.onChange(
-                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
+                          sanitizeEditorInput(e.target.value, {
+                            maxLength: 50,
+                          }),
                         )
                       }
                     />
@@ -125,7 +127,9 @@ export default function PersonalInfoForm({
                       {...field}
                       onChange={(e) =>
                         field.onChange(
-                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
+                          sanitizeEditorInput(e.target.value, {
+                            maxLength: 50,
+                          }),
                         )
                       }
                     />
@@ -142,14 +146,14 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Job title</FormLabel>
                 <FormControl>
-                    <Input
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(
-                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
-                        )
-                      }
-                    />
+                  <Input
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        sanitizeEditorInput(e.target.value, { maxLength: 50 }),
+                      )
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -167,7 +171,9 @@ export default function PersonalInfoForm({
                       {...field}
                       onChange={(e) =>
                         field.onChange(
-                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
+                          sanitizeEditorInput(e.target.value, {
+                            maxLength: 50,
+                          }),
                         )
                       }
                     />
@@ -187,7 +193,9 @@ export default function PersonalInfoForm({
                       {...field}
                       onChange={(e) =>
                         field.onChange(
-                          sanitizeEditorInput(e.target.value, { maxLength: 50 }),
+                          sanitizeEditorInput(e.target.value, {
+                            maxLength: 50,
+                          }),
                         )
                       }
                     />
@@ -204,15 +212,15 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                    <Input
-                      {...field}
-                      type="tel"
-                      onChange={(e) =>
-                        field.onChange(
-                          sanitizeEditorInput(e.target.value, { maxLength: 20 }),
-                        )
-                      }
-                    />
+                  <Input
+                    {...field}
+                    type="tel"
+                    onChange={(e) =>
+                      field.onChange(
+                        sanitizeEditorInput(e.target.value, { maxLength: 20 }),
+                      )
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

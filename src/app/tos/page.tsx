@@ -9,7 +9,7 @@ export default function Page() {
     <main className="mx-auto max-w-prose space-y-6 p-3 py-6">
       <Navbar />
       <h1 className="text-center text-2xl font-bold">Terms of Service</h1>
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-muted-foreground text-center text-sm">
         Effective Date: Mar 31, 2025
       </p>
       <p>

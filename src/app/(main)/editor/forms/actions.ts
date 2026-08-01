@@ -18,9 +18,7 @@ import type {
   WorkExperience,
 } from "@/lib/resume/validation";
 
-type Education = NonNullable<
-  GenerateSummaryInput["educations"]
->[number];
+type Education = NonNullable<GenerateSummaryInput["educations"]>[number];
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({

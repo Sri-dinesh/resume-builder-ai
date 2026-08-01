@@ -77,10 +77,10 @@ export default function DownloadableResume({
 
       {resumeData.summary && (
         <section className="mb-5">
-          <h2 className="mb-2 border-b border-gray-300 pb-1 text-sm font-bold uppercase tracking-wide text-gray-800">
+          <h2 className="mb-2 border-b border-gray-300 pb-1 text-sm font-bold tracking-wide text-gray-800 uppercase">
             Professional Summary
           </h2>
-          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
+          <p className="text-sm leading-relaxed whitespace-pre-line text-gray-700">
             {resumeData.summary}
           </p>
         </section>
@@ -88,7 +88,7 @@ export default function DownloadableResume({
 
       {!!resumeData.workExperiences?.length && (
         <section className="mb-5">
-          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold uppercase tracking-wide text-gray-800">
+          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold tracking-wide text-gray-800 uppercase">
             Work Experience
           </h2>
           <div className="space-y-4">
@@ -111,7 +111,7 @@ export default function DownloadableResume({
                   )}
                 </div>
                 {exp.description && (
-                  <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-gray-700">
+                  <p className="mt-1 text-sm leading-relaxed whitespace-pre-line text-gray-700">
                     {exp.description}
                   </p>
                 )}
@@ -123,7 +123,7 @@ export default function DownloadableResume({
 
       {!!resumeData.projects?.length && (
         <section className="mb-5">
-          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold uppercase tracking-wide text-gray-800">
+          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold tracking-wide text-gray-800 uppercase">
             Projects
           </h2>
           <div className="space-y-4">
@@ -138,12 +138,12 @@ export default function DownloadableResume({
                   </span>
                 </div>
                 {proj.toolsUsed && (
-                  <p className="text-xs italic text-gray-600">
+                  <p className="text-xs text-gray-600 italic">
                     Technologies: {proj.toolsUsed}
                   </p>
                 )}
                 {proj.description && (
-                  <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-gray-700">
+                  <p className="mt-1 text-sm leading-relaxed whitespace-pre-line text-gray-700">
                     {proj.description}
                   </p>
                 )}
@@ -163,7 +163,7 @@ export default function DownloadableResume({
 
       {!!resumeData.educations?.length && (
         <section className="mb-5">
-          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold uppercase tracking-wide text-gray-800">
+          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold tracking-wide text-gray-800 uppercase">
             Education
           </h2>
           <div className="space-y-3">
@@ -186,7 +186,7 @@ export default function DownloadableResume({
 
       {!!resumeData.skills?.length && (
         <section className="mb-5">
-          <h2 className="mb-2 border-b border-gray-300 pb-1 text-sm font-bold uppercase tracking-wide text-gray-800">
+          <h2 className="mb-2 border-b border-gray-300 pb-1 text-sm font-bold tracking-wide text-gray-800 uppercase">
             Skills
           </h2>
           <p className="text-sm leading-relaxed text-gray-700">
@@ -197,7 +197,7 @@ export default function DownloadableResume({
 
       {!!resumeData.certifications?.length && (
         <section className="mb-5">
-          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold uppercase tracking-wide text-gray-800">
+          <h2 className="mb-3 border-b border-gray-300 pb-1 text-sm font-bold tracking-wide text-gray-800 uppercase">
             Certifications
           </h2>
           <div className="space-y-3">

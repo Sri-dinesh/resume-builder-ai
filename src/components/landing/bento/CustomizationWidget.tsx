@@ -97,32 +97,32 @@ const CustomizationWidget = () => {
   return (
     <div
       ref={container}
-      className="group relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300 hover:border-primary/30"
+      className="group hover:border-primary/30 relative flex h-full w-full flex-col justify-between overflow-hidden p-6 transition-colors duration-300"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className="z-10 flex flex-col">
-        <span className="mb-4 font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/60 dark:text-muted-foreground/80">
+        <span className="text-muted-foreground/60 dark:text-muted-foreground/80 mb-4 font-mono text-[9px] tracking-[0.15em] uppercase">
           04 / Customization
         </span>
-        <h3 className="font-['Syne'] text-[19px] font-bold leading-tight tracking-[-0.02em] text-foreground">
+        <h3 className="text-foreground font-['Syne'] text-[19px] leading-tight font-bold tracking-[-0.02em]">
           Pixel Perfect.
         </h3>
-        <p className="mt-2 max-w-[240px] text-[12.5px] font-light leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground mt-2 max-w-[240px] text-[12.5px] leading-relaxed font-light">
           Personalize your brand. Change layouts, colors, and typography
           instantly.
         </p>
       </div>
 
       <div
-        className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute top-0 left-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
             "radial-gradient(circle at 0% 0%, rgba(217,119,87,0.12) 0%, transparent 75%)",
         }}
       />
 
-      <div className="absolute bottom-0 left-0 right-0 flex h-[62%] items-center justify-center pb-2">
+      <div className="absolute right-0 bottom-0 left-0 flex h-[62%] items-center justify-center pb-2">
         <svg
           className="h-full w-full max-w-[300px]"
           viewBox="0 0 280 150"
@@ -132,39 +132,39 @@ const CustomizationWidget = () => {
             <foreignObject x="0" y="0" width="144" height="136">
               <div
                 {...{ xmlns: "http://www.w3.org/1999/xhtml" }}
-                className="relative flex h-full w-full flex-col overflow-hidden rounded-[6px] border border-border/50 bg-background p-3 font-sans"
+                className="border-border/50 bg-background relative flex h-full w-full flex-col overflow-hidden rounded-[6px] border p-3 font-sans"
               >
                 <div className="mb-2.5 flex items-center gap-[8px]">
-                  <div className="accent-bg flex h-7 w-7 items-center justify-center rounded-full bg-secondary transition-colors">
+                  <div className="accent-bg bg-secondary flex h-7 w-7 items-center justify-center rounded-full transition-colors">
                     <span className="accent-text text-[9px] font-bold tracking-tighter text-transparent">
                       JS
                     </span>
                   </div>
                   <div className="flex flex-col gap-[5px]">
-                    <div className="h-[4px] w-16 rounded-full bg-muted-foreground/40"></div>
-                    <div className="h-[3px] w-10 rounded-full bg-muted-foreground/20"></div>
+                    <div className="bg-muted-foreground/40 h-[4px] w-16 rounded-full"></div>
+                    <div className="bg-muted-foreground/20 h-[3px] w-10 rounded-full"></div>
                   </div>
                 </div>
 
-                <div className="mb-2.5 h-px w-full bg-border/30"></div>
+                <div className="bg-border/30 mb-2.5 h-px w-full"></div>
 
                 <div className="relative w-full flex-1">
                   <div className="font-sans-wrapper absolute inset-0">
-                    <div className="doc-block-1 absolute left-0 top-0 w-full">
-                      <h4 className="mb-[3px] text-[7.5px] font-bold leading-none text-foreground">
+                    <div className="doc-block-1 absolute top-0 left-0 w-full">
+                      <h4 className="text-foreground mb-[3px] text-[7.5px] leading-none font-bold">
                         Experience
                       </h4>
-                      <p className="text-[6px] font-medium leading-[1.3] text-muted-foreground">
+                      <p className="text-muted-foreground text-[6px] leading-[1.3] font-medium">
                         Senior Software Engineer
                         <br />
                         Built interactive web apps.
                       </p>
                     </div>
-                    <div className="doc-block-2 absolute left-0 top-[36px] w-full">
-                      <h4 className="mb-[3px] text-[7.5px] font-bold leading-none text-foreground">
+                    <div className="doc-block-2 absolute top-[36px] left-0 w-full">
+                      <h4 className="text-foreground mb-[3px] text-[7.5px] leading-none font-bold">
                         Education
                       </h4>
-                      <p className="text-[6px] font-medium leading-[1.3] text-muted-foreground">
+                      <p className="text-muted-foreground text-[6px] leading-[1.3] font-medium">
                         B.S. in Computer Science
                         <br />
                         University of Technology
@@ -174,21 +174,21 @@ const CustomizationWidget = () => {
 
                   <div className="font-serif-wrapper absolute inset-0 opacity-0">
                     <div className="font-serif">
-                      <div className="doc-block-1 absolute left-0 top-0 w-full">
-                        <h4 className="mb-[3px] text-[8.5px] font-bold leading-none text-foreground">
+                      <div className="doc-block-1 absolute top-0 left-0 w-full">
+                        <h4 className="text-foreground mb-[3px] text-[8.5px] leading-none font-bold">
                           Experience
                         </h4>
-                        <p className="text-[6.5px] font-medium leading-[1.3] text-muted-foreground">
+                        <p className="text-muted-foreground text-[6.5px] leading-[1.3] font-medium">
                           Senior Software Engineer
                           <br />
                           Built interactive web apps.
                         </p>
                       </div>
-                      <div className="doc-block-2 absolute left-0 top-[36px] w-full">
-                        <h4 className="mb-[3px] text-[8.5px] font-bold leading-none text-foreground">
+                      <div className="doc-block-2 absolute top-[36px] left-0 w-full">
+                        <h4 className="text-foreground mb-[3px] text-[8.5px] leading-none font-bold">
                           Education
                         </h4>
-                        <p className="text-[6.5px] font-medium leading-[1.3] text-muted-foreground">
+                        <p className="text-muted-foreground text-[6.5px] leading-[1.3] font-medium">
                           B.S. in Computer Science
                           <br />
                           University of Technology

@@ -21,7 +21,7 @@ export const themes: Theme[] = [
     colors: {
       bg: "20 20 19",
       surface: "30 30 30",
-      primary: "217 119 87", 
+      primary: "217 119 87",
       textMain: "250 249 245",
       textMuted: "176 174 165",
       border: "51 51 51",
