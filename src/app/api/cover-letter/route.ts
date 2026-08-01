@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
-import { env } from "@/env";
+import { getAIProvider } from "@/lib/ai";
 import { getUserSubscriptionLevel } from "@/lib/billing/subscription";
 import {
   coverLetterGenerationSchema,
@@ -9,11 +8,6 @@ import {
   type CoverLetterGenerationInput,
 } from "@/lib/cover-letter-validation";
 import { logger } from "@/lib/logger";
-
-const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({
-  model: "gemini-3.5-flash",
-});
 
 const generationConfig = {
   temperature: 0.7,
@@ -85,22 +79,6 @@ function sanitizeOutput(output: string) {
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     .replace(/javascript:/gi, "")
     .replace(/on\w+=/gi, "");
-}
-
-function extractJson(text: string) {
-  const trimmed = text.trim();
-
-  if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
-    return trimmed;
-  }
-
-  const start = trimmed.indexOf("{");
-  const end = trimmed.lastIndexOf("}");
-  if (start >= 0 && end > start) {
-    return trimmed.slice(start, end + 1);
-  }
-
-  throw new Error("Model response was not valid JSON.");
 }
 
 function buildPrompt(input: CoverLetterGenerationInput) {
@@ -307,14 +285,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const chatSession = model.startChat({
-      generationConfig,
-      history: [],
-    });
-
-    const result = await chatSession.sendMessage(buildPrompt(validatedInput));
-    const parsedModelOutput: unknown = JSON.parse(
-      extractJson(result.response.text()),
+    const parsedModelOutput = await getAIProvider().generateJson<unknown>(
+      buildPrompt(validatedInput),
+      { temperature: generationConfig.temperature },
     );
     const outputValidation =
       coverLetterOutputSchema.safeParse(parsedModelOutput);

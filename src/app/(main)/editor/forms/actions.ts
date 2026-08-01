@@ -1,8 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { env } from "@/env";
+import { getAIProvider } from "@/lib/ai";
 import { canUseAITools } from "@/lib/billing/permissions";
 import { getUserSubscriptionLevel } from "@/lib/billing/subscription";
 import {
@@ -19,17 +18,6 @@ import type {
 } from "@/lib/resume/validation";
 
 type Education = NonNullable<GenerateSummaryInput["educations"]>[number];
-
-const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({
-  model: "gemini-3.5-flash",
-  generationConfig: {
-    temperature: 0.7,
-    topP: 0.95,
-    topK: 40,
-    maxOutputTokens: 8192,
-  },
-});
 
 export async function generateSummary(input: GenerateSummaryInput) {
   const { userId } = await auth();
@@ -124,11 +112,10 @@ export async function generateSummary(input: GenerateSummaryInput) {
       return total + (end.getFullYear() - start.getFullYear());
     }, 0);
   }
-
   try {
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    const text = await getAIProvider().generateText(prompt, {
+      temperature: 0.7,
+    });
 
     if (!text) {
       throw new Error("Failed to generate AI response");
@@ -208,11 +195,10 @@ Critical Requirements:
 - For technical roles: Include at least one bullet highlighting technical implementation or solution
 - For non-technical roles: Include at least one bullet highlighting strategic impact or stakeholder management
 `;
-
   try {
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const aiResponse = response.text();
+    const aiResponse = await getAIProvider().generateText(prompt, {
+      temperature: 0.7,
+    });
 
     if (!aiResponse) {
       throw new Error("Failed to generate AI response");
@@ -303,11 +289,10 @@ Format Rules:
 7. Keep each bullet point ideally fit within **one line of A4 paper width** for readability.
 
 `;
-
   try {
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const aiResponse = response.text();
+    const aiResponse = await getAIProvider().generateText(prompt, {
+      temperature: 0.7,
+    });
 
     if (!aiResponse) {
       throw new Error("Failed to generate AI response");

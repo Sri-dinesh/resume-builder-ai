@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createAIChatSession } from "@/lib/ai/client";
+import { getAIProvider } from "@/lib/ai";
 import { logger } from "@/lib/logger";
 export async function POST(request: Request) {
   try {
@@ -78,9 +78,7 @@ export async function POST(request: Request) {
       }
       Parse and enhance this resume: ${text}. Ensure all dates are in YYYY-MM format and all fields exactly match the structure above.`;
 
-    const result = await createAIChatSession().sendMessage(prompt);
-    const enhancedText = result.response.text();
-    const parsedResponse: unknown = JSON.parse(enhancedText);
+    const parsedResponse = await getAIProvider().generateJson<unknown>(prompt);
 
     return NextResponse.json({ enhancedText: parsedResponse });
   } catch (error: unknown) {
