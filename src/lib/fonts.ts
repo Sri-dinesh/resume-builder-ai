@@ -1,13 +1,13 @@
 export const FONT_OPTIONS = [
   {
+    name: "CMU Serif",
+    value: "Computer Modern Serif Roman",
+    preview: "The classic academic LaTeX font, highly professional and precise",
+  },
+  {
     name: "Arial",
     value: "Arial",
     preview: "Classic sans-serif font, widely used in professional documents",
-  },
-  {
-    name: "Calibri",
-    value: "Calibri",
-    preview: "Modern sans-serif, Microsoft's default font since 2007",
   },
   {
     name: "Helvetica",
@@ -20,11 +20,6 @@ export const FONT_OPTIONS = [
     preview: "Traditional serif font, standard for formal documents",
   },
   {
-    name: "Georgia",
-    value: "Georgia",
-    preview: "Elegant serif font, excellent readability on screens",
-  },
-  {
     name: "Verdana",
     value: "Verdana",
     preview: "Clear sans-serif font, designed for screen legibility",
@@ -33,16 +28,6 @@ export const FONT_OPTIONS = [
     name: "Inter",
     value: "Inter",
     preview: "Modern and professional, optimized for screen readability",
-  },
-  {
-    name: "Garamond",
-    value: "Garamond",
-    preview: "Classic serif font reminiscent of Times New Roman",
-  },
-  {
-    name: "Noto Serif",
-    value: "Noto Serif",
-    preview: "Clean and versatile sans-serif font, suitable for resumes",
   },
 ] as const;
 

@@ -10,6 +10,18 @@ import { format } from "date-fns";
 import React from "react";
 import type { ResumeValues } from "@/lib/resume/validation";
 
+import { Font } from "@react-pdf/renderer";
+
+Font.register({
+  family: "Computer Modern Serif Roman",
+  fonts: [
+    { src: "/fonts/computer-modern/cmu-serif-500-roman.ttf" },
+    { src: "/fonts/computer-modern/cmu-serif-700-roman.ttf", fontWeight: "bold" },
+    { src: "/fonts/computer-modern/cmu-serif-500-italic.ttf", fontStyle: "italic" },
+    { src: "/fonts/computer-modern/cmu-serif-700-italic.ttf", fontWeight: "bold", fontStyle: "italic" },
+  ],
+});
+
 const stripHtml = (html: string) => {
   if (!html) return "";
   let text = html.replace(/<br\s*\/?>/gi, "\n");
@@ -39,7 +51,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#FFFFFF",
     padding: 30,
-    fontFamily: "Helvetica",
     fontSize: 9,
     lineHeight: 1.4,
   },
@@ -132,10 +143,11 @@ interface ResumePDFProps {
 
 const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
   const colorHex = resumeData.colorHex || "#000000";
+  const fontFamily = resumeData.fontFamily || "Computer Modern Serif Roman";
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" style={[styles.page, { fontFamily }]}>
         {/* Personal Info */}
         <View style={styles.header}>
           {resumeData.photo && (

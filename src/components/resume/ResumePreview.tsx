@@ -5,7 +5,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { formatDate } from "date-fns";
-import { Inter, Noto_Serif } from "next/font/google";
+import { Inter } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
@@ -29,11 +29,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const notoSerif = Noto_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
+
 
 interface ResumePreviewProps {
   resumeData: ResumeValues;
@@ -88,10 +84,8 @@ export default function ResumePreview({
         return "Verdana, sans-serif";
       case "Inter":
         return `${inter.style.fontFamily}`;
-      case "Garamond":
-        return "Garamond, serif";
-      case "Noto Serif":
-        return notoSerif.style.fontFamily;
+      case "Computer Modern Serif Roman":
+        return "'Computer Modern Serif Roman', serif";
       default:
         return "Arial, sans-serif";
     }

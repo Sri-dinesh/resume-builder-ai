@@ -53,7 +53,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
           skills: [],
           borderStyle: "",
           colorHex: "",
-          fontFamily: "",
+          fontFamily: "Computer Modern Serif Roman",
           summary: undefined,
         },
   );
