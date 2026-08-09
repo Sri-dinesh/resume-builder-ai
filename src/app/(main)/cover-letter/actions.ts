@@ -13,7 +13,6 @@ export type CoverLetterResumeData = {
   phone: string | null;
   city: string | null;
   country: string | null;
-  linkedin: string | null;
   jobTitle: string | null;
   summary: string | null;
   skills: string[];
@@ -65,7 +64,6 @@ export async function getUserResumes(): Promise<CoverLetterResumeData[]> {
     phone: resume.phone,
     city: resume.city,
     country: resume.country,
-    linkedin: resume.linkedin,
     jobTitle: resume.jobTitle,
     summary: resume.summary,
     skills: resume.skills,

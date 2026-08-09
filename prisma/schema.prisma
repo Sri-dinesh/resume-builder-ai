@@ -37,6 +37,8 @@ model Resume {
   website     String?
   websiteName String?
 
+  contactLinks ContactLink[]
+
   workExperiences WorkExperience[]
   projects        Project[]
   educations      Education[]
@@ -134,4 +136,19 @@ model Certification {
   updatedAt DateTime @updatedAt
 
   @@map("certifications")
+}
+
+model ContactLink {
+  id String @id @default(cuid())
+
+  url      String
+  linkName String?
+
+  resumeId String
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contact_links")
 }

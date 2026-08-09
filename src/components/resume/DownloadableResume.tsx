@@ -53,24 +53,19 @@ export default function DownloadableResume({
             </a>
           )}
         </div>
-        {(resumeData.linkedin || resumeData.website) && (
+        {!!resumeData.contactLinks?.length && (
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm text-gray-600">
-            {resumeData.linkedin && (
-              <span>
-                LinkedIn:{" "}
-                <a href={resumeData.linkedin} className="hover:text-blue-600">
-                  {resumeData.linkedin.replace(/^https?:\/\//, "")}
-                </a>
-              </span>
-            )}
-            {resumeData.website && (
-              <span>
-                {resumeData.websiteName || "Website"}:{" "}
-                <a href={resumeData.website} className="hover:text-blue-600">
-                  {resumeData.website.replace(/^https?:\/\//, "")}
-                </a>
-              </span>
-            )}
+            {resumeData.contactLinks.map((link, index) => {
+              if (!link.url) return null;
+              return (
+                <span key={index}>
+                  {link.linkName ? `${link.linkName}: ` : ""}
+                  <a href={link.url} className="hover:text-blue-600">
+                    {link.url.replace(/^https?:\/\//, "")}
+                  </a>
+                </span>
+              );
+            })}
           </div>
         )}
       </div>

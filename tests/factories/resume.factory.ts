@@ -68,9 +68,10 @@ export function buildResumeFactory(index = 1): ResumeValues {
     country: "India",
     phone: "9876543210",
     email: `candidate${index}@example.com`,
-    linkedin: `https://linkedin.com/in/candidate${index}`,
-    website: `https://portfolio${index}.example.com`,
-    websiteName: `Portfolio ${index}`,
+    contactLinks: [
+      { url: `https://linkedin.com/in/candidate${index}`, linkName: "LinkedIn" },
+      { url: `https://portfolio${index}.example.com`, linkName: `Portfolio ${index}` },
+    ],
     summary:
       "Results-driven professional with measurable impact across delivery, automation, and stakeholder management.",
     workExperiences: [
@@ -128,7 +129,7 @@ export function buildResumeText(index = 1) {
     `${resume.firstName} ${resume.lastName}`,
     resume.email,
     resume.phone,
-    resume.linkedin,
+    ...(resume.contactLinks?.map((l) => l.url) ?? []),
     resume.jobTitle,
     "Summary",
     resume.summary,

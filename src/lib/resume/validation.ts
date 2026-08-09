@@ -32,9 +32,15 @@ export const personalInfoSchema = z.object({
   country: optionalString,
   phone: optionalString,
   email: optionalString,
-  linkedin: optionalString,
-  website: optionalString,
-  websiteName: optionalString,
+  contactLinks: z
+    .array(
+      z.object({
+        url: z.string().url("Must be a valid URL").or(z.literal("")),
+        linkName: optionalString,
+      }),
+    )
+    .max(15, "Maximum 15 links allowed")
+    .optional(),
 });
 
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;

@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
+import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -30,18 +31,23 @@ export default function PersonalInfoForm({
       country: resumeData.country || "",
       phone: resumeData.phone || "",
       email: resumeData.email || "",
-      linkedin: resumeData.linkedin || "",
-      website: resumeData.website || "",
-      websiteName: resumeData.websiteName || "",
+      contactLinks: resumeData.contactLinks?.length
+        ? resumeData.contactLinks
+        : [],
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "contactLinks",
+  });
+
   useEffect(() => {
-    const { unsubscribe } = form.watch((values) => {
+    const { unsubscribe } = form.watch(() => {
       void (async () => {
         const isValid = await form.trigger();
         if (!isValid) return;
-        setResumeData({ ...resumeData, ...values });
+        setResumeData({ ...resumeData, ...form.getValues() });
       })();
     });
     return unsubscribe;
@@ -239,118 +245,60 @@ export default function PersonalInfoForm({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="linkedin"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>LinkedIn</FormLabel>
-                <FormControl>
-                  <Input {...field} type="url" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="websiteName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website Link</FormLabel>
-                <FormControl>
-                  <Input {...field} type="url" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* <FormField
-            control={form.control}
-            name="linkedin"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>LinkedIn Profile</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="url"
-                    placeholder="https://linkedin.com/in/username"
-                    value={field.value ?? ""}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      field.onChange(value);
-                      form.setValue("linkedin", value, { shouldDirty: true });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Personal Website</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="url"
-                    placeholder="https://yourwebsite.com"
-                    value={field.value ?? ""}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      field.onChange(value);
-                      form.setValue("website", value, { shouldDirty: true });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="websiteName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website Display Name</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Portfolio"
-                    value={field.value ?? ""}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      field.onChange(value);
-                      form.setValue("websiteName", value, {
-                        shouldDirty: true,
-                      });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <FormLabel>Links</FormLabel>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => append({ url: "", linkName: "" })}
+                disabled={fields.length >= 15}
+              >
+                <Plus className="mr-2 size-4" />
+                Add Link
+              </Button>
+            </div>
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex items-start gap-3">
+                <FormField
+                  control={form.control}
+                  name={`contactLinks.${index}.linkName`}
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel className={index > 0 ? "sr-only" : ""}>Label</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="e.g. LinkedIn" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`contactLinks.${index}.url`}
+                  render={({ field }) => (
+                    <FormItem className="flex-[2]">
+                      <FormLabel className={index > 0 ? "sr-only" : ""}>URL</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="url" placeholder="https://..." />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className={index === 0 ? "mt-8" : ""}
+                  onClick={() => remove(index)}
+                >
+                  <Trash2 className="size-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
         </form>
       </Form>
     </div>

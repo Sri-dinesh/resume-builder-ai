@@ -89,9 +89,10 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     country: data.country || undefined,
     phone: data.phone || undefined,
     email: data.email || undefined,
-    linkedin: data.linkedin || undefined,
-    website: data.website || undefined,
-    websiteName: data.websiteName || undefined,
+    contactLinks: data.contactLinks.map((link) => ({
+      url: link.url,
+      linkName: link.linkName || undefined,
+    })),
     workExperiences: data.workExperiences.map((exp) => ({
       position: exp.position || undefined,
       company: exp.company || undefined,

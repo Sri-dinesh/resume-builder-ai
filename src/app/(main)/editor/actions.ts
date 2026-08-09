@@ -22,6 +22,7 @@ export async function saveResume(values: ResumeValues) {
     projects,
     educations,
     certifications,
+    contactLinks,
     ...resumeValues
   } = resumeSchema.parse(values);
 
@@ -91,10 +92,14 @@ export async function saveResume(values: ResumeValues) {
       where: { id },
       data: {
         ...resumeValues,
-        linkedin: values.linkedin || null,
-        website: values.website || null,
-        websiteName: values.websiteName || null,
         photoUrl: newPhotoUrl,
+        contactLinks: {
+          deleteMany: {},
+          create: contactLinks?.map((link) => ({
+            url: link.url,
+            linkName: link.linkName || null,
+          })) || [],
+        },
         workExperiences: {
           deleteMany: {},
           create: workExperiences?.map((exp) => ({
@@ -137,10 +142,13 @@ export async function saveResume(values: ResumeValues) {
       data: {
         ...resumeValues,
         userId,
-        linkedin: values.linkedin || null,
-        website: values.website || null,
-        websiteName: values.websiteName || null,
         photoUrl: newPhotoUrl,
+        contactLinks: {
+          create: contactLinks?.map((link) => ({
+            url: link.url,
+            linkName: link.linkName || null,
+          })) || [],
+        },
         workExperiences: {
           create: workExperiences?.map((exp) => ({
             ...exp,

@@ -164,10 +164,16 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
               {resumeData.phone && <Text>{resumeData.phone}</Text>}
               {resumeData.phone && resumeData.email && <Text>•</Text>}
               {resumeData.email && <Text>{resumeData.email}</Text>}
-              {(resumeData.linkedin || resumeData.website) && <Text>•</Text>}
-              {resumeData.linkedin && <Text>LinkedIn</Text>}
-              {resumeData.linkedin && resumeData.website && <Text>•</Text>}
-              {resumeData.website && <Text>Website</Text>}
+              {resumeData.contactLinks?.map((link, index) => {
+                if (!link.url) return null;
+                const needsDot = index > 0 || !!resumeData.city || !!resumeData.country || !!resumeData.phone || !!resumeData.email;
+                return (
+                  <React.Fragment key={index}>
+                    {needsDot && <Text>•</Text>}
+                    <Text>{link.linkName || link.url.replace(/^https?:\/\//, "")}</Text>
+                  </React.Fragment>
+                );
+              })}
             </View>
           </View>
         </View>

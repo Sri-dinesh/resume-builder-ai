@@ -202,9 +202,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
     email,
     colorHex,
     borderStyle,
-    linkedin,
-    websiteName,
-    website,
+    contactLinks,
   } = resumeData;
 
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
@@ -273,18 +271,18 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
               {email}
             </a>
           )}
-          {(phone || email) && linkedin ? " • " : ""}
-          {linkedin && (
-            <a href={linkedin} target="_blank" className="text-blue-500">
-              LinkedIn
-            </a>
-          )}
-          {linkedin && website ? " • " : ""}
-          {website && (
-            <a href={website} target="_blank" className="text-blue-500">
-              {websiteName || website}
-            </a>
-          )}
+          {contactLinks?.map((link, index) => {
+            if (!link.url) return null;
+            const needsDot = index > 0 || !!city || !!country || !!phone || !!email;
+            return (
+              <React.Fragment key={index}>
+                {needsDot ? " • " : ""}
+                <a href={link.url} target="_blank" className="text-blue-500">
+                  {link.linkName || link.url.replace(/^https?:\/\//, "")}
+                </a>
+              </React.Fragment>
+            );
+          })}
         </p>
       </div>
     </div>
