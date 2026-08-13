@@ -119,7 +119,8 @@ export async function saveResume(values: ResumeValues) {
         educations: {
           deleteMany: {},
           create: educations?.map((edu) => ({
-            ...edu,
+            degree: edu.degree,
+            school: edu.location ? `${edu.school || ""}, ${edu.location}` : edu.school,
             startDate: edu.startDate ? new Date(edu.startDate) : undefined,
             endDate: edu.endDate ? new Date(edu.endDate) : undefined,
           })),

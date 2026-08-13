@@ -43,7 +43,18 @@ export default function EducationForm({
   const form = useForm<EducationValues>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
-      educations: resumeData.educations || [],
+      educations: resumeData.educations?.map(edu => {
+        const parts = edu.school?.split(',') || [];
+        const school = parts[0]?.trim() || "";
+        const location = parts.length > 1 ? parts.slice(1).join(',').trim() : "";
+        return {
+          ...edu,
+          school,
+          location,
+          startDate: edu.startDate ? String(edu.startDate).slice(0, 10) : "",
+          endDate: edu.endDate ? String(edu.endDate).slice(0, 10) : "",
+        };
+      }) || [],
     },
   });
 
@@ -200,7 +211,27 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         name={`educations.${index}.school`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>College/University Name</FormLabel>
+            <FormLabel>Institution</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                onChange={(e) =>
+                  field.onChange(
+                    sanitizeEditorInput(e.target.value, { maxLength: 100 }),
+                  )
+                }
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`educations.${index}.location`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Location</FormLabel>
             <FormControl>
               <Input
                 {...field}
