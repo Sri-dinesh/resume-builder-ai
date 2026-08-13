@@ -5,9 +5,11 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { formatDate } from "date-fns";
+import { Loader2, Phone, Mail, Globe, MapPin } from "lucide-react";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { DraggableSection } from "@/components/editor";
 import useDimensions from "@/hooks/useDimensions";
@@ -93,13 +95,19 @@ export default function ResumePreview({
 
   // const { width } = useDimensions(containerRef);
   const { width } = useDimensions(containerRef as React.RefObject<HTMLElement>);
-  const scale = width ? width / 794 : 1;
+  const scale = width ? width / 816 : 1;
 
   useEffect(() => {
     if (!previewContentRef.current || !width) return;
 
-    setPreviewHeight(previewContentRef.current.scrollHeight * scale);
-  }, [resumeData, scale, sectionOrder, width]);
+    const observer = new ResizeObserver(() => {
+      setPreviewHeight(previewContentRef.current!.scrollHeight * scale);
+    });
+
+    observer.observe(previewContentRef.current);
+
+    return () => observer.disconnect();
+  }, [scale, width]);
 
   const setContentRefs = (node: HTMLDivElement | null) => {
     previewContentRef.current = node;
@@ -123,11 +131,12 @@ export default function ResumePreview({
       ref={containerRef}
     >
       <div
-        className={cn("space-y-2 p-6", !width && "invisible")}
+        className={cn("space-y-2 p-[0.5in]", !width && "invisible")}
         style={{
-          width: 794,
+          width: 816,
           zoom: scale,
           fontFamily: getFontFamily(),
+          background: "repeating-linear-gradient(to bottom, transparent 0, transparent 1055px, #cbd5e1 1055px, #cbd5e1 1056px)",
         }}
         ref={setContentRefs}
         id="resumePreviewContent"
@@ -197,6 +206,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
     colorHex,
     borderStyle,
     contactLinks,
+    headerAlignment,
   } = resumeData;
 
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
@@ -208,15 +218,29 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
     return () => URL.revokeObjectURL(objectUrl);
   }, [photo]);
 
+  const alignmentClass =
+    headerAlignment === "left"
+      ? "items-start text-left"
+      : headerAlignment === "right"
+        ? "items-end text-right"
+        : "items-center text-center";
+
+  const justifyClass =
+    headerAlignment === "left"
+      ? "justify-start"
+      : headerAlignment === "right"
+        ? "justify-end"
+        : "justify-center";
+
   return (
-    <div className="flex items-center gap-6">
+    <div className={`flex flex-col ${alignmentClass}`}>
       {photoSrc && (
         <Image
           src={photoSrc}
-          width={100}
-          height={100}
+          width={80}
+          height={80}
           alt="Author photo"
-          className="aspect-square object-cover"
+          className="mb-2 aspect-square object-cover"
           style={{
             borderRadius:
               borderStyle === BorderStyles.SQUARE
@@ -227,57 +251,60 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           }}
         />
       )}
-      <div className="space-y-0.5">
-        <div className="space-y-0.5">
-          <p
-            className="text-3xl font-bold"
-            style={{
-              color: colorHex,
-            }}
-          >
-            {firstName} {lastName}
-          </p>
-          <p
-            className="text-lg font-medium"
-            style={
-              {
-                // color: colorHex,
-              }
-            }
-          >
-            {jobTitle}
-          </p>
-        </div>
-        <p className="text-sm text-gray-500">
-          {city}
-          {city && country ? ", " : ""}
-          {country}
-          {(city || country) && (phone || email) ? " • " : ""}
-          {/* {[phone, email].filter(Boolean).join(" • ")} */}
-          {phone && (
-            <a href={`tel:${phone}`} className="text-blue-500">
+      <h1
+        className="font-bold text-[24.9pt]"
+        style={{ color: colorHex, fontVariant: "small-caps" }}
+      >
+        {firstName} {lastName}
+      </h1>
+      {jobTitle && (
+        <p className="font-semibold mt-0.5 text-[10pt]">{jobTitle}</p>
+      )}
+      <div className={`mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11pt] text-black ${justifyClass}`}>
+        {phone && (
+          <div className="flex items-center gap-1">
+            <Phone size={12} />
+            <a href={`tel:${phone}`} className="hover:underline">
               {phone}
             </a>
-          )}
-          {phone && email ? " • " : ""}
-          {email && (
-            <a href={`mailto:${email}`} className="text-blue-500">
+          </div>
+        )}
+        
+        {email && (
+          <div className="flex items-center gap-1">
+            <Mail size={12} />
+            <a href={`mailto:${email}`} className="hover:underline">
               {email}
             </a>
-          )}
-          {contactLinks?.map((link, index) => {
-            if (!link.url) return null;
-            const needsDot = index > 0 || !!city || !!country || !!phone || !!email;
-            return (
-              <React.Fragment key={index}>
-                {needsDot ? " • " : ""}
-                <a href={link.url} target="_blank" className="text-blue-500">
-                  {link.linkName || link.url.replace(/^https?:\/\//, "")}
-                </a>
-              </React.Fragment>
-            );
-          })}
-        </p>
+          </div>
+        )}
+
+        {(city || country) && (
+          <div className="flex items-center gap-1">
+            <MapPin size={12} />
+            <span>
+              {city}
+              {city && country ? ", " : ""}
+              {country}
+            </span>
+          </div>
+        )}
+
+        {contactLinks?.map((link, index) => {
+          if (!link.url) return null;
+          let Icon: React.ElementType = Globe;
+          if (link.url.toLowerCase().includes("linkedin")) Icon = FaLinkedin;
+          else if (link.url.toLowerCase().includes("github")) Icon = FaGithub;
+          
+          return (
+            <div key={index} className="flex items-center gap-1">
+              <Icon size={12} />
+              <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                {link.linkName || link.url.replace(/^https?:\/\//, "")}
+              </a>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -289,28 +316,18 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
   if (!summary) return null;
 
   return (
-    <>
-      {/* <div className="break-inside-avoid space-y-3"> */}
-      <div className="space-y-1">
-        <p
-          className="text-lg font-semibold"
-          style={{
-            color: colorHex,
-          }}
-        >
-          SUMMARY
-        </p>
-        <hr
-          className="border-2"
-          style={{
-            borderColor: colorHex,
-          }}
-        />
-        <div className="text-justify text-sm whitespace-pre-line">
-          {summary}
-        </div>
+    <div className="space-y-1">
+      <p
+        className="font-bold text-[12pt]"
+        style={{ color: colorHex }}
+      >
+        Objective
+      </p>
+      <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+      <div className="text-[10pt] text-justify whitespace-pre-line mt-1">
+        {summary}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -324,66 +341,46 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   if (!workExperiencesNotEmpty?.length) return null;
 
   return (
-    <>
+    <div className="space-y-1.5">
       <div className="space-y-1">
         <p
-          className="text-lg font-semibold"
-          style={{
-            color: colorHex,
-          }}
+          className="font-bold text-[12pt]"
+          style={{ color: colorHex }}
         >
-          EXPERIENCE
+          Experience
         </p>
-        <hr
-          className="border-2"
-          style={{
-            borderColor: colorHex,
-          }}
-        />
-        {workExperiencesNotEmpty.map((exp, index) => (
-          <div key={index} className="break-inside-avoid space-y-0.5">
-            <div
-              className="flex items-center justify-between text-sm font-semibold"
-              style={
-                {
-                  // color: colorHex,
-                }
-              }
-            >
-              <span>{exp.position}</span>
-              {exp.startDate && (
-                <span>
-                  {formatDate(exp.startDate, "MM/yyyy")} -{" "}
-                  {exp.endDate ? formatDate(exp.endDate, "MM/yyyy") : "Present"}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold">{exp.company}</p>
-              <p className="text-sm font-light">{exp.locationType}</p>
-            </div>
-            {!!exp.description?.length && (
-              <ul className="mt-1 space-y-0.5 text-sm">
-                {exp.description.map((bullet, i) => (
-                  <li key={i} className="flex items-start gap-1.5">
-                    <span
-                      className="font-bold select-none"
-                      style={{ color: colorHex || "currentColor" }}
-                    >
-                      •
-                    </span>
-                    <div
-                      className="flex-1 text-justify"
-                      dangerouslySetInnerHTML={{ __html: bullet }}
-                    />
-                  </li>
-                ))}
-              </ul>
+        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+      </div>
+      
+      {workExperiencesNotEmpty.map((exp, index) => (
+        <div key={index} className="break-inside-avoid space-y-0.5">
+          <div className="flex items-center justify-between text-[11pt]">
+            <span className="font-bold">{exp.company}</span>
+            {exp.startDate && (
+              <span className="font-bold text-[10pt]">
+                {formatDate(exp.startDate, "MMM yyyy")} -{" "}
+                {exp.endDate ? formatDate(exp.endDate, "MMM yyyy") : "Present"}
+              </span>
             )}
           </div>
-        ))}
-      </div>
-    </>
+          <div className="flex items-center justify-between text-[10pt]">
+            <span className="italic">{exp.position}</span>
+            <span className="italic">{exp.locationType}</span>
+          </div>
+          {!!exp.description?.length && (
+            <ul className="mt-1 list-outside list-disc space-y-0.5 text-[10pt] ml-4">
+              {exp.description.map((bullet, i) => (
+                <li key={i} className="text-justify pl-1">
+                  <span
+                    dangerouslySetInnerHTML={{ __html: bullet.replace(/^<p>/, '').replace(/<\/p>$/, '') }}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -397,70 +394,49 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
   if (!projectsNotEmpty?.length) return null;
 
   return (
-    <>
+    <div className="space-y-1.5">
       <div className="space-y-1">
         <p
-          className="text-lg font-semibold"
-          style={{
-            color: colorHex,
-          }}
+          className="font-bold text-[12pt]"
+          style={{ color: colorHex }}
         >
-          PROJECTS
+          Projects
         </p>
-        <hr
-          className="border-2"
-          style={{
-            borderColor: colorHex,
-          }}
-        />
-        {projectsNotEmpty.map((proj, index) => (
-          <div key={index} className="break-inside-avoid space-y-0.5">
-            <div
-              className="flex items-center justify-between text-sm font-semibold"
-              style={
-                {
-                  // color: colorHex,
-                }
-              }
-            >
-              <span className="text-base">{proj.ProjectName}</span>
-              {proj.startDate && (
-                <span>
-                  {formatDate(proj.startDate, "MM/yyyy")} -{" "}
-                  {proj.endDate
-                    ? formatDate(proj.endDate, "MM/yyyy")
-                    : "Present"}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-light italic">{proj.toolsUsed}</p>
-              {proj.demoLink && proj.demoLink.startsWith("http") && (
-                <a
-                  href={proj.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-light italic hover:underline"
-                  // style={{ color: colorHex }}
-                >
-                  View Demo
-                </a>
-              )}
-            </div>
+        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+      </div>
 
+      <div className="space-y-1.5 break-inside-avoid">
+        {projectsNotEmpty.map((proj, index) => (
+          <div key={index} className="space-y-0.5">
+            <div className="flex items-center justify-between text-[10pt]">
+              <div>
+                <span className="font-bold text-[11pt]">{proj.ProjectName}</span>
+                {proj.toolsUsed && (
+                  <>
+                    <span className="mx-1">|</span>
+                    <span className="italic">{proj.toolsUsed}</span>
+                  </>
+                )}
+              </div>
+              <div className="flex gap-2 font-bold uppercase tracking-wider">
+                {proj.demoLink && proj.demoLink.startsWith("http") && (
+                  <a href={proj.demoLink} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                    DEMO
+                  </a>
+                )}
+                {proj.githubUrl && proj.githubUrl.startsWith("http") && (
+                  <a href={proj.githubUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                    CODE
+                  </a>
+                )}
+              </div>
+            </div>
             {!!proj.description?.length && (
-              <ul className="mt-1 space-y-0.5 text-sm">
+              <ul className="mt-1 list-outside list-disc space-y-0.5 text-[10pt] ml-4">
                 {proj.description.map((bullet, i) => (
-                  <li key={i} className="flex items-start gap-1.5">
+                  <li key={i} className="text-justify pl-1">
                     <span
-                      className="font-bold select-none"
-                      style={{ color: colorHex || "currentColor" }}
-                    >
-                      •
-                    </span>
-                    <div
-                      className="flex-1 text-justify"
-                      dangerouslySetInnerHTML={{ __html: bullet }}
+                      dangerouslySetInnerHTML={{ __html: bullet.replace(/^<p>/, '').replace(/<\/p>$/, '') }}
                     />
                   </li>
                 ))}
@@ -469,7 +445,7 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -483,45 +459,41 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
   if (!educationsNotEmpty?.length) return null;
 
   return (
-    <>
+    <div className="space-y-1.5">
       <div className="space-y-1">
         <p
-          className="text-lg font-semibold"
-          style={{
-            color: colorHex,
-          }}
+          className="font-bold text-[12pt]"
+          style={{ color: colorHex }}
         >
-          EDUCATION
+          Education
         </p>
-        <hr
-          className="border-2"
-          style={{
-            borderColor: colorHex,
-          }}
-        />
-        {educationsNotEmpty.map((edu, index) => (
-          <div key={index} className="break-inside-avoid space-y-0.5">
-            <div
-              className="flex items-center justify-between text-sm font-semibold"
-              style={
-                {
-                  // color: colorHex,
-                }
-              }
-            >
-              <span>{edu.degree}</span>
-              {edu.startDate && (
-                <span>
-                  {edu.startDate &&
-                    `${formatDate(edu.startDate, "MM/yyyy")} ${edu.endDate ? `- ${formatDate(edu.endDate, "MM/yyyy")}` : ""}`}
+        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+      </div>
+      
+      {educationsNotEmpty.map((edu, index) => {
+        const schoolParts = edu.school?.split(",") || [];
+        const institution = schoolParts[0]?.trim();
+        const location = edu.location || (schoolParts.length > 1 ? schoolParts.slice(1).join(",").trim() : "");
+        return (
+          <div key={index} className="break-inside-avoid space-y-0.5 text-[10pt] mt-1">
+            <div className="flex items-center justify-between text-[11pt]">
+              <span className="font-bold">{institution}</span>
+              {(edu.startDate || edu.endDate) && (
+                <span className="font-bold text-[10pt]">
+                  {edu.startDate ? formatDate(edu.startDate, "MMM yyyy") : ""}
+                  {edu.startDate && edu.endDate ? " - " : ""}
+                  {edu.endDate ? formatDate(edu.endDate, "MMM yyyy") : edu.startDate ? " - Present" : "Present"}
                 </span>
               )}
             </div>
-            <p className="text-sm font-medium">{edu.school}</p>
+            <div className="flex items-center justify-between">
+              <span className="italic">{edu.degree}</span>
+              {location && <span className="italic text-[10pt]">{location}</span>}
+            </div>
           </div>
-        ))}
-      </div>
-    </>
+        );
+      })}
+    </div>
   );
 }
 
@@ -531,32 +503,21 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
   if (!skills?.length) return null;
 
   return (
-    <>
-      <div className="break-inside-avoid space-y-1">
+    <div className="space-y-1.5">
+      <div className="space-y-1">
         <p
-          className="text-lg font-semibold"
-          style={{
-            color: colorHex,
-          }}
+          className="font-bold text-[12pt]"
+          style={{ color: colorHex }}
         >
-          SKILLS
+          Technical Skills
         </p>
-        <hr
-          className="border-2"
-          style={{
-            borderColor: colorHex,
-          }}
-        />
-        <div className="flex break-inside-avoid flex-wrap gap-y-0">
-          {skills.map((skill, index) => (
-            <span key={index} className="text-sm">
-              {skill}
-              {index !== skills.length - 1 && ",\u00A0"}
-            </span>
-          ))}
-        </div>
+        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
       </div>
-    </>
+
+      <div className="text-[10pt] break-inside-avoid">
+        {skills.join(", ")}
+      </div>
+    </div>
   );
 }
 
@@ -572,49 +533,28 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
   if (!certificationsNotEmpty?.length) return null;
 
   return (
-    <>
+    <div className="space-y-1.5">
       <div className="space-y-1">
         <p
-          className="text-lg font-semibold"
-          style={{
-            color: colorHex,
-          }}
+          className="font-bold text-[12pt]"
+          style={{ color: colorHex }}
         >
-          CERTIFICATIONS
+          Certifications
         </p>
-        <hr
-          className="border-2"
-          style={{
-            borderColor: colorHex,
-          }}
-        />
-        {certificationsNotEmpty.map((cert, index) => (
-          <div key={index} className="break-inside-avoid space-y-0.5">
-            {/* Certification Name */}
-            <div
-              className="flex items-center justify-between text-sm font-semibold"
-              style={
-                {
-                  // color: colorHex,
-                }
-              }
-            >
-              <span>
-                <span className="font-semibold">{cert.certificationName}</span>
-                {cert.awardedBy && (
-                  <span className="font-normal italic">
-                    {" "}
-                    - {cert.awardedBy}
-                  </span>
-                )}
-              </span>
-              {cert.awardedDate && (
-                <span>{formatDate(cert.awardedDate, "MM/yyyy")}</span>
-              )}
-            </div>
-          </div>
-        ))}
+        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
       </div>
-    </>
+      
+      <ul className="list-outside list-disc space-y-1 text-[10pt] ml-4 break-inside-avoid">
+        {certificationsNotEmpty.map((cert, index) => (
+          <li key={index} className="text-justify pl-1">
+            <span className="font-bold text-[11pt]">{cert.certificationName}. </span>
+            {cert.awardedBy && <span className="text-[11pt]">{cert.awardedBy}</span>}
+            {cert.awardedDate && (
+              <span className="text-[10pt]"> - {formatDate(cert.awardedDate, "MMM yyyy")}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
