@@ -7,7 +7,7 @@ import { useState } from "react";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
 import { cn, mapToResumeValues } from "@/lib/utils";
 import Breadcrumbs from "./Breadcrumbs";
-import Footer from "./Footer";
+import StepsSidebar from "./StepsSidebar";
 import { steps } from "./steps";
 import useAutoSaveResume from "./useAutoSaveResume";
 import type { ResumeServerData } from "@/lib/resume/types";
@@ -54,13 +54,12 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
           borderStyle: "",
           colorHex: "",
           fontFamily: "Computer Modern Serif Roman",
+          headerAlignment: "center",
           summary: undefined,
         },
   );
 
-  const [showSmResumePreview, setShowSmResumePreview] = useState(false);
-
-  const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData);
+  const { hasUnsavedChanges } = useAutoSaveResume(resumeData);
 
   useUnloadWarning(hasUnsavedChanges);
 
@@ -79,22 +78,23 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   return (
     <div className="flex min-h-0 grow flex-col">
       <main className="relative grow">
-        <Footer
-          currentStep={currentStep}
-          setCurrentStep={setStep}
-          showSmResumePreview={showSmResumePreview}
-          setShowSmResumePreview={setShowSmResumePreview}
-          isSaving={isSaving}
-          hasUnsavedChanges={hasUnsavedChanges}
-        />
-        <div className="absolute inset-0 flex min-h-0 w-full px-3 pt-3 pb-3 md:px-4 md:pt-4 md:pb-4">
+        <div className="absolute inset-0 flex min-h-0 w-full px-3 pt-3 pb-3 md:px-4 md:pt-4 md:pb-4 md:gap-4">
           <div
             className={cn(
-              "min-h-0 w-full space-y-5 overflow-y-auto pr-1 md:block md:w-1/2 md:pr-4",
-              showSmResumePreview && "hidden",
+              "hidden md:flex w-max h-fit flex-col space-y-2"
             )}
           >
-            <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
+            <StepsSidebar currentStep={currentStep} setCurrentStep={setStep} />
+          </div>
+          
+          <div
+            className={cn(
+              "min-h-0 flex-1 space-y-5 overflow-y-auto pr-1 md:pr-0"
+            )}
+          >
+            <div className="md:hidden mb-4">
+              <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
+            </div>
             {FormComponent && (
               <FormComponent
                 resumeData={resumeData}
@@ -102,11 +102,10 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
               />
             )}
           </div>
-          <div className="grow md:border-r" />
+          <div className="hidden md:block border-r" />
           <ResumePreviewSection
             resumeData={resumeData}
             setResumeData={setResumeData}
-            className={cn(showSmResumePreview && "flex")}
           />
         </div>
       </main>

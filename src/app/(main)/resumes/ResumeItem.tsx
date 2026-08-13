@@ -75,7 +75,7 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
       <div
         onClick={() => router.push(`/editor?resumeId=${resume.id}`)}
         className="border-border/50 bg-muted/20 relative mt-auto block w-full cursor-pointer overflow-hidden rounded-md border"
-        style={{ aspectRatio: "210/297" }}
+        style={{ aspectRatio: "8.5/11" }}
         role="button"
         tabIndex={0}
       >

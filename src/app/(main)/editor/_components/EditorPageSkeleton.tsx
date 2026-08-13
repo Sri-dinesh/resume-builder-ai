@@ -38,7 +38,7 @@ export default function EditorPageSkeleton() {
           {/* Right side - Preview */}
           <div className="hidden w-1/2 md:flex">
             <div className="bg-secondary flex w-full justify-center p-3">
-              <Skeleton className="aspect-[210/297] h-auto w-full max-w-2xl shadow-md" />
+              <Skeleton className="aspect-[8.5/11] h-auto w-full max-w-2xl shadow-md" />
             </div>
           </div>
         </div>
