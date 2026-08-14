@@ -37,17 +37,17 @@ SparkCV is an intelligent, AI-powered resume builder, ATS (Applicant Tracking Sy
 ## 4. Architecture
 ```mermaid
 graph TD
-    Client[Client Browser (Next.js/React)] -->|Server Actions / API Routes| Server[Next.js Server]
-    Server -->|Auth Verification| Clerk[Clerk Auth]
-    Server -->|ORM Queries| Database[(PostgreSQL/Neon)]
-    Server -->|AI Prompts| Gemini[Google Gemini AI]
-    Server -->|Payment Processing & Webhooks| Stripe[Stripe]
-    Server -->|Profile Image Uploads| VercelBlob[Vercel Blob Storage]
+    Client["Client Browser (Next.js/React)"] -->|Server Actions / API Routes| Server["Next.js Server"]
+    Server -->|Auth Verification| Clerk["Clerk Auth"]
+    Server -->|ORM Queries| Database[("PostgreSQL/Neon")]
+    Server -->|AI Prompts| Gemini["Google Gemini AI"]
+    Server -->|Payment Processing & Webhooks| Stripe["Stripe"]
+    Server -->|Profile Image Uploads| VercelBlob["Vercel Blob Storage"]
     
-    subgraph Frontend Features
-        Editor[Drag & Drop Editor]
-        ATS[ATS Scorer Dashboard]
-        CoverLetter[Cover Letter Generator]
+    subgraph Frontend_Features [Frontend Features]
+        Editor["Drag & Drop Editor"]
+        ATS["ATS Scorer Dashboard"]
+        CoverLetter["Cover Letter Generator"]
     end
     
     Client --> Editor
