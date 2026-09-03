@@ -5,7 +5,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { formatDate } from "date-fns";
-import { Loader2, Phone, Mail, Globe, MapPin } from "lucide-react";
+import { Phone, Mail, Globe, MapPin } from "lucide-react";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
@@ -95,7 +95,7 @@ export default function ResumePreview({
 
   // const { width } = useDimensions(containerRef);
   const { width } = useDimensions(containerRef as React.RefObject<HTMLElement>);
-  const scale = width ? width / 816 : 1;
+  const scale = width ? width / 794 : 1;
 
   useEffect(() => {
     if (!previewContentRef.current || !width) return;
@@ -133,10 +133,11 @@ export default function ResumePreview({
       <div
         className={cn("space-y-2 p-[0.5in]", !width && "invisible")}
         style={{
-          width: 816,
+          width: 794,
+          minHeight: 1123,
           zoom: scale,
           fontFamily: getFontFamily(),
-          background: "repeating-linear-gradient(to bottom, transparent 0, transparent 1055px, #cbd5e1 1055px, #cbd5e1 1056px)",
+          backgroundColor: "#ffffff",
         }}
         ref={setContentRefs}
         id="resumePreviewContent"

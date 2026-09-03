@@ -152,7 +152,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ resumeData }) => {
 
   return (
     <Document>
-      <Page size="LETTER" style={[styles.page, { fontFamily }]}>
+      <Page size="A4" style={[styles.page, { fontFamily }]}>
         {/* Personal Info */}
         <View 
           style={[
