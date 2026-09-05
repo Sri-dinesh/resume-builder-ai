@@ -21,9 +21,10 @@ model Resume {
   description String?
 
   photoUrl    String?
-  colorHex    String  @default("#000000")
-  borderStyle String  @default("squircle")
-  fontFamily  String  @default("Computer Modern Serif Roman")
+  colorHex        String  @default("#000000")
+  borderStyle     String  @default("squircle")
+  fontFamily      String  @default("Computer Modern Serif Roman")
+  headerAlignment String  @default("center")
 
   summary     String?
   firstName   String?
@@ -80,6 +81,7 @@ model Project {
   endDate     DateTime?
   description String[]  @default([])
   demoLink    String?
+  githubUrl   String?
 
   resumeId String
   resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)

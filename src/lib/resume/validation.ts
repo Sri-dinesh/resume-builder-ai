@@ -77,6 +77,7 @@ export const projectSchema = z.object({
         endDate: optionalString,
         description: descriptionArray,
         demoLink: optionalString,
+        githubUrl: optionalString,
         // demoLink: z.string().url().optional().or(z.string().length(0)), // Add URL validation
       }),
     )
@@ -113,6 +114,7 @@ export const educationSchema = z.object({
       z.object({
         degree: optionalString,
         school: optionalString,
+        location: optionalString,
         startDate: optionalString,
         endDate: optionalString,
       }),
@@ -146,6 +148,7 @@ export const resumeSchema = z.object({
   colorHex: optionalString,
   borderStyle: optionalString,
   fontFamily: z.string(),
+  headerAlignment: optionalString,
 });
 
 export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {

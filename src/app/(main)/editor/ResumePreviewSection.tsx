@@ -6,6 +6,7 @@ import ResumePreview from "@/components/resume/ResumePreview";
 import { cn } from "@/lib/utils";
 import BorderStyleButton from "./BorderStyleButton";
 import ColorPicker from "./ColorPicker";
+import HeaderAlignmentButton from "./HeaderAlignmentButton";
 import type { ResumeValues } from "@/lib/resume/validation";
 
 interface ResumePreviewSectionProps {
@@ -56,6 +57,14 @@ export default function ResumePreviewSection({
             value={resumeData.fontFamily}
             onValueChange={(fontFamily) =>
               setResumeData({ ...resumeData, fontFamily })
+            }
+          />
+
+          {/* Header Alignment Button */}
+          <HeaderAlignmentButton
+            headerAlignment={resumeData.headerAlignment}
+            onChange={(headerAlignment) =>
+              setResumeData({ ...resumeData, headerAlignment })
             }
           />
 

@@ -6,6 +6,7 @@
   src: url('/fonts/computer-modern/cmu-serif-500-roman.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -13,6 +14,7 @@
   src: url('/fonts/computer-modern/cmu-serif-700-roman.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -20,6 +22,7 @@
   src: url('/fonts/computer-modern/cmu-serif-500-italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -27,6 +30,7 @@
   src: url('/fonts/computer-modern/cmu-serif-700-italic.ttf') format('truetype');
   font-weight: bold;
   font-style: italic;
+  font-display: swap;
 }
 
 @layer base {
@@ -107,20 +111,59 @@
   }
 }
 
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
 @media print {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   #resumePreviewContent {
     zoom: 1 !important;
-    padding: 0;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    padding: 12.7mm !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-}
 
-#resumePreviewContent {
-  font-family: var(--font-inter), sans-serif;
-}
+  /* Hide interactive controls, drag handles, and navigation during print */
+  [data-dndkit],
+  .cursor-grab,
+  .group-hover\:block,
+  button,
+  nav,
+  header {
+    display: none !important;
+  }
 
-@page {
-  size: A4;
-  margin: 0.6cm;
+  /* Ensure resume items do not break awkwardly mid-block */
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Strip all transitions, animations, and shadows so Chromium outputs clean vector PDF without laggy GPU rasterization */
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
 }
 
 .landing-page {
