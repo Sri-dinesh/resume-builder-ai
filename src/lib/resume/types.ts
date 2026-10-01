@@ -8,6 +8,7 @@ export interface EditorFormProps {
 
 export const resumeDataInclude = {
   contactLinks: true,
+
   workExperiences: true,
   projects: true,
   educations: true,

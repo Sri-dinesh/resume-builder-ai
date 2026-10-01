@@ -108,6 +108,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       endDate: proj.endDate?.toISOString().split("T")[0],
       description: normalizeBullets(proj.description),
       demoLink: proj.demoLink || undefined,
+      githubUrl: proj.githubUrl || undefined,
     })),
     certifications: data.certifications.map((cert) => ({
       certificationName: cert.certificationName || undefined,
@@ -124,6 +125,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     borderStyle: data.borderStyle,
     colorHex: data.colorHex,
     fontFamily: data.fontFamily,
+    headerAlignment: data.headerAlignment,
     summary: data.summary || undefined,
   };
 }

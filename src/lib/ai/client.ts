@@ -148,13 +148,31 @@ export class OpenAIProvider implements AIProvider {
     prompt: string,
     options?: { temperature?: number },
   ): Promise<T> {
-    const response = await this.client.chat.completions.create({
-      model: this.modelName,
-      messages: [{ role: "user", content: prompt }],
-      temperature: options?.temperature ?? 0.7,
-      response_format: { type: "json_object" },
-    });
-    const text = response.choices[0]?.message?.content || "";
+    let text = "";
+    try {
+      const response = await this.client.chat.completions.create({
+        model: this.modelName,
+        messages: [{ role: "user", content: prompt }],
+        temperature: options?.temperature ?? 0.7,
+        response_format: { type: "json_object" },
+      });
+      text = response.choices[0]?.message?.content || "";
+    } catch {
+      // Fallback for providers / models that do not support response_format: { type: "json_object" }
+      const response = await this.client.chat.completions.create({
+        model: this.modelName,
+        messages: [
+          {
+            role: "user",
+            content:
+              prompt +
+              "\n\nIMPORTANT: Return ONLY a valid JSON object without any Markdown fences or extra commentary.",
+          },
+        ],
+        temperature: options?.temperature ?? 0.7,
+      });
+      text = response.choices[0]?.message?.content || "";
+    }
     const cleaned = extractJson(text);
     const sanitized = sanitizeJsonString(cleaned);
     return JSON.parse(sanitized) as T;
@@ -172,7 +190,7 @@ export function getAIProvider(): AIProvider {
         "GEMINI_API_KEY must be provided when using Gemini provider",
       );
     }
-    const model = env.AI_MODEL || "gemini-3.5-flash";
+    const model = env.AI_MODEL || "gemini-2.5-flash-lite";
     return new GeminiProvider(apiKey, model);
   }
 
@@ -189,12 +207,15 @@ export function getAIProvider(): AIProvider {
   // For any other provider (e.g. "opencode-zen", "custom", "deepseek", etc.) or if AI_BASE_URL is set,
   // we assume it is an OpenAI-compatible endpoint.
   const apiKey = env.AI_API_KEY || env.GEMINI_API_KEY || "";
-  const baseURL = env.AI_BASE_URL;
+  let baseURL = env.AI_BASE_URL;
   if (!baseURL) {
     throw new Error(
       `AI_BASE_URL must be provided when using custom/OpenAI-compatible provider "${env.AI_PROVIDER}"`,
     );
   }
+  // Sanitize baseURL: remove any accidental trailing /chat/completions or trailing slashes
+  baseURL = baseURL.replace(/\/chat\/completions\/?$/i, "").replace(/\/+$/, "");
+
   const model = env.AI_MODEL || "custom-model";
   return new OpenAIProvider(apiKey, model, baseURL);
 }

@@ -41,6 +41,41 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
   const reactToPrintFn = useReactToPrint({
     contentRef,
     documentTitle: resume.title || "Resume",
+    pageStyle: `
+      @page {
+        size: A4 portrait;
+        margin: 0mm;
+      }
+      @media print {
+        html, body {
+          margin: 0 !important;
+          padding: 0 !important;
+          background: #ffffff !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        #resumePreviewContent {
+          width: 210mm !important;
+          min-height: 297mm !important;
+          padding: 12.7mm !important;
+          margin: 0 auto !important;
+          box-sizing: border-box !important;
+          background: #ffffff !important;
+          background-image: none !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+        [data-dndkit], .cursor-grab {
+          display: none !important;
+        }
+        * {
+          transition: none !important;
+          animation: none !important;
+          box-shadow: none !important;
+          text-shadow: none !important;
+        }
+      }
+    `,
   });
 
   const wasUpdated = resume.updatedAt !== resume.createdAt;

@@ -22,11 +22,18 @@ export default async function Page() {
     where: { userId },
   });
 
-  const priceInfo = subscription
-    ? await stripe.prices.retrieve(subscription.stripePriceId, {
+  const isExpired =
+    subscription && subscription.stripeCurrentPeriodEnd < new Date();
+
+  const activeSubscription = isExpired ? null : subscription;
+
+  const priceInfo = activeSubscription
+    ? await stripe.prices.retrieve(activeSubscription.stripePriceId, {
         expand: ["product"],
       })
     : null;
+
+
 
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
@@ -37,12 +44,12 @@ export default async function Page() {
           {priceInfo ? (priceInfo.product as Stripe.Product).name : "Free"}
         </span>
       </p>
-      {subscription ? (
+      {activeSubscription ? (
         <>
-          {subscription.stripeCancelAtPeriodEnd && (
+          {activeSubscription.stripeCancelAtPeriodEnd && (
             <p className="text-destructive">
               Your subscription will be canceled on{" "}
-              {formatDate(subscription.stripeCurrentPeriodEnd, "MMMM dd, yyyy")}
+              {formatDate(activeSubscription.stripeCurrentPeriodEnd, "MMMM dd, yyyy")}
             </p>
           )}
           <ManageSubscriptionButton />
