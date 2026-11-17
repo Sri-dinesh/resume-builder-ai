@@ -30,7 +30,9 @@ export default function HeaderAlignmentButton({
       return;
     }
 
-    const currentIndex = headerAlignment ? headerAlignments.indexOf(headerAlignment) : 1; // Default to center
+    const currentIndex = headerAlignment
+      ? headerAlignments.indexOf(headerAlignment)
+      : 1; // Default to center
     const nextIndex = (currentIndex + 1) % headerAlignments.length;
     onChange(headerAlignments[nextIndex]);
   }

@@ -78,21 +78,17 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   return (
     <div className="flex min-h-0 grow flex-col">
       <main className="relative grow">
-        <div className="absolute inset-0 flex min-h-0 w-full px-3 pt-3 pb-3 md:px-4 md:pt-4 md:pb-4 md:gap-4">
-          <div
-            className={cn(
-              "hidden md:flex w-max h-fit flex-col space-y-2"
-            )}
-          >
+        <div className="absolute inset-0 flex min-h-0 w-full px-3 pt-3 pb-3 md:gap-4 md:px-4 md:pt-4 md:pb-4">
+          <div className={cn("hidden h-fit w-max flex-col space-y-2 md:flex")}>
             <StepsSidebar currentStep={currentStep} setCurrentStep={setStep} />
           </div>
-          
+
           <div
             className={cn(
-              "min-h-0 flex-1 space-y-5 overflow-y-auto pr-1 md:pr-0"
+              "min-h-0 flex-1 space-y-5 overflow-y-auto pr-1 md:pr-0",
             )}
           >
-            <div className="md:hidden mb-4">
+            <div className="mb-4 md:hidden">
               <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
             </div>
             {FormComponent && (
@@ -102,7 +98,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
               />
             )}
           </div>
-          <div className="hidden md:block border-r" />
+          <div className="hidden border-r md:block" />
           <ResumePreviewSection
             resumeData={resumeData}
             setResumeData={setResumeData}

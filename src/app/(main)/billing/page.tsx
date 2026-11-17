@@ -33,8 +33,6 @@ export default async function Page() {
       })
     : null;
 
-
-
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
       <h1 className="text-3xl font-bold">Billing</h1>
@@ -49,7 +47,10 @@ export default async function Page() {
           {activeSubscription.stripeCancelAtPeriodEnd && (
             <p className="text-destructive">
               Your subscription will be canceled on{" "}
-              {formatDate(activeSubscription.stripeCurrentPeriodEnd, "MMMM dd, yyyy")}
+              {formatDate(
+                activeSubscription.stripeCurrentPeriodEnd,
+                "MMMM dd, yyyy",
+              )}
             </p>
           )}
           <ManageSubscriptionButton />

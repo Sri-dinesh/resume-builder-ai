@@ -2,32 +2,32 @@
 @config "../../tailwind.config.ts";
 
 @font-face {
-  font-family: 'Computer Modern Serif Roman';
-  src: url('/fonts/computer-modern/cmu-serif-500-roman.ttf') format('truetype');
+  font-family: "Computer Modern Serif Roman";
+  src: url("/fonts/computer-modern/cmu-serif-500-roman.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Computer Modern Serif Roman';
-  src: url('/fonts/computer-modern/cmu-serif-700-roman.ttf') format('truetype');
+  font-family: "Computer Modern Serif Roman";
+  src: url("/fonts/computer-modern/cmu-serif-700-roman.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Computer Modern Serif Roman';
-  src: url('/fonts/computer-modern/cmu-serif-500-italic.ttf') format('truetype');
+  font-family: "Computer Modern Serif Roman";
+  src: url("/fonts/computer-modern/cmu-serif-500-italic.ttf") format("truetype");
   font-weight: normal;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Computer Modern Serif Roman';
-  src: url('/fonts/computer-modern/cmu-serif-700-italic.ttf') format('truetype');
+  font-family: "Computer Modern Serif Roman";
+  src: url("/fonts/computer-modern/cmu-serif-700-italic.ttf") format("truetype");
   font-weight: bold;
   font-style: italic;
   font-display: swap;

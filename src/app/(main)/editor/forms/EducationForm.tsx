@@ -43,18 +43,20 @@ export default function EducationForm({
   const form = useForm<EducationValues>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
-      educations: resumeData.educations?.map(edu => {
-        const parts = edu.school?.split(',') || [];
-        const school = parts[0]?.trim() || "";
-        const location = parts.length > 1 ? parts.slice(1).join(',').trim() : "";
-        return {
-          ...edu,
-          school,
-          location,
-          startDate: edu.startDate ? String(edu.startDate).slice(0, 10) : "",
-          endDate: edu.endDate ? String(edu.endDate).slice(0, 10) : "",
-        };
-      }) || [],
+      educations:
+        resumeData.educations?.map((edu) => {
+          const parts = edu.school?.split(",") || [];
+          const school = parts[0]?.trim() || "";
+          const location =
+            parts.length > 1 ? parts.slice(1).join(",").trim() : "";
+          return {
+            ...edu,
+            school,
+            location,
+            startDate: edu.startDate ? String(edu.startDate).slice(0, 10) : "",
+            endDate: edu.endDate ? String(edu.endDate).slice(0, 10) : "",
+          };
+        }) || [],
     },
   });
 

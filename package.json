@@ -1,8 +1,10 @@
 {
   "name": "ai-resume-builder",
   "version": "0.1.0",
+  "description": "AI-powered resume builder, ATS scorer, and cover letter generator — built for job seekers who want to stand out.",
   "private": true,
   "scripts": {
+    "setup": "cp -n .env.example .env.local && npm install && npx prisma generate",
     "dev": "next dev --turbo",
     "dev:legacy": "next dev",
     "build": "next build --webpack",

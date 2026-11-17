@@ -31,8 +31,6 @@ const inter = Inter({
   display: "swap",
 });
 
-
-
 interface ResumePreviewProps {
   resumeData: ResumeValues;
   contentRef?: React.Ref<HTMLDivElement>;
@@ -253,15 +251,17 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
         />
       )}
       <h1
-        className="font-bold text-[24.9pt]"
+        className="text-[24.9pt] font-bold"
         style={{ color: colorHex, fontVariant: "small-caps" }}
       >
         {firstName} {lastName}
       </h1>
       {jobTitle && (
-        <p className="font-semibold mt-0.5 text-[10pt]">{jobTitle}</p>
+        <p className="mt-0.5 text-[10pt] font-semibold">{jobTitle}</p>
       )}
-      <div className={`mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11pt] text-black ${justifyClass}`}>
+      <div
+        className={`mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11pt] text-black ${justifyClass}`}
+      >
         {phone && (
           <div className="flex items-center gap-1">
             <Phone size={12} />
@@ -270,7 +270,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
             </a>
           </div>
         )}
-        
+
         {email && (
           <div className="flex items-center gap-1">
             <Mail size={12} />
@@ -296,11 +296,16 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           let Icon: React.ElementType = Globe;
           if (link.url.toLowerCase().includes("linkedin")) Icon = FaLinkedin;
           else if (link.url.toLowerCase().includes("github")) Icon = FaGithub;
-          
+
           return (
             <div key={index} className="flex items-center gap-1">
               <Icon size={12} />
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
                 {link.linkName || link.url.replace(/^https?:\/\//, "")}
               </a>
             </div>
@@ -318,14 +323,14 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
 
   return (
     <div className="space-y-1">
-      <p
-        className="font-bold text-[12pt]"
-        style={{ color: colorHex }}
-      >
+      <p className="text-[12pt] font-bold" style={{ color: colorHex }}>
         Objective
       </p>
-      <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
-      <div className="text-[10pt] text-justify whitespace-pre-line mt-1">
+      <div
+        className="h-[1px] w-full bg-black"
+        style={{ backgroundColor: colorHex || "black" }}
+      />
+      <div className="mt-1 text-justify text-[10pt] whitespace-pre-line">
         {summary}
       </div>
     </div>
@@ -344,21 +349,21 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   return (
     <div className="space-y-1.5">
       <div className="space-y-1">
-        <p
-          className="font-bold text-[12pt]"
-          style={{ color: colorHex }}
-        >
+        <p className="text-[12pt] font-bold" style={{ color: colorHex }}>
           Experience
         </p>
-        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+        <div
+          className="h-[1px] w-full bg-black"
+          style={{ backgroundColor: colorHex || "black" }}
+        />
       </div>
-      
+
       {workExperiencesNotEmpty.map((exp, index) => (
         <div key={index} className="break-inside-avoid space-y-0.5">
           <div className="flex items-center justify-between text-[11pt]">
             <span className="font-bold">{exp.company}</span>
             {exp.startDate && (
-              <span className="font-bold text-[10pt]">
+              <span className="text-[10pt] font-bold">
                 {formatDate(exp.startDate, "MMM yyyy")} -{" "}
                 {exp.endDate ? formatDate(exp.endDate, "MMM yyyy") : "Present"}
               </span>
@@ -369,11 +374,13 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
             <span className="italic">{exp.locationType}</span>
           </div>
           {!!exp.description?.length && (
-            <ul className="mt-1 list-outside list-disc space-y-0.5 text-[10pt] ml-4">
+            <ul className="mt-1 ml-4 list-outside list-disc space-y-0.5 text-[10pt]">
               {exp.description.map((bullet, i) => (
-                <li key={i} className="text-justify pl-1">
+                <li key={i} className="pl-1 text-justify">
                   <span
-                    dangerouslySetInnerHTML={{ __html: bullet.replace(/^<p>/, '').replace(/<\/p>$/, '') }}
+                    dangerouslySetInnerHTML={{
+                      __html: bullet.replace(/^<p>/, "").replace(/<\/p>$/, ""),
+                    }}
                   />
                 </li>
               ))}
@@ -397,21 +404,23 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
   return (
     <div className="space-y-1.5">
       <div className="space-y-1">
-        <p
-          className="font-bold text-[12pt]"
-          style={{ color: colorHex }}
-        >
+        <p className="text-[12pt] font-bold" style={{ color: colorHex }}>
           Projects
         </p>
-        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+        <div
+          className="h-[1px] w-full bg-black"
+          style={{ backgroundColor: colorHex || "black" }}
+        />
       </div>
 
-      <div className="space-y-1.5 break-inside-avoid">
+      <div className="break-inside-avoid space-y-1.5">
         {projectsNotEmpty.map((proj, index) => (
           <div key={index} className="space-y-0.5">
             <div className="flex items-center justify-between text-[10pt]">
               <div>
-                <span className="font-bold text-[11pt]">{proj.ProjectName}</span>
+                <span className="text-[11pt] font-bold">
+                  {proj.ProjectName}
+                </span>
                 {proj.toolsUsed && (
                   <>
                     <span className="mx-1">|</span>
@@ -419,25 +428,39 @@ function ProjectSection({ resumeData }: ResumeSectionProps) {
                   </>
                 )}
               </div>
-              <div className="flex gap-2 font-bold uppercase tracking-wider">
+              <div className="flex gap-2 font-bold tracking-wider uppercase">
                 {proj.demoLink && proj.demoLink.startsWith("http") && (
-                  <a href={proj.demoLink} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                  <a
+                    href={proj.demoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-blue-600"
+                  >
                     DEMO
                   </a>
                 )}
                 {proj.githubUrl && proj.githubUrl.startsWith("http") && (
-                  <a href={proj.githubUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                  <a
+                    href={proj.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-blue-600"
+                  >
                     CODE
                   </a>
                 )}
               </div>
             </div>
             {!!proj.description?.length && (
-              <ul className="mt-1 list-outside list-disc space-y-0.5 text-[10pt] ml-4">
+              <ul className="mt-1 ml-4 list-outside list-disc space-y-0.5 text-[10pt]">
                 {proj.description.map((bullet, i) => (
-                  <li key={i} className="text-justify pl-1">
+                  <li key={i} className="pl-1 text-justify">
                     <span
-                      dangerouslySetInnerHTML={{ __html: bullet.replace(/^<p>/, '').replace(/<\/p>$/, '') }}
+                      dangerouslySetInnerHTML={{
+                        __html: bullet
+                          .replace(/^<p>/, "")
+                          .replace(/<\/p>$/, ""),
+                      }}
                     />
                   </li>
                 ))}
@@ -462,34 +485,45 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
   return (
     <div className="space-y-1.5">
       <div className="space-y-1">
-        <p
-          className="font-bold text-[12pt]"
-          style={{ color: colorHex }}
-        >
+        <p className="text-[12pt] font-bold" style={{ color: colorHex }}>
           Education
         </p>
-        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+        <div
+          className="h-[1px] w-full bg-black"
+          style={{ backgroundColor: colorHex || "black" }}
+        />
       </div>
-      
+
       {educationsNotEmpty.map((edu, index) => {
         const schoolParts = edu.school?.split(",") || [];
         const institution = schoolParts[0]?.trim();
-        const location = edu.location || (schoolParts.length > 1 ? schoolParts.slice(1).join(",").trim() : "");
+        const location =
+          edu.location ||
+          (schoolParts.length > 1 ? schoolParts.slice(1).join(",").trim() : "");
         return (
-          <div key={index} className="break-inside-avoid space-y-0.5 text-[10pt] mt-1">
+          <div
+            key={index}
+            className="mt-1 break-inside-avoid space-y-0.5 text-[10pt]"
+          >
             <div className="flex items-center justify-between text-[11pt]">
               <span className="font-bold">{institution}</span>
               {(edu.startDate || edu.endDate) && (
-                <span className="font-bold text-[10pt]">
+                <span className="text-[10pt] font-bold">
                   {edu.startDate ? formatDate(edu.startDate, "MMM yyyy") : ""}
                   {edu.startDate && edu.endDate ? " - " : ""}
-                  {edu.endDate ? formatDate(edu.endDate, "MMM yyyy") : edu.startDate ? " - Present" : "Present"}
+                  {edu.endDate
+                    ? formatDate(edu.endDate, "MMM yyyy")
+                    : edu.startDate
+                      ? " - Present"
+                      : "Present"}
                 </span>
               )}
             </div>
             <div className="flex items-center justify-between">
               <span className="italic">{edu.degree}</span>
-              {location && <span className="italic text-[10pt]">{location}</span>}
+              {location && (
+                <span className="text-[10pt] italic">{location}</span>
+              )}
             </div>
           </div>
         );
@@ -506,18 +540,16 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
   return (
     <div className="space-y-1.5">
       <div className="space-y-1">
-        <p
-          className="font-bold text-[12pt]"
-          style={{ color: colorHex }}
-        >
+        <p className="text-[12pt] font-bold" style={{ color: colorHex }}>
           Technical Skills
         </p>
-        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+        <div
+          className="h-[1px] w-full bg-black"
+          style={{ backgroundColor: colorHex || "black" }}
+        />
       </div>
 
-      <div className="text-[10pt] break-inside-avoid">
-        {skills.join(", ")}
-      </div>
+      <div className="break-inside-avoid text-[10pt]">{skills.join(", ")}</div>
     </div>
   );
 }
@@ -536,22 +568,29 @@ function CertificationSection({ resumeData }: ResumeSectionProps) {
   return (
     <div className="space-y-1.5">
       <div className="space-y-1">
-        <p
-          className="font-bold text-[12pt]"
-          style={{ color: colorHex }}
-        >
+        <p className="text-[12pt] font-bold" style={{ color: colorHex }}>
           Certifications
         </p>
-        <div className="h-[1px] w-full bg-black" style={{ backgroundColor: colorHex || "black" }} />
+        <div
+          className="h-[1px] w-full bg-black"
+          style={{ backgroundColor: colorHex || "black" }}
+        />
       </div>
-      
-      <ul className="list-outside list-disc space-y-1 text-[10pt] ml-4 break-inside-avoid">
+
+      <ul className="ml-4 list-outside list-disc break-inside-avoid space-y-1 text-[10pt]">
         {certificationsNotEmpty.map((cert, index) => (
-          <li key={index} className="text-justify pl-1">
-            <span className="font-bold text-[11pt]">{cert.certificationName}. </span>
-            {cert.awardedBy && <span className="text-[11pt]">{cert.awardedBy}</span>}
+          <li key={index} className="pl-1 text-justify">
+            <span className="text-[11pt] font-bold">
+              {cert.certificationName}.{" "}
+            </span>
+            {cert.awardedBy && (
+              <span className="text-[11pt]">{cert.awardedBy}</span>
+            )}
             {cert.awardedDate && (
-              <span className="text-[10pt]"> - {formatDate(cert.awardedDate, "MMM yyyy")}</span>
+              <span className="text-[10pt]">
+                {" "}
+                - {formatDate(cert.awardedDate, "MMM yyyy")}
+              </span>
             )}
           </li>
         ))}

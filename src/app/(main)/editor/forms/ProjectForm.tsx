@@ -260,9 +260,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Demo link</FormLabel>
-              <FormDescription>
-                Link to live demo.
-              </FormDescription>
+              <FormDescription>Link to live demo.</FormDescription>
               <div className="flex gap-2">
                 <FormControl>
                   <Input {...field} type="url" placeholder="https://..." />
@@ -288,12 +286,14 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Code link</FormLabel>
-              <FormDescription>
-                Link to source code.
-              </FormDescription>
+              <FormDescription>Link to source code.</FormDescription>
               <div className="flex gap-2">
                 <FormControl>
-                  <Input {...field} type="url" placeholder="https://github.com/..." />
+                  <Input
+                    {...field}
+                    type="url"
+                    placeholder="https://github.com/..."
+                  />
                 </FormControl>
                 {field.value && (
                   <a

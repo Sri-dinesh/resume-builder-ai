@@ -267,7 +267,9 @@ export default function PersonalInfoForm({
                   name={`contactLinks.${index}.linkName`}
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel className={index > 0 ? "sr-only" : ""}>Label</FormLabel>
+                      <FormLabel className={index > 0 ? "sr-only" : ""}>
+                        Label
+                      </FormLabel>
                       <FormControl>
                         <Input {...field} placeholder="e.g. LinkedIn" />
                       </FormControl>
@@ -280,9 +282,15 @@ export default function PersonalInfoForm({
                   name={`contactLinks.${index}.url`}
                   render={({ field }) => (
                     <FormItem className="flex-[2]">
-                      <FormLabel className={index > 0 ? "sr-only" : ""}>URL</FormLabel>
+                      <FormLabel className={index > 0 ? "sr-only" : ""}>
+                        URL
+                      </FormLabel>
                       <FormControl>
-                        <Input {...field} type="url" placeholder="https://..." />
+                        <Input
+                          {...field}
+                          type="url"
+                          placeholder="https://..."
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

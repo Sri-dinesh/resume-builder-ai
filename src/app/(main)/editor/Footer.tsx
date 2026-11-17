@@ -78,37 +78,41 @@ export default function Footer({
         >
           Next
         </Button>
-        
+
         {/* Mobile controls */}
         <div className="flex items-center gap-2 md:hidden">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={
-                previousStep ? () => setCurrentStep(previousStep) : undefined
-              }
-              disabled={!previousStep}
-            >
-              &larr;
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={nextStep ? () => setCurrentStep(nextStep) : undefined}
-              disabled={!nextStep}
-            >
-              &rarr;
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setShowSmResumePreview(!showSmResumePreview)}
-              title={
-                showSmResumePreview ? "Show input form" : "Show resume preview"
-              }
-            >
-              {showSmResumePreview ? <PenLine className="h-4 w-4" /> : <FileUser className="h-4 w-4" />}
-            </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={
+              previousStep ? () => setCurrentStep(previousStep) : undefined
+            }
+            disabled={!previousStep}
+          >
+            &larr;
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={nextStep ? () => setCurrentStep(nextStep) : undefined}
+            disabled={!nextStep}
+          >
+            &rarr;
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setShowSmResumePreview(!showSmResumePreview)}
+            title={
+              showSmResumePreview ? "Show input form" : "Show resume preview"
+            }
+          >
+            {showSmResumePreview ? (
+              <PenLine className="h-4 w-4" />
+            ) : (
+              <FileUser className="h-4 w-4" />
+            )}
+          </Button>
         </div>
       </div>
     </div>

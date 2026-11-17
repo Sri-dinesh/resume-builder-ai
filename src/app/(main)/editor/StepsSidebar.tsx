@@ -20,8 +20,9 @@ export default function StepsSidebar({
           variant="ghost"
           size="sm"
           className={cn(
-            "justify-start text-left text-muted-foreground",
-            step.key === currentStep && "bg-accent text-foreground font-semibold"
+            "text-muted-foreground justify-start text-left",
+            step.key === currentStep &&
+              "bg-accent text-foreground font-semibold",
           )}
           onClick={() => setCurrentStep(step.key)}
         >

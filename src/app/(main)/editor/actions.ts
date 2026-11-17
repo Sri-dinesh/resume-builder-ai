@@ -95,10 +95,11 @@ export async function saveResume(values: ResumeValues) {
         photoUrl: newPhotoUrl,
         contactLinks: {
           deleteMany: {},
-          create: contactLinks?.map((link) => ({
-            url: link.url,
-            linkName: link.linkName || null,
-          })) || [],
+          create:
+            contactLinks?.map((link) => ({
+              url: link.url,
+              linkName: link.linkName || null,
+            })) || [],
         },
         workExperiences: {
           deleteMany: {},
@@ -120,7 +121,9 @@ export async function saveResume(values: ResumeValues) {
           deleteMany: {},
           create: educations?.map((edu) => ({
             degree: edu.degree,
-            school: edu.location ? `${edu.school || ""}, ${edu.location}` : edu.school,
+            school: edu.location
+              ? `${edu.school || ""}, ${edu.location}`
+              : edu.school,
             startDate: edu.startDate ? new Date(edu.startDate) : undefined,
             endDate: edu.endDate ? new Date(edu.endDate) : undefined,
           })),
@@ -145,10 +148,11 @@ export async function saveResume(values: ResumeValues) {
         userId,
         photoUrl: newPhotoUrl,
         contactLinks: {
-          create: contactLinks?.map((link) => ({
-            url: link.url,
-            linkName: link.linkName || null,
-          })) || [],
+          create:
+            contactLinks?.map((link) => ({
+              url: link.url,
+              linkName: link.linkName || null,
+            })) || [],
         },
         workExperiences: {
           create: workExperiences?.map((exp) => ({

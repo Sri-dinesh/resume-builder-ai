@@ -69,8 +69,14 @@ export function buildResumeFactory(index = 1): ResumeValues {
     phone: "9876543210",
     email: `candidate${index}@example.com`,
     contactLinks: [
-      { url: `https://linkedin.com/in/candidate${index}`, linkName: "LinkedIn" },
-      { url: `https://portfolio${index}.example.com`, linkName: `Portfolio ${index}` },
+      {
+        url: `https://linkedin.com/in/candidate${index}`,
+        linkName: "LinkedIn",
+      },
+      {
+        url: `https://portfolio${index}.example.com`,
+        linkName: `Portfolio ${index}`,
+      },
     ],
     summary:
       "Results-driven professional with measurable impact across delivery, automation, and stakeholder management.",
