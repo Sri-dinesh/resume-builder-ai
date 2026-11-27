@@ -38,6 +38,7 @@ export interface ScoreMetrics {
   bulletCount: number;
   measurableBulletCount: number;
   actionVerbCount: number;
+  actionVerbDensity: number;
   sectionsFound: string[];
   sectionsMissing: string[];
   hasJobDescription: boolean;

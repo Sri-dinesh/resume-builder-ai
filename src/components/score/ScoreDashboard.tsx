@@ -1,7 +1,19 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, FileText, Target } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Download,
+  FileText,
+  Sparkles,
+  Target,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  formatAtsReportJson,
+  formatAtsReportMarkdown,
+} from "@/lib/resume/report";
 import { KeywordList } from "./KeywordList";
 import { ScoreGauge } from "./ScoreGauge";
 import { SectionAnalysis } from "./SectionAnalysis";
@@ -17,7 +29,33 @@ const PRIORITY_STYLES = {
   low: "bg-slate-500/10 text-slate-700 dark:text-slate-300",
 } as const;
 
+function downloadReportFile(content: string, filename: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
+  const handleExportMarkdown = () => {
+    downloadReportFile(
+      formatAtsReportMarkdown(analysis),
+      "ats-audit-report.md",
+      "text/markdown;charset=utf-8",
+    );
+  };
+
+  const handleExportJson = () => {
+    downloadReportFile(
+      formatAtsReportJson(analysis),
+      "ats-audit-report.json",
+      "application/json;charset=utf-8",
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -34,22 +72,46 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
 
         <Card className="border-border/50 bg-card/60 dark:bg-card/40 shadow-md backdrop-blur-xl">
           <CardHeader className="p-5 pb-0">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge
-                variant="secondary"
-                className="text-[10px] tracking-wider uppercase"
-              >
-                {analysis.verdict}
-              </Badge>
-              {analysis.metrics.hasJobDescription ? (
-                <Badge variant="outline" className="text-[10px]">
-                  JD Tailored Scan
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge
+                  variant="secondary"
+                  className="text-[10px] tracking-wider uppercase"
+                >
+                  {analysis.verdict}
                 </Badge>
-              ) : (
-                <Badge variant="outline" className="text-[10px]">
-                  General ATS Scan
-                </Badge>
-              )}
+                {analysis.metrics.hasJobDescription ? (
+                  <Badge variant="outline" className="text-[10px]">
+                    JD Tailored Scan
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="text-[10px]">
+                    General ATS Scan
+                  </Badge>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportMarkdown}
+                  className="h-7 gap-1.5 text-xs"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Export MD
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportJson}
+                  className="h-7 gap-1.5 text-xs"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Export JSON
+                </Button>
+              </div>
             </div>
             <CardTitle className="mt-1 text-xl">ATS Summary</CardTitle>
           </CardHeader>
@@ -58,7 +120,7 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
               {analysis.summary}
             </p>
 
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
               <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">
                 <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
                   <Target className="h-3.5 w-3.5" />
@@ -84,6 +146,15 @@ export function ScoreDashboard({ analysis }: ScoreDashboardProps) {
                 </div>
                 <p className="text-foreground mt-1 text-lg font-semibold">
                   {analysis.metrics.measurableBulletCount}
+                </p>
+              </div>
+              <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">
+                <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Verb Density
+                </div>
+                <p className="text-foreground mt-1 text-lg font-semibold">
+                  {analysis.metrics.actionVerbDensity}%
                 </p>
               </div>
               <div className="border-border/50 bg-background/50 dark:border-border/40 dark:bg-muted/20 rounded-xl border p-3 backdrop-blur-sm">

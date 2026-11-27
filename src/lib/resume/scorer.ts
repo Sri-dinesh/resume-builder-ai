@@ -282,6 +282,7 @@ export class ResumeScorer {
         bulletCount: this.bullets.length,
         measurableBulletCount: this.countMeasurableBullets(),
         actionVerbCount: this.countActionVerbBullets(),
+        actionVerbDensity: this.calculateActionVerbDensity(),
         sectionsFound: sectionInsights.found.map((section) => section.label),
         sectionsMissing: sectionInsights.missing.map(
           (section) => section.label,
@@ -877,6 +878,14 @@ export class ResumeScorer {
         new RegExp(`^[\\u2022*\\-]\\s+${verb}\\b`, "i").test(bullet),
       ),
     ).length;
+  }
+
+  private calculateActionVerbDensity() {
+    if (this.bullets.length === 0) return 0;
+    return Math.min(
+      100,
+      Math.round((this.countActionVerbBullets() / this.bullets.length) * 100),
+    );
   }
 
   private averageBulletWordCount() {
